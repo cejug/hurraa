@@ -5,13 +5,11 @@
 	<persistence-unit name="hurra-pu" transaction-type="JTA">
 		<jta-data-source>java:/hurraaDS</jta-data-source>
 
-		<class>org.cejug.hurraa.model.Produto</class>
-		<class>org.cejug.hurraa.model.Manufacturer</class>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 
 		<properties>
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
-			<property name="hibernate.hbm2ddl.auto" value="update" />
 		</properties>
 	</persistence-unit>
 </persistence>

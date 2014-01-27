@@ -1,4 +1,6 @@
+# Compiled folders
 *.class
+src/main/webapp/WEB-INF/classes*
 
 # Package Files #
 *.jar

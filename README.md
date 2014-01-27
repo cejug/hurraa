@@ -5,6 +5,7 @@ Opensource project to resource management
 
 Configuration of the datasource at standalone.xml file
 ---
+```xml
 <datasource jndi-name="java:/hurraaDS" pool-name="hurraaDS" enabled="true" use-java-context="true">
   <connection-url>jdbc:mysql://localhost:3306/hurraa</connection-url>
   <driver>com.mysql</driver>
@@ -22,6 +23,7 @@ Configuration of the datasource at standalone.xml file
     <xa-datasource-class>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</xa-datasource-class>
   </driver>
 </drivers>
+```
 
 Put Mysql Driver like the following video:
 http://www.youtube.com/watch?v=l1daP7PZxNA&feature

@@ -36,6 +36,7 @@ public class UserController {
 	@Post
 	@Path("insert")
 	public void insert(User user) {
+		System.out.println(user);
 		userBean.insert(user);
 		result.redirectTo("/user/list");
 	}

@@ -16,11 +16,11 @@
 		<c:set var="action" value="${linkTo[UserController].insert}" />
 	</c:if>
 	<form action="${action}" method="post">
-		
+
 		<cejug:textField name="user.name" value="${user.name }" /> <br/>
-		<cejug:textField name="user.mail" value="${user.mail }" /> <br/>
+		<cejug:textField name="user.email" value="${user.email }" /> <br/>
 		<cejug:textField name="user.password" value="${user.password }" /> <br/>
-		
+
 		<input name="user.id" value="${user.id }" type="hidden" />
 		<button type="submit"> <fmt:message key="user.form.submit" /> </button>
 	</form>

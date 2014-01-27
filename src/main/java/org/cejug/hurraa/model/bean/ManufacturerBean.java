@@ -10,9 +10,10 @@ import org.cejug.hurraa.model.Manufacturer;
 
 @Stateless
 public class ManufacturerBean {
+
 	@PersistenceContext
 	private EntityManager manager;
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Manufacturer> list() {
 		return manager.createQuery("from Manufacturer").getResultList();
@@ -31,6 +32,6 @@ public class ManufacturerBean {
 	}
 
 	public void delete(Manufacturer manufacturer) {
-		manager.remove( manager.merge(manufacturer) );
+		manager.remove(manager.merge(manufacturer));
 	}
 }

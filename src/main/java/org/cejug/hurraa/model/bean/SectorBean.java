@@ -10,10 +10,10 @@ import org.cejug.hurraa.model.Sector;
 
 @Stateless
 public class SectorBean {
-	
+
 	@PersistenceContext
 	private EntityManager manager;
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Sector> list() {
 		return manager.createQuery("from Sector").getResultList();
@@ -32,7 +32,7 @@ public class SectorBean {
 	}
 
 	public void delete(Sector sector) {
-		manager.remove( manager.merge(sector) );
+		manager.remove(manager.merge(sector));
 	}
 
 }

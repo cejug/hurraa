@@ -17,7 +17,7 @@
 		<tr>
 			<td><fmt:message key="user.id" /></td>
 			<td><fmt:message key="user.name" /></td>
-			<td><fmt:message key="user.mail" /></td>
+			<td><fmt:message key="user.email" /></td>
 			<td></td>
 			<td></td>
 		</tr>
@@ -25,7 +25,7 @@
 			<tr>
 				<td>${user.id }</td>
 				<td>${user.name }</td>
-				<td>${user.mail }</td>
+				<td>${user.email }</td>
 				<td><a href="${linkTo[UserController].form(user.id) }"> <fmt:message
 							key="label.update" />
 				</a></td>

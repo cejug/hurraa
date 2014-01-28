@@ -11,3 +11,4 @@ src/main/webapp/WEB-INF/classes*
 .classpath
 .project
 .settings*
+/target

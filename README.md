@@ -28,3 +28,6 @@ Configuration of the datasource at standalone.xml file
 Put Mysql Driver like the following video:
 http://www.youtube.com/watch?v=l1daP7PZxNA&feature
 After 48 minutes of video.
+
+Get module wildfly here: https://docs.google.com/file/d/0B25_MAAKa3jEVFRCRnp5Sm9zZE0/edit 
+and unpack in WILDFLY_HOME/modules/system/layers/base/com

@@ -20,23 +20,23 @@ public abstract class AbstractBean<T> {
 
 	protected abstract EntityManager getEntityManager();
 
-	public void create(T entity) {
+	public void insert(T entity) {
 		getEntityManager().persist(entity);
 	}
 
-	public void edit(T entity) {
+	public void update(T entity) {
 		getEntityManager().merge(entity);
 	}
 
-	public void remove(T entity) {
+	public void delete(T entity) {
 		getEntityManager().remove(getEntityManager().merge(entity));
 	}
 
-	public T find(Object id) {
+	public T findById(Object id) {
 		return getEntityManager().find(entityClass, id);
 	}
 
-	public List<T> findAll() {
+	public List<T> list() {
 		CriteriaQuery cq = getEntityManager().getCriteriaBuilder()
 				.createQuery();
 		cq.select(cq.from(entityClass));

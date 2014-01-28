@@ -40,12 +40,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.wildfly</groupId>
-            <artifactId>wildfly-jpa</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
     </dependencies>
 
 	<build>

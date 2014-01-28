@@ -1,37 +1,52 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.cejug.hurraa</groupId>
-	<artifactId>hurraa</artifactId>
-	<version>0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
-	<name>Hurra</name>
-	<description>OpenSource project for IT resource management</description>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.cejug.hurraa</groupId>
+    <artifactId>hurraa</artifactId>
+    <version>0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <name>Hurraa</name>
+    <description>OpenSource project for IT resource management</description>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>br.com.caelum</groupId>
-			<artifactId>vraptor</artifactId>
-			<version>4.0.0-beta-4</version>
-		</dependency>
+    <dependencies>
 
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-web-api</artifactId>
-			<version>7.0</version>
-			<scope>provided</scope>
-		</dependency>
+        <dependency>
+            <groupId>br.com.caelum</groupId>
+            <artifactId>vraptor</artifactId>
+            <version>4.0.0-beta-4</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.liquibase</groupId>
-			<artifactId>liquibase-core</artifactId>
-			<version>3.0.7</version>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>3.0.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.wildfly</groupId>
+            <artifactId>wildfly-jpa</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
 
 	<build>
 		<finalName>hurraa</finalName>
@@ -73,5 +88,12 @@
 			</plugin>
 		</plugins>
 	</build>
+
+    <repositories>
+        <repository>
+            <id>JBoss Repository</id>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+        </repository>
+    </repositories>
 
 </project>

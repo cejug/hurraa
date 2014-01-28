@@ -1,6 +1,8 @@
-# Compiled folders
+# Compiled files
 *.class
 src/main/webapp/WEB-INF/classes*
+src/main/webapp/WEB-INF/.gitignore
+target
 
 # Package Files #
 *.jar

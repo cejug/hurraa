@@ -4,7 +4,7 @@ import javax.ejb.EJB;
 import javax.inject.Inject;
 
 import org.cejug.hurraa.model.Manufacturer;
-import org.cejug.hurraa.model.bean.ManufacturerBean;
+import org.cejug.hurraa.model.bean.HurraaBean;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
@@ -19,7 +19,7 @@ public class ManufacturerController {
 	@Inject private Result result;
 	
 	@EJB
-	private ManufacturerBean manufacturerBean;
+	private HurraaBean hurraaBean;
 	
 	@Path("form")
 	public void form() {
@@ -28,33 +28,33 @@ public class ManufacturerController {
 	
 	@Path("form/{id}")
 	public void form(Long id) {
-		Manufacturer manufacturer = manufacturerBean.findById(id);
+		Manufacturer manufacturer = hurraaBean.findById(Manufacturer.class, id);
 		result.include(manufacturer);
 	}
 	
 	@Post
 	@Path("insert")
 	public void insert(Manufacturer manufacturer) {
-		manufacturerBean.insert(manufacturer);
+	    hurraaBean.insert(manufacturer);
 		result.redirectTo("/manufacturer/list");
 	}
 	
 	@Get
 	@Path("list")
 	public void list() {
-		result.include("manufacturers", manufacturerBean.findAll());
+		result.include("manufacturers", hurraaBean.findAll("from Manufacturer m order by m.id desc", Manufacturer.class));
 	}
 	
 	@Post
 	@Path("update")
 	public void update(Manufacturer manufacturer) {
-		manufacturerBean.update(manufacturer);
+	    hurraaBean.update(manufacturer);
 		result.redirectTo(ManufacturerController.class).list();
 	}
 	
 	@Path("delete/{manufacturer.id}")
 	public void delete(Manufacturer manufacturer) {
-		manufacturerBean.delete(manufacturer);
+	    hurraaBean.delete(Manufacturer.class, manufacturer.getId());
 		result.redirectTo(ManufacturerController.class).list();
 	}
 }

@@ -1,7 +1,5 @@
 package org.cejug.hurraa.model.bean;
 
-import java.util.List;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -9,30 +7,17 @@ import javax.persistence.PersistenceContext;
 import org.cejug.hurraa.model.User;
 
 @Stateless
-public class UserBean {
+public class UserBean extends AbstractBean<User> {
 
 	@PersistenceContext
 	private EntityManager manager;
 	
-	@SuppressWarnings("unchecked")
-	public List<User> list() {
-		return manager.createQuery("from User").getResultList();
+	public UserBean() {
+		super(User.class);
 	}
 
-	public void insert(User user) {
-		manager.persist(user);
+	@Override
+	protected EntityManager getEntityManager() {
+		return this.manager;
 	}
-
-	public User findById(Long id) {
-		return manager.find(User.class, id);
-	}
-
-	public void update(User user) {
-		manager.merge(user);
-	}
-
-	public void delete(User user) {
-		manager.remove( manager.merge(user) );
-	}
-	
 }

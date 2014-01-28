@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.cejug.hurraa</groupId>
     <artifactId>hurraa</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <packaging>war</packaging>
     <name>Hurra</name>
     <description>OpenSource project for IT resource management</description>

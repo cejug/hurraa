@@ -41,9 +41,6 @@ public class SectorController {
     @Post
     @Path("insert")
     public void insert(Sector sector) {
-        // validator.check( sector.getName() != null , new SimpleMessage("erro"
-        // , "name.invalid"));
-        // validator.onErrorForwardTo( SectorController.class ).form();
         sectorBean.insert(sector);
         result.redirectTo(SectorController.class).list();
     }
@@ -51,7 +48,7 @@ public class SectorController {
     @Get
     @Path("list")
     public void list() {
-        result.include("sectors", sectorBean.list());
+        result.include("sectors", sectorBean.findAll());
     }
 
     @Post
@@ -66,5 +63,4 @@ public class SectorController {
         sectorBean.delete(sector);
         result.redirectTo(SectorController.class).list();
     }
-
 }

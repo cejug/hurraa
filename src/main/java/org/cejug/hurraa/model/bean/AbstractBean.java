@@ -7,39 +7,44 @@ import javax.persistence.criteria.CriteriaQuery;
 
 /**
  * Model class to other beans
- * 
+ *
  * @author Daniel Cunha (danielsoro@gmail.com)
- * 
+ *
  */
 public abstract class AbstractBean<T> {
-	private Class<T> entityClass;
 
-	public AbstractBean(Class<T> entityClass) {
-		this.entityClass = entityClass;
-	}
+    private Class<T> entityClass;
 
-	protected abstract EntityManager getEntityManager();
+    public AbstractBean(Class<T> entityClass) {
+        this.entityClass = entityClass;
+    }
 
-	public void insert(T entity) {
-		getEntityManager().persist(entity);
-	}
+    protected abstract EntityManager getEntityManager();
 
-	public void update(T entity) {
-		getEntityManager().merge(entity);
-	}
+    public void insert(T entity) {
+        getEntityManager().persist(entity);
+    }
 
-	public void delete(T entity) {
-		getEntityManager().remove(getEntityManager().merge(entity));
-	}
+    public void update(T entity) {
+        getEntityManager().merge(entity);
+    }
 
-	public T findById(Object id) {
-		return getEntityManager().find(entityClass, id);
-	}
+    public void delete(T entity) {
+        getEntityManager().remove(getEntityManager().merge(entity));
+    }
 
-	public List<T> list() {
-		CriteriaQuery cq = getEntityManager().getCriteriaBuilder()
-				.createQuery();
-		cq.select(cq.from(entityClass));
-		return getEntityManager().createQuery(cq).getResultList();
-	}
+    public T findById(Object id) {
+        return getEntityManager().find(entityClass, id);
+    }
+
+    /**
+     * Returns all persisted instances of the given entity. Use it with extreme
+     * precaution.
+     */
+    public List<T> findAll() {
+        CriteriaQuery cq = getEntityManager().getCriteriaBuilder()
+                .createQuery();
+        cq.select(cq.from(entityClass));
+        return getEntityManager().createQuery(cq).getResultList();
+    }
 }

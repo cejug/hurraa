@@ -35,7 +35,6 @@ public class ManufacturerController {
 	@Post
 	@Path("insert")
 	public void insert(Manufacturer manufacturer) {
-		System.out.println(manufacturer);
 		manufacturerBean.insert(manufacturer);
 		result.redirectTo("/manufacturer/list");
 	}
@@ -43,7 +42,7 @@ public class ManufacturerController {
 	@Get
 	@Path("list")
 	public void list() {
-		result.include("manufacturers", manufacturerBean.list());
+		result.include("manufacturers", manufacturerBean.findAll());
 	}
 	
 	@Post
@@ -58,5 +57,4 @@ public class ManufacturerController {
 		manufacturerBean.delete(manufacturer);
 		result.redirectTo(ManufacturerController.class).list();
 	}
-	
 }

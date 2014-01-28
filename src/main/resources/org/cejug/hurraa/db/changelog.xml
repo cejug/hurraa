@@ -9,4 +9,5 @@
 
     <include file="org/cejug/hurraa/db/changelogs/20140126-1-paulojribp.sql"/>
     <include file="org/cejug/hurraa/db/changelogs/20140127-1-italocostajava.sql"/>
+    <include file="org/cejug/hurraa/db/changelogs/20140127-2-efraimgentil.sql"/>
 </databaseChangeLog>

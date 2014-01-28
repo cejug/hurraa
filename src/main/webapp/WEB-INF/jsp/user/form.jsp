@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="cejug" %>
 <!DOCTYPE html>
-<html>
+<html> 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title> <fmt:message key="user.form.insert" /> </title>

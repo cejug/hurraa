@@ -36,7 +36,6 @@ public class UserController {
 	@Post
 	@Path("insert")
 	public void insert(User user) {
-		System.out.println(user);
 		userBean.insert(user);
 		result.redirectTo("/user/list");
 	}
@@ -44,7 +43,7 @@ public class UserController {
 	@Get
 	@Path("list")
 	public void list() {
-		result.include("users", userBean.list());
+		result.include("users", userBean.findAll());
 	}
 	
 	@Post
@@ -59,5 +58,4 @@ public class UserController {
 		userBean.delete(user);
 		result.redirectTo(UserController.class).list();
 	}
-	
 }

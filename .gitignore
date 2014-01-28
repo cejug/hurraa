@@ -14,3 +14,4 @@ target
 .project
 .settings*
 /target
+nb-configuration.xml

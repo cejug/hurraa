@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaQuery;
 
 @Stateless
 public class HurraaBean {
@@ -41,6 +42,13 @@ public class HurraaBean {
     
     public void removeWithParameter(String jpql, String param, Class klass) {
         em.createQuery(jpql, klass).setParameter(1, param).executeUpdate();
+    }
+    
+    public <T> List<T> findAll(Class<T> klass) {
+        CriteriaQuery cq = em.getCriteriaBuilder()
+                .createQuery();
+        cq.select(cq.from(klass));
+        return em.createQuery(cq).getResultList();
     }
    
 }

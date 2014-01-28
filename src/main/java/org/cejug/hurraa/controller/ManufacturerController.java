@@ -42,7 +42,7 @@ public class ManufacturerController {
 	@Get
 	@Path("list")
 	public void list() {
-		result.include("manufacturers", hurraaBean.findAll("from Manufacturer m order by m.id desc", Manufacturer.class));
+		result.include("manufacturers", hurraaBean.findAll(Manufacturer.class));
 	}
 	
 	@Post

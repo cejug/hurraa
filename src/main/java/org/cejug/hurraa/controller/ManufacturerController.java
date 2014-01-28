@@ -42,6 +42,8 @@ public class ManufacturerController {
 	@Get
 	@Path("list")
 	public void list() {
+	    System.out.println("============");
+	    System.out.println("============");
 		result.include("manufacturers", hurraaBean.findAll(Manufacturer.class));
 	}
 	

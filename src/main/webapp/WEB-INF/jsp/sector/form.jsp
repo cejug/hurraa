@@ -10,16 +10,21 @@
         <title><fmt:message key="manufacturer.form.insert" /></title>
     </head>
     <body>
-        <c:if test="${not empty sector}">
+        <c:if test="${not empty sector or sector.id != null}">
             <c:set var="action" value="${linkTo[SectorController].update}" />
         </c:if>
-        <c:if test="${empty sector}">
+        <c:if test="${empty sector or sector.id == null}">
             <c:set var="action" value="${linkTo[SectorController].insert}" />
         </c:if>
 
         <form action="${action}" method="post">
-
-            <cejug:textField name="sector.name" value="${sector.name }" />
+            <cejug:textField name="sector.name" value="${sector.name }" 
+            	errorsMap="${errors.asMap()}" showAllErrors="true" />
+           	<cejug:textField name="sector.email" value="${sector.email}" 
+            	errorsMap="${errors.asMap()}" />
+            <cejug:singleCheckboxField name="sector.respondsOccurrence" value="${sector.respondsOccurrence}" />
+            <cejug:singleCheckboxField name="sector.active" value="${sector.active}" />
+            
             <br /> <input name="sector.id" value="${sector.id }" type="hidden" />
             <button type="submit">
                 <fmt:message key="sector.form.submit" />

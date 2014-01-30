@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Email;
+
 @Entity
 public class Sector implements Serializable {
 
@@ -19,6 +21,14 @@ public class Sector implements Serializable {
 
     @NotNull
     private String name;
+    
+    @NotNull
+    @Email
+    private String email;
+    
+    private boolean active;
+    
+    private boolean respondsOccurrence;
 
     public Sector() {
     }
@@ -38,8 +48,32 @@ public class Sector implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+    
+    public String getEmail() {
+		return email;
+	}
 
-    @Override
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public boolean isRespondsOccurrence() {
+		return respondsOccurrence;
+	}
+
+	public void setRespondsOccurrence(boolean respondsOccurrence) {
+		this.respondsOccurrence = respondsOccurrence;
+	}
+
+	@Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;

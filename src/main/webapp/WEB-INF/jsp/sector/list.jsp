@@ -19,6 +19,8 @@
 		<tr>
 			<td><fmt:message key="sector.id" /></td>
 			<td><fmt:message key="sector.name" /></td>
+			<td><fmt:message key="sector.respondsOccurrence" /></td>
+			<td><fmt:message key="sector.active" /></td>
 			<td></td>
 			<td></td>
 		</tr>
@@ -26,6 +28,8 @@
 			<tr>
 				<td>${sector.id }</td>
 				<td>${sector.name }</td>
+				<td>${sector.respondsOccurrence }</td>
+				<td>${sector.active }</td>
 				<td><a href="${linkTo[SectorController].form(sector.id) }">
 						<fmt:message key="label.update" />
 				</a></td>

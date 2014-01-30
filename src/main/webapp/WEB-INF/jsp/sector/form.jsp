@@ -17,9 +17,10 @@
             <c:set var="action" value="${linkTo[SectorController].insert}" />
         </c:if>
 
+		${errors.asMap()}
         <form action="${action}" method="post">
-
             <cejug:textField name="sector.name" value="${sector.name }" />
+            ${errors.asMap()["sector.name"]}
             <br /> <input name="sector.id" value="${sector.id }" type="hidden" />
             <button type="submit">
                 <fmt:message key="sector.form.submit" />

@@ -1,6 +1,5 @@
 package org.cejug.hurraa.controller;
 
-import javax.ejb.EJB;
 import javax.inject.Inject;
 
 import org.cejug.hurraa.model.Sector;
@@ -16,11 +15,17 @@ import br.com.caelum.vraptor.Result;
 @Controller
 public class SectorController {
 
-    @Inject
-    private Result result;
-
-    @EJB
+	private Result result;
     private SectorBean sectorBean;
+    
+    public SectorController() {
+	}
+    
+    @Inject
+    public SectorController(Result result, SectorBean sectorBean) {
+    	this.result = result;
+    	this.sectorBean = sectorBean;
+	}
 
     @Path(value = { "", "/" })
     public void index() {

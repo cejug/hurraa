@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Manufacturer implements Serializable {
+public class Manufacturer implements Serializable, Identified<Long> {
 
     private static final long serialVersionUID = 1L;
 

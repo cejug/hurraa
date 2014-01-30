@@ -21,6 +21,9 @@ After **General Configuration** section:
 4. connect localhost:9990
 5. ./subsystem=datasources/jdbc-driver=com.mysql:add(driver-name="com.mysql", driver-module-name="com.mysql", driver-xa-datasource-class-name="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource" )
 6. ./subsystem=datasources/data-source=hurraaDS:add(enabled=true , jndi-name="java:/hurraaDS" , use-java-context=true, driver-name="com.mysql" , min-pool-size=10 , max-pool-size=100 , pool-prefill=true, user-name="root" , connection-url="jdbc:mysql://localhost:3306/hurraa" )
+7. Create a env variable WILDFLY_HOME for arquillian.xml config
+( most of linux distributions: create a file wf.sh in /etc/profile.d with this content export WILDFLY_HOME=/your_path_to/wildfly-8.0.0.CR1 )
+
 
 
 #### Configuration of the datasource at standalone.xml file

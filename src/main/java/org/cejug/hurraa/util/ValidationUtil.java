@@ -15,7 +15,7 @@ import br.com.caelum.vraptor.validator.Validator;
 @Stateless
 public class ValidationUtil {
 	
-	public Validator validateBean( String prefix , Validator validator , Object validationTarget  ){
+	public Validator validateBean( String prefix , Object validationTarget , Validator validator ){
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		javax.validation.Validator beanValidator = factory.getValidator();
     	Set<ConstraintViolation<Object>> constrainsErrors =  beanValidator.validate(validationTarget);

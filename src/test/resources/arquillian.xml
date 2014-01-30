@@ -5,9 +5,9 @@
 
   <defaultProtocol type="Servlet 3.0" />
 
-  <container qualifier="jbossas-managed-wildfly-8">
+  <container qualifier="wildfly-8">
     <configuration>
-      <property name="jbossHome">/home/hf/java/wildfly-8.0.0.CR1</property>
+      <property name="jbossHome">/home/hf/java/wildfly-8.0.0.CR1/</property>
       <property name="serverConfig">standalone.xml</property>
     </configuration>
   </container>

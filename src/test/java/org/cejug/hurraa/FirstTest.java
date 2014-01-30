@@ -14,17 +14,17 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class FirstTest {
 
-//    @Deployment
-//    public static WebArchive createDeployment() {
-//        return ShrinkWrap.create(WebArchive.class)
-//                .addClass(ManufacturerController.class)
-////                .addClass(HurraaBean.class)
-////                .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
-//                .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
-//    }
+    @Deployment
+    public static WebArchive createDeployment() {
+        return ShrinkWrap.create(WebArchive.class)
+                .addClass(ManufacturerController.class)
+                .addClass(HurraaBean.class)
+                .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
+               .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+   }
 
-//    @Inject
-//    ManufacturerController mc;
+    @Inject
+    ManufacturerController mc;
     
     @Test
     public void first_test() {

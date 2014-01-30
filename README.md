@@ -1,17 +1,17 @@
 # Hurraa
 
-**Opensource project to resource management**
+Opensource project to resource management
 
 ### Datasource configuration
 
-##### General Configuration
+#### General Configuration
 
 Get module wildfly here: https://docs.google.com/file/d/0B25_MAAKa3jEVFRCRnp5Sm9zZE0/edit 
 and unpack in WILDFLY_HOME/modules/system/layers/base/com
 
 Like the following video shows: http://www.youtube.com/watch?v=l1daP7PZxNA#t=2729 After 45 minutes
 
-##### Configuration of the Datasource through jboss cli
+#### Configuration of the Datasource through jboss cli
 
 After **General Configuration** section: 
 
@@ -23,7 +23,7 @@ After **General Configuration** section:
 6. ./subsystem=datasources/data-source=hurraaDS:add(enabled=true , jndi-name="java:/hurraaDS" , use-java-context=true, driver-name="com.mysql" , min-pool-size=10 , max-pool-size=100 , pool-prefill=true, user-name="root" , connection-url="jdbc:mysql://localhost:3306/hurraa" )
 
 
-##### Configuration of the datasource at standalone.xml file
+#### Configuration of the datasource at standalone.xml file
 
 ```xml
 <datasource jndi-name="java:/hurraaDS" pool-name="hurraaDS" enabled="true" use-java-context="true">

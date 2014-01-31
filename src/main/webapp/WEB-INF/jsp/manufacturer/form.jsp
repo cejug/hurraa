@@ -4,10 +4,6 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="cejug" %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title> <fmt:message key="manufacturer.form.insert" /> </title>
-</head>
 <body>
 	<c:if test="${not empty manufacturer}">
 		<c:set var="action" value="${linkTo[ManufacturerController].update}" />

@@ -7,7 +7,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title><fmt:message key="manufacturer.form.insert" /></title>
+        <title><fmt:message key="sector.form.insert" /></title>
     </head>
     <body>
         <c:if test="${not empty sector or sector.id != null}">
@@ -19,7 +19,7 @@
 
         <form action="${action}" method="post">
             <cejug:textField name="sector.name" value="${sector.name }" 
-            	errorsMap="${errors.asMap()}" showAllErrors="true" />
+            	errorsMap="${errors.asMap()}" />
            	<cejug:textField name="sector.email" value="${sector.email}" 
             	errorsMap="${errors.asMap()}" />
             <cejug:singleCheckboxField name="sector.respondsOccurrence" value="${sector.respondsOccurrence}" />

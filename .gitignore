@@ -15,3 +15,6 @@ target
 .settings*
 /target
 nb-configuration.xml
+
+# Other Editors #
+*~

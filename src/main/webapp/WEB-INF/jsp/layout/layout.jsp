@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="shortcut icon" type="image/x-icon" href="/hurraa/images/logo/16x.png"/> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><fmt:message key="page.title"/></title>
 		<link rel="stylesheet" href="<c:url value='/css/pure-min.css'/>" type="text/css">
@@ -14,6 +15,7 @@
     </head>
     <body>
         <header>
+            <img alt="Home" src="/hurraa/images/logo/64x.png" style="float: left;">
             <h1><fmt:message key="page.title"/></h1>
             <!-- Menu Pure CSS -->
 			<div id="demo-horizontal-menu" class="pure-menu pure-menu-open pure-menu-horizontal">

@@ -51,3 +51,8 @@ Create a env variable WILDFLY_HOME for arquillian.xml config
   </driver>
 </drivers>
 ```
+#### Wildfly Restriction
+Workaround to resolve the problem of the wildfly with the class MultableResponse. Edit the file standalone.xml for to add in the tag servlet-container the property bellow:
+```xml
+allow-non-standard-wrappers="true"
+```

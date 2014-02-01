@@ -21,7 +21,7 @@
         <form action="${action}" method="post">
             <cejug:textField name="manufacturer.name"
             value="${manufacturer.name }" errorsMap="${errors}"/>
-        <br />
+            <br />        
             <input name="manufacturer.id" value="${manufacturer.id }"
             type="hidden" />
         <button type="submit" class="pure-button">

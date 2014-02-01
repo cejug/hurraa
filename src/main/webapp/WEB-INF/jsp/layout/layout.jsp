@@ -7,8 +7,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><fmt:message key="page.title"/></title>
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="<c:url value='/css/default.css'/>" type="text/css">
+        <link rel="stylesheet" href="<c:url value='/css/pure-min.css'/>" type="text/css">
         <d:head/>
     </head>
     <body>

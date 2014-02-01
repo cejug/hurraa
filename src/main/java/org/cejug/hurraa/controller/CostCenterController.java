@@ -66,7 +66,7 @@ public class CostCenterController {
         result.redirectTo(CostCenterController.class).list();
     }
 
-    @Path("delete/{sector.id}")
+    @Path("delete/{costCenter.id}")
     public void delete(CostCenter costCenter) {
     	costCenterBean.delete(costCenter);
         result.redirectTo(CostCenterController.class).list();

@@ -27,6 +27,11 @@ public class ManufacturerController {
 		this.result = result;
 		this.manufacturerBean = manufacturerBean;
 	}
+	
+	@Path(value = { "", "/" })
+    public void index() {
+        result.forwardTo(ManufacturerController.class).list();
+    }
 
 	@Path("form")
 	public void form() {

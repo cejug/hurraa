@@ -16,12 +16,12 @@
         <c:if test="${empty sector or sector.id == null}">
             <c:set var="action" value="${linkTo[SectorController].insert}" />
         </c:if>
-
+		
         <form action="${action}" method="post">
             <cejug:textField name="sector.name" value="${sector.name }" 
-            	errorsMap="${errors.asMap()}" />
+            	errorsMap="${errors}" />
            	<cejug:textField name="sector.email" value="${sector.email}" 
-            	errorsMap="${errors.asMap()}" />
+            	errorsMap="${errors}" />
             <cejug:singleCheckboxField name="sector.respondsOccurrence" value="${sector.respondsOccurrence}" />
             <cejug:singleCheckboxField name="sector.active" value="${sector.active}" />
             

@@ -4,10 +4,7 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 
 import org.cejug.hurraa.model.CostCenter;
-import org.cejug.hurraa.model.Sector;
 import org.cejug.hurraa.model.bean.CostCenterBean;
-import org.cejug.hurraa.model.bean.SectorBean;
-import org.cejug.hurraa.util.ValidationUtil;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
@@ -15,7 +12,6 @@ import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.Validator;
-import br.com.caelum.vraptor.validator.beanvalidation.MethodValidator;
 
 @Path("cost-center")
 @Controller

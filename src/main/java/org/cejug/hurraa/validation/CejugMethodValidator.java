@@ -11,10 +11,10 @@ import javax.validation.MessageInterpolator;
 import javax.validation.Path.Node;
 import javax.validation.Path.ParameterNode;
 
-import com.google.common.base.Joiner;
-
 import br.com.caelum.vraptor.http.ValuedParameter;
 import br.com.caelum.vraptor.validator.beanvalidation.MethodValidator;
+
+import com.google.common.base.Joiner;
 
 @Specializes
 @ApplicationScoped
@@ -31,14 +31,26 @@ public class CejugMethodValidator extends MethodValidator {
 	}
 	
 	@Override
-	protected String extractCategory(ValuedParameter[] params, ConstraintViolation<Object> v) {
-		Iterator<Node> property = v.getPropertyPath().iterator();
-		property.next();
-		ParameterNode parameterNode = property.next().as(ParameterNode.class);
-		int index = parameterNode.getParameterIndex();
-		String argName = "arg" + index;
-		int indexOfArg = v.getPropertyPath().toString().indexOf(argName);
-		return Joiner.on(".").join(v.getPropertyPath()).substring( indexOfArg ).replace("arg" + index, params[index].getName());
+	protected String extractCategory(ValuedParameter[] params, ConstraintViolation<Object> violation) {
+		Iterator<Node> node = violation.getPropertyPath().iterator();
+		int index =  getFirstParameterIndex( node );  
+		node = violation.getPropertyPath().iterator();// Reset the interator
+		return mountCategory( node ).replace( "arg" + index , params[index].getName() );
+	}
+	
+	private String mountCategory( Iterator<Node> node ){
+		ignoreMethodName( node );
+		return Joiner.on(".").join( node );
+	}
+	
+	private void ignoreMethodName( Iterator<Node> node ){
+		node.next(); 
+	}
+	
+	private int getFirstParameterIndex( Iterator<Node> node ){
+		ignoreMethodName( node );
+		ParameterNode parameterNode = node.next().as(ParameterNode.class);
+		return parameterNode.getParameterIndex();
 	}
 	
 }

@@ -1,12 +1,10 @@
 package org.cejug.hurraa.controller;
 
-import java.util.Map;
-
 import javax.inject.Inject;
+import javax.validation.Valid;
 
 import org.cejug.hurraa.model.Sector;
 import org.cejug.hurraa.model.bean.SectorBean;
-import org.cejug.hurraa.util.ValidationUtil;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
@@ -20,17 +18,15 @@ import br.com.caelum.vraptor.validator.Validator;
 public class SectorController {
 
     private Result result;
-    private ValidationUtil validationUtil;
     private SectorBean sectorBean;
     
     @Deprecated
     public SectorController() {	}
     
     @Inject
-    public SectorController(Result result, SectorBean sectorBean , ValidationUtil validationUtil) {
+    public SectorController(Result result, SectorBean sectorBean ) {
     	this.result = result;
     	this.sectorBean = sectorBean;
-    	this.validationUtil = validationUtil;
 	}
 
     @Path(value = { "", "/" })
@@ -50,8 +46,7 @@ public class SectorController {
     }
 
     @Post("/insert")
-    public void insert(Sector sector , Validator validator) {
-    	validator = validationUtil.validateBean("sector", sector , validator);
+    public void insert(@Valid Sector sector , Validator validator) {
     	validator.onErrorForwardTo( SectorController.class ).form();
     	
         sectorBean.insert(sector);
@@ -66,8 +61,7 @@ public class SectorController {
 
     @Post
     @Path("update")
-    public void update(Sector sector , Validator validator) {
-    	validator = validationUtil.validateBean("sector", sector , validator);
+    public void update(@Valid Sector sector , Validator validator) {
     	validator.onErrorForwardTo( SectorController.class ).form();
     	
         sectorBean.update(sector);

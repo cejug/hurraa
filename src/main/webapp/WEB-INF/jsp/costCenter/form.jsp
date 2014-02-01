@@ -28,7 +28,7 @@
             
             <br />
             <input name="costCenter.id" value="${costCenter.id }" type="hidden" />
-            <button type="submit">
+            <button type="submit" class="pure-button">
                 <fmt:message key="costCenter.form.submit" />
             </button>
         </form>

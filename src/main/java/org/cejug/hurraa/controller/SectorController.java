@@ -1,7 +1,7 @@
 package org.cejug.hurraa.controller;
 
-import javax.ejb.EJB;
 import javax.inject.Inject;
+import javax.validation.Valid;
 
 import org.cejug.hurraa.model.Sector;
 import org.cejug.hurraa.model.bean.SectorBean;
@@ -11,16 +11,23 @@ import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.validator.Validator;
 
 @Path(value = "sector")
 @Controller
 public class SectorController {
 
-    @Inject
     private Result result;
-
-    @EJB
     private SectorBean sectorBean;
+    
+    @Deprecated
+    public SectorController() {	}
+    
+    @Inject
+    public SectorController(Result result, SectorBean sectorBean ) {
+    	this.result = result;
+    	this.sectorBean = sectorBean;
+	}
 
     @Path(value = { "", "/" })
     public void index() {
@@ -38,12 +45,10 @@ public class SectorController {
         result.include(sector);
     }
 
-    @Post
-    @Path("insert")
-    public void insert(Sector sector) {
-        // validator.check( sector.getName() != null , new SimpleMessage("erro"
-        // , "name.invalid"));
-        // validator.onErrorForwardTo( SectorController.class ).form();
+    @Post("/insert")
+    public void insert(@Valid Sector sector , Validator validator) {
+    	validator.onErrorForwardTo( SectorController.class ).form();
+    	
         sectorBean.insert(sector);
         result.redirectTo(SectorController.class).list();
     }
@@ -51,12 +56,14 @@ public class SectorController {
     @Get
     @Path("list")
     public void list() {
-        result.include("sectors", sectorBean.list());
+        result.include("sectors", sectorBean.findAll());
     }
 
     @Post
     @Path("update")
-    public void update(Sector sector) {
+    public void update(@Valid Sector sector , Validator validator) {
+    	validator.onErrorForwardTo( SectorController.class ).form();
+    	
         sectorBean.update(sector);
         result.redirectTo(SectorController.class).list();
     }
@@ -66,5 +73,4 @@ public class SectorController {
         sectorBean.delete(sector);
         result.redirectTo(SectorController.class).list();
     }
-
 }

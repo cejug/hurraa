@@ -3,11 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="cejug" %>
 <!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title> <fmt:message key="user.form.insert" /> </title>
-</head>
+<html> 
 <body>
 	<c:if test="${not empty user}">
 		<c:set var="action" value="${linkTo[UserController].update}" />

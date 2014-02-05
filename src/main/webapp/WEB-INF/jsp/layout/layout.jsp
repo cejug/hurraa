@@ -29,7 +29,7 @@
 <d:head />
 </head>
 <body>
-    <div id="wrap">
+    <header id="wrap">
         
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
@@ -62,24 +62,24 @@
             </div>
         </nav>
         
-        <div class="container">
+        <section class="container">
             <div class="page-header">
                 <h1>
                     <fmt:message key="page.title" />
                 </h1>
             </div>
             <d:body />
-        </div>
-    </div>
+        </section>
+    </header>
     
-    <div id="footer">
+    <footer id="footer">
         <div class="container">
             <p class="text-muted">
                 <span class="glyphicon glyphicon-copyright-mark"></span>
                 <fmt:message key="page.copyright" />
             </p>
         </div>
-    </div>
+    </footer>
     
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="<c:url value='/resources/libs/jquery/js/jquery-2.1.0.min.js' />"></script>

@@ -12,6 +12,10 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 <link rel="shortcut icon" type="image/x-icon" href="<c:url value='/resources/images/logo/16x.png'/>" />
+<link rel="apple-touch-icon" href="<c:url value='/resources/images/logo/64x.png'/>">
+<link rel="apple-touch-icon" sizes="76x76" href="<c:url value='/resources/images/logo/64x.png'/>">
+<link rel="apple-touch-icon" sizes="120x120" href="<c:url value='/resources/images/logo/64x.png'/>">
+<link rel="apple-touch-icon" sizes="152x152" href="<c:url value='/resources/images/logo/64x.png'/>">
 <link rel="stylesheet" href="<c:url value='/resources/css/default.css'/>" type="text/css">
 <link rel="stylesheet" href="<c:url value='/resources/libs/bootstrap/css/bootstrap.min.css' />">
 <link rel="stylesheet" href="<c:url value='/resources/libs/bootstrap/css/bootstrap-theme.min.css' />">
@@ -80,5 +84,6 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="<c:url value='/resources/libs/jquery/js/jquery-2.1.0.min.js' />"></script>
     <script src="<c:url value='/resources/libs/bootstrap/js/bootstrap.min.js' />"></script>
+    <script src="<c:url value='/resources/js/webapp-standalone.js' />"></script>
 </body>
 </html>

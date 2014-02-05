@@ -7,7 +7,6 @@
 <link rel="shortcut icon" type="image/x-icon" href="<c:url value='/resources/images/logo/16x.png'/>" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><fmt:message key="page.title" /></title>
-<link rel="stylesheet" href="<c:url value='/resources/css/pure-min.css'/>" type="text/css">
 <link rel="stylesheet" href="<c:url value='/resources/css/default.css'/>" type="text/css">
 <d:head />
 </head>
@@ -49,22 +48,6 @@
         <span><fmt:message key="page.copyright" /></span>
     </footer>
 
-    <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-    <script>
-		YUI({
-			classNamePrefix : 'pure'
-		}).use('gallery-sm-menu', function(Y) {
-			var horizontalMenu = new Y.Menu({
-				container : '#demo-horizontal-menu',
-				sourceNode : '#std-menu-items',
-				orientation : 'horizontal',
-				hideOnOutsideClick : false,
-				hideOnClick : false
-			});
-
-			horizontalMenu.render();
-			horizontalMenu.show();
-		});
-    </script>
+    <script src="<c:url value='/resources/libs/jquery-2.1.0.min.js'/>"></script>
 </body>
 </html>

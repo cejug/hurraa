@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title><fmt:message key="page.title" /></title>
+<title><fmt:message key="page.title" /> - <fmt:message key="page.subtitle" /></title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -30,7 +30,6 @@
 </head>
 <body>
     <header id="wrap">
-        
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
@@ -40,7 +39,9 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="<c:url value="/" />"> <img alt="Home" src="<c:url value='/resources/images/logo/32x.png' />" />
+                    <a class="navbar-brand" href="<c:url value="/" />"> 
+                        <img alt="Home" src="<c:url value='/resources/images/logo/32x.png' />" />
+                        <fmt:message key="page.title" />
                     </a>
                 </div>
                 <div class="navbar-collapse collapse">
@@ -63,11 +64,6 @@
         </nav>
         
         <section class="container">
-            <div class="page-header">
-                <h1>
-                    <fmt:message key="page.title" />
-                </h1>
-            </div>
             <d:body />
         </section>
     </header>

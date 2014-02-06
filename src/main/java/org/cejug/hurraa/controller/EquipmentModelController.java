@@ -2,17 +2,13 @@ package org.cejug.hurraa.controller;
 
 import java.util.ResourceBundle;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
-import javax.servlet.jsp.jstl.fmt.LocalizationContext;
 import javax.validation.Valid;
 
 import org.cejug.hurraa.model.EquipmentModel;
-import org.cejug.hurraa.model.EquipmentType;
 import org.cejug.hurraa.model.bean.EquipmentModelBean;
 import org.cejug.hurraa.model.bean.EquipmentTypeBean;
 import org.cejug.hurraa.producer.ValidationMessages;
-import org.cejug.hurraa.validation.EquipmentModelNameAvailable;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;

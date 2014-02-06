@@ -3,7 +3,6 @@ package org.cejug.hurraa.producer;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.annotation.Resource;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
@@ -21,6 +20,5 @@ public class ValidationBundleProducer {
     public ResourceBundle getBundle(){
         return  new SafeResourceBundle( ResourceBundle.getBundle("ValidationMessages" , locale ) );
     }
-    
     
 }

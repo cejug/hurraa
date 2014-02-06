@@ -13,6 +13,6 @@
     <include file="org/cejug/hurraa/db/changelogs/20140129-1-efraimgentil.sql"/>
     <include file="org/cejug/hurraa/db/changelogs/20140130-1-efraimgentil.sql"/>
     <include file="org/cejug/hurraa/db/changelogs/20140202-1-brunnogoncalves.sql"/>
-    
+    <include file="org/cejug/hurraa/db/changelogs/20140203-1-efraimgentil.sql"/>
     
 </databaseChangeLog>

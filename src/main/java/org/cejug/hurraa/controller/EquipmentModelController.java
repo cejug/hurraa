@@ -2,6 +2,7 @@ package org.cejug.hurraa.controller;
 
 import java.util.ResourceBundle;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.jsp.jstl.fmt.LocalizationContext;
 import javax.validation.Valid;
@@ -10,6 +11,7 @@ import org.cejug.hurraa.model.EquipmentModel;
 import org.cejug.hurraa.model.EquipmentType;
 import org.cejug.hurraa.model.bean.EquipmentModelBean;
 import org.cejug.hurraa.model.bean.EquipmentTypeBean;
+import org.cejug.hurraa.producer.ValidationMessages;
 import org.cejug.hurraa.validation.EquipmentModelNameAvailable;
 
 import br.com.caelum.vraptor.Controller;
@@ -33,7 +35,7 @@ public class EquipmentModelController {
     public EquipmentModelController() {  }
     
     @Inject
-    public EquipmentModelController( Result result , EquipmentModelBean equipmentModelBean, EquipmentTypeBean equipmentTypeBean , ResourceBundle bundle ) {
+    public EquipmentModelController( Result result , EquipmentModelBean equipmentModelBean, EquipmentTypeBean equipmentTypeBean , @ValidationMessages ResourceBundle bundle ) {
         this.result = result;
         this.equipmentModelBean = equipmentModelBean;
         this.equipmentTypeBean = equipmentTypeBean;

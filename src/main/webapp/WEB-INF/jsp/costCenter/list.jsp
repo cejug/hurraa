@@ -10,14 +10,17 @@
 </head>
 <body>
 
+	<div class="page-header">
+      <h1><small><fmt:message key='title.costCenters' /></small></h1>
+    </div>
+    
 	<div>
-		<a href="${linkTo[CostCenterController].form}"> <fmt:message
-				key="costCenter.form.insert" />
-		</a>
+		<a href="${linkTo[CostCenterController].form}" class="btn btn-primary active" role="button"> <fmt:message key="link.text.add" /> </a>
 	</div>
-	<table border="1">
+	
+	<table class="table table-condensed table-hover table-striped">
 		<tr>
-			<td><fmt:message key="costCenter.id" /></td>
+			<td>#</td>
 			<td><fmt:message key="costCenter.code" /></td>
 			<td><fmt:message key="costCenter.name" /></td>
 			<td><fmt:message key="costCenter.description" /></td>
@@ -26,16 +29,20 @@
 		</tr>
 		<c:forEach items="${costCenters}" var="costCenter">
 			<tr>
-				<td>${costCenter.id }</td>
-				<td>${costCenter.code }</td>
-				<td>${costCenter.name }</td>
-				<td>${costCenter.description }</td>
-				<td><a href="${linkTo[CostCenterController].form(costCenter.id) }">
-						<fmt:message key="label.update" />
-				</a></td>
-				<td><a href="${linkTo[CostCenterController].delete(costCenter) }">
-						<fmt:message key="label.remove" />
-				</a></td>
+				<td>${costCenter.id}</td>
+				<td>${costCenter.code}</td>
+				<td>${costCenter.name}</td>
+				<td>${costCenter.description}</td>
+				<td>
+				  <a href="${linkTo[CostCenterController].form(costCenter.id)}" title="<fmt:message key='label.update' />">
+				    <span class="glyphicon glyphicon-edit"></span> 
+				  </a>
+				</td>
+				<td>
+				  <a href="${linkTo[CostCenterController].delete(costCenter)}" title="<fmt:message key='label.remove' />"> 
+				      <span class="glyphicon glyphicon-remove"></span>				
+				   </a>
+				</td>
 			</tr>
 		</c:forEach>
 	</table>

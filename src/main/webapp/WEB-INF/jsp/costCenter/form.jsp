@@ -17,21 +17,29 @@
             <c:set var="action" value="${linkTo[CostCenterController].insert}" />
         </c:if>
 		
+		<div class="page-header">
+	      <h1><small><fmt:message key='costCenter.form.insert' /></small></h1>
+	    </div>
+		
 		${errors.asMap()}
-        <form action="${action}" method="post">
-        	<cejug:textField name="costCenter.code" value="${costCenter.code}" 
-            	errorsMap="${errors.asMap()}" />
-            <cejug:textField name="costCenter.name" value="${costCenter.name }" 
-            	errorsMap="${errors.asMap()}" />
-           	<cejug:textField name="costCenter.description" value="${costCenter.description}" 
-            	errorsMap="${errors.asMap()}" />
-            
-            <br />
-            <input name="costCenter.id" value="${costCenter.id }" type="hidden" />
-            <button type="submit" class="pure-button">
-                <fmt:message key="costCenter.form.submit" />
-            </button>
-        </form>
+		
+		<div style="width: 50%;">
+        <form class="form-horizontal" role="form" action="${action}" method="post">
+
+          <cejug:textField type="text" name="costCenter.code" value="${costCenter.code}" errorsMap="${errors.asMap()}" />
+          <cejug:textField type="text" name="costCenter.name" value="${costCenter.name }" errorsMap="${errors.asMap()}" />
+          <cejug:textField type="text" name="costCenter.description" value="${costCenter.description}" errorsMap="${errors.asMap()}" />
+          
+		  <div class="form-group">
+		    <div class="col-sm-offset-2 col-sm-10">
+		      <button type="submit" class="btn btn-default"> <fmt:message key="costCenter.form.submit" /> </button>
+		    </div>
+		  </div>
+		  
+		  <input name="costCenter.id" value="${costCenter.id }" type="hidden" />
+		  
+		</form>
+		</div>
 
     </body>
 </html>

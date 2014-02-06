@@ -1,10 +1,11 @@
+body {
+	min-height: 600px;
+	padding-top: 30px;
+}
 
-body { margin: 0; font-family: arial, sans-serif; font-size: 12px; color: #727376; }
-
-header { background-color: #E6E7E8; height: 67px; padding: 10px; }
-
-footer { background-color: #727376; height: 30px; color: white; font-size: 12px; text-align: center; padding-top: 5px; margin-top: 30px; }
-
-h1 { margin-top: 0; }
-
-#main { margin: 10px; min-height: 300px;}
+footer {
+	border-top: 1px solid #727376;
+	min-height: 30px;
+	padding: 15px 15px;
+	margin-top: 30px;
+}

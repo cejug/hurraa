@@ -1,5 +1,7 @@
 /*
-* This file is part of Hurraa.
+* Hurraa is a web application conceived to manage resources
+* in companies that need manage IT resources. Create issues
+* and purchase IT materials. Copyright (C) 2014 CEJUG.
 *
 * Hurraa is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by

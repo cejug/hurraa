@@ -25,9 +25,14 @@ After **General Configuration** section:
 ### Configuration environment vars.
 Create a env variable WILDFLY_HOME for arquillian.xml config
 
-1. LINUX - most of linux distributions: create a file wf.sh in /etc/profile.d with this content export WILDFLY_HOME=/your_path_to/wildfly-8.0.0.CR1
-2. MAC - add contect WILDFLY_HOME=/your_path_to/wildfly-8.0.0.CR1 into /etc/profile
-
+1. LINUX - most of linux distributions: create a file wf.sh in /etc/profile.d with this content 
+```bash
+export WILDFLY_HOME=/your_path_to/wildfly-8.0.0.CR1
+```
+2. MAC - add this content into /etc/profile
+```bash
+WILDFLY_HOME=/your_path_to/wildfly-8.0.0.CR1 
+```
 
 
 #### Configuration of the datasource at standalone.xml file
@@ -52,7 +57,7 @@ Create a env variable WILDFLY_HOME for arquillian.xml config
 </drivers>
 ```
 #### Wildfly Restriction
-Workaround to resolve the problem of the wildfly with the class MultableResponse. Edit the file standalone.xml for to add in the tag servlet-container the property bellow:
+Workaround to resolve the problem of the wildfly with the class MultableResponse. Edit the file standalone.xml and add as attribute of the tag servlet-container the property bellow:
 ```xml
 allow-non-standard-wrappers="true"
 ```

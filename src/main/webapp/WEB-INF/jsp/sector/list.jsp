@@ -6,14 +6,17 @@
 <html>
 <body>
 
+	<div class="page-header">
+      <h1><small><fmt:message key='title.sectors' /></small></h1>
+    </div>
+    
 	<div>
-		<a href="${linkTo[SectorController].form}"> <fmt:message
-				key="sector.form.insert" />
-		</a>
+		<a href="${linkTo[SectorController].form}" class="btn btn-primary active" role="button"> <fmt:message key="link.text.add" /> </a>
 	</div>
-	<table border="1">
+	
+	<table class="table table-condensed table-hover table-striped">
 		<tr>
-			<td><fmt:message key="sector.id" /></td>
+			<td>#</td>
 			<td><fmt:message key="sector.name" /></td>
 			<td><fmt:message key="sector.respondsOccurrence" /></td>
 			<td><fmt:message key="sector.active" /></td>
@@ -26,12 +29,16 @@
 				<td>${sector.name }</td>
 				<td>${sector.respondsOccurrence }</td>
 				<td>${sector.active }</td>
-				<td><a href="${linkTo[SectorController].form(sector.id) }">
-						<fmt:message key="label.update" />
-				</a></td>
-				<td><a href="${linkTo[SectorController].delete(sector) }">
-						<fmt:message key="label.remove" />
-				</a></td>
+				<td>
+				  <a href="${linkTo[SectorController].form(sector.id)}" title="<fmt:message key='label.update' />">
+				    <span class="glyphicon glyphicon-edit"></span> 
+				  </a>
+				</td>
+				<td>
+				   <a href="${linkTo[SectorController].delete(sector)}" title="<fmt:message key='label.remove' />"> 
+				      <span class="glyphicon glyphicon-remove"></span>				
+				   </a>
+                </td>
 			</tr>
 		</c:forEach>
 	</table>

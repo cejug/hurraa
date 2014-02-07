@@ -5,5 +5,12 @@
 <%@ attribute name="name" required="true" %>
 <%@ attribute name="value" required="false" %>
 
-<label for="${name}"><fmt:message key="${name }" /></label>
-<input type="checkbox" name="${name }" id="${name }" value="true" ${value == true ? 'checked="checked"' : '' } />
+<div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="${name}" id="${name}" value="true" ${value == true ? 'checked="checked"' : ''} /> <fmt:message key="${name}" />
+      </label>
+    </div>
+  </div>
+</div>

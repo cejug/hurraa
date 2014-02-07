@@ -7,7 +7,7 @@ Opensource project to resource management
 #### General Configuration
 
 Get module wildfly here: https://docs.google.com/file/d/0B25_MAAKa3jEVFRCRnp5Sm9zZE0/edit 
-and unpack in WILDFLY_HOME/modules/system/layers/base/com
+and unpack in WILDFLY_HOME/modules/com
 
 Like the following video shows: http://www.youtube.com/watch?v=l1daP7PZxNA#t=2729 After 45 minutes
 

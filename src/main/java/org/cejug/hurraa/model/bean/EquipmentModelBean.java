@@ -24,9 +24,11 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.cejug.hurraa.model.EquipmentModel;
+import org.cejug.hurraa.model.EquipmentType;
 
 @Stateless
 public class EquipmentModelBean extends AbstractBean<EquipmentModel> {
@@ -48,6 +50,13 @@ public class EquipmentModelBean extends AbstractBean<EquipmentModel> {
         TypedQuery<EquipmentModel> query = getEntityManager()
                     .createNamedQuery( "FIND_BY_NAME", EquipmentModel.class );
         query.setParameter("name", name);
+        return query.getResultList().isEmpty();
+    }
+    
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public boolean isEquipmentTypeInUse(EquipmentType equipmentType){
+        Query query = getEntityManager().createNamedQuery("EQUIPMENTTYPE_IN_USE" , EquipmentModel.class );
+        query.setParameter("equipmentType", equipmentType );
         return query.getResultList().isEmpty();
     }
 

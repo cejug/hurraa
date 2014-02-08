@@ -23,21 +23,20 @@ import javax.inject.Inject;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import org.cejug.hurraa.model.bean.EquipmentModelBean;
-import org.cejug.hurraa.validation.EquipmentModelNameAvailable;
+import org.cejug.hurraa.model.bean.EquipmentTypeBean;
+import org.cejug.hurraa.validation.EquipmentTypeNameAvailable;
 
-public class EquipmentModelNameAvailableValidator implements ConstraintValidator< EquipmentModelNameAvailable , String> {
+public class EquipmentTypeNameAvailableValidator implements ConstraintValidator< EquipmentTypeNameAvailable , String> {
     
     @Inject
-    private EquipmentModelBean equipmentModelBean;
+    private EquipmentTypeBean equipmentTypeBean;
     
     @Override
-    public void initialize(EquipmentModelNameAvailable constraintAnnotation) { }
+    public void initialize(EquipmentTypeNameAvailable constraintAnnotation) {  }
 
     @Override
-    public boolean isValid(String value,
-            ConstraintValidatorContext context) {
-        return equipmentModelBean.isNameAvailable( value );
+    public boolean isValid(String value, ConstraintValidatorContext context) {
+        return equipmentTypeBean.isNameAvailable(value);
     }
 
 }

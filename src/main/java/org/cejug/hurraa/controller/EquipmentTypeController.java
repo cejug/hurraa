@@ -24,6 +24,7 @@ import javax.validation.Valid;
 
 import org.cejug.hurraa.model.EquipmentType;
 import org.cejug.hurraa.model.bean.EquipmentTypeBean;
+import org.cejug.hurraa.validation.EquipmentTypeInUse;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
@@ -86,7 +87,8 @@ public class EquipmentTypeController {
     }
 
     @Path("delete/{equipmentType.id}")
-    public void delete(EquipmentType equipmentType) {
+    public void delete(@EquipmentTypeInUse EquipmentType equipmentType , Validator validator) {
+        validator.onErrorForwardTo( EquipmentTypeController.class ).list();
         equipmentTypeBean.delete(equipmentType);
         result.redirectTo(EquipmentTypeController.class).list();
     }

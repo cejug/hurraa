@@ -25,13 +25,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
 import org.cejug.hurraa.validation.EquipmentModelNameAvailable;
 import org.hibernate.validator.constraints.NotBlank;
 
-@NamedQuery(name = "FIND_BY_NAME" , query = "FROM EquipmentModel e WHERE e.name = :name" )
+@NamedQueries(value = {
+   @NamedQuery(name = "FIND_BY_NAME" , query = "FROM EquipmentModel e WHERE e.name = :name" )  
+ , @NamedQuery(name = "EQUIPMENTTYPE_IN_USE" , query = "FROM EquipmentModel e WHERE e.equipmentType = :equipmentType" )
+})
 @Entity
 public class EquipmentModel {
       

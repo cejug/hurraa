@@ -53,6 +53,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="${linkTo[SectorController].index}"><fmt:message key="menu.admin.sector" /></a></li>
                                 <li><a href="${linkTo[EquipmentTypeController].index}"><fmt:message key="menu.admin.equipmentType" /></a></li>
+                                <li><a href="${linkTo[EquipmentModelController].index}"><fmt:message key="menu.admin.equipmentModel" /></a></li>
                                 <li><a href="${linkTo[ManufacturerController].index}"><fmt:message key="menu.admin.manufacturer" /></a></li>
                                 <li><a href="${linkTo[CostCenterController].index}"><fmt:message key="menu.admin.costCenter" /></a></li>
                                 <li class="divider"></li>

@@ -17,27 +17,31 @@
 * along with Hurraa. If not, see http://www.gnu.org/licenses/gpl-3.0.html.
 *
 */
-package org.cejug.hurraa.validation.impl;
+package org.cejug.hurraa.validation;
 
-import javax.inject.Inject;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import org.cejug.hurraa.model.bean.EquipmentModelBean;
-import org.cejug.hurraa.validation.EquipmentModelNameAvailable;
+import javax.validation.Constraint;
+import javax.validation.Payload;
+import javax.validation.ReportAsSingleViolation;
 
-public class EquipmentModelNameAvailableValidator implements ConstraintValidator< EquipmentModelNameAvailable , String> {
+import org.cejug.hurraa.validation.impl.EquipmentTypeInUseValidator;
+
+@Target({ ElementType.PARAMETER , ElementType.FIELD })
+@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = { EquipmentTypeInUseValidator.class })
+@ReportAsSingleViolation
+@Documented
+public @interface EquipmentTypeInUse {
     
-    @Inject
-    private EquipmentModelBean equipmentModelBean;
+    String message() default "{equipmentType.isInUse}";
     
-    @Override
-    public void initialize(EquipmentModelNameAvailable constraintAnnotation) { }
+    Class<?>[] groups() default {};
 
-    @Override
-    public boolean isValid(String value,
-            ConstraintValidatorContext context) {
-        return equipmentModelBean.isNameAvailable( value );
-    }
-
+    Class<? extends Payload>[] payload() default {};
+    
 }

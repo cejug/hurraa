@@ -11,12 +11,11 @@
 <%@ attribute name="errorsMap" required="false" type="java.util.Map" %>
 <c:set var="showFieldError" value="${(empty showFieldError) ? true : showFieldError}" />
 <c:set var="showAllErrors" value="${(empty showAllErrors) ? false : showAllErrors}" />
-<c:if test="${showFieldError == true and not empty errorsMap}">
-	<cejug:errorMessage name="${name}" errorsMap="${errorsMap}" showAllErrors="${showAllErrors}" />
-</c:if>
-<div class="form-group">
-  <label for="${name}" class="col-sm-2 control-label"><fmt:message key="${name}" /></label>
-  <div class="col-sm-10">
-     <input type="${type}" class="form-control" name="${name}" id="${name}" value="${value}" placeholder="${placeholder}"/>
-  </div>
+<div class="form-group ${errors[name] != null ? 'has-error' : ''}"  >
+  <label for="${name}"><fmt:message key="${name}" />
+      <c:if test="${showFieldError == true and not empty errorsMap}">
+        <cejug:errorMessage name="${name}" errorsMap="${errorsMap}" showAllErrors="${showAllErrors}" />
+      </c:if>
+  </label>
+  <input type="${type}" class="form-control col-sm-10" name="${name}" id="${name}" value="${value}" placeholder="${placeholder}"/>
 </div>

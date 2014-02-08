@@ -17,37 +17,27 @@
 * along with Hurraa. If not, see http://www.gnu.org/licenses/gpl-3.0.html.
 *
 */
-package org.cejug.hurraa.model.bean;
+package org.cejug.hurraa.validation.impl;
 
-import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.inject.Inject;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
 import org.cejug.hurraa.model.EquipmentType;
+import org.cejug.hurraa.model.bean.EquipmentModelBean;
+import org.cejug.hurraa.validation.EquipmentTypeInUse;
 
-@Stateless
-public class EquipmentTypeBean extends AbstractBean<EquipmentType> {
+public class EquipmentTypeInUseValidator implements ConstraintValidator< EquipmentTypeInUse , EquipmentType>  {
+    
+    @Inject
+    private EquipmentModelBean equipmentModelBean;
+    
+    @Override
+    public void initialize(EquipmentTypeInUse constraintAnnotation) { }
 
-	@PersistenceContext
-	private EntityManager manager;
-	
-	public EquipmentTypeBean() {
-		super(EquipmentType.class);
-	}
-
-	@Override
-	protected EntityManager getEntityManager() {
-		return this.manager;
-	}
-	
-	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public boolean isNameAvailable(String value) {
-        Query query = getEntityManager().createNamedQuery("NAME_IN_USE" , EquipmentType.class);
-        query.setParameter("name", value);
-        return query.getResultList().isEmpty();
+    @Override
+    public boolean isValid(EquipmentType value, ConstraintValidatorContext context) {
+        return equipmentModelBean.isEquipmentTypeInUse(value);
     }
-	
+
 }

@@ -5,12 +5,24 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <body>
-	<div>
-		<a href="${linkTo[EquipmentTypeController].form}"> 
-			<fmt:message key="equipmentType.form.insert" />
-		</a>
-	</div>
-	<table border="1">
+    
+    <div class="page-header">
+      <h1><small><fmt:message key='title.equipmentType' /></small></h1>
+    </div>
+    
+    <div>
+        <a href="${linkTo[EquipmentTypeController].form}" class="btn btn-primary active" role="button">
+            <fmt:message key="link.text.add" />
+        </a>
+    </div>
+       
+    <c:if test='${errors["equipmentType"] != null}' >
+        <div class="alert alert-danger">
+          <strong>${errors["equipmentType"][0]}</strong>
+        </div>
+    </c:if>   
+    
+	<table class="table table-striped table-condensed"> 
 		<tr>
 			<td><fmt:message key="equipmentType.id" /></td>
 			<td><fmt:message key="equipmentType.name" /></td>
@@ -21,12 +33,14 @@
 			<tr>
 				<td>${equipmentType.id }</td>
 				<td>${equipmentType.name }</td>
-				<td><a href="${linkTo[EquipmentTypeController].form(equipmentType.id) }"> 
-						<fmt:message key="label.update" />
+				<td>
+                    <a href="${linkTo[EquipmentTypeController].form(equipmentType.id) }" title="<fmt:message key="label.update" />">
+                        <span class="glyphicon glyphicon-edit"></span>
 					</a>
 				</td>
-				<td><a href="${linkTo[EquipmentTypeController].delete(equipmentType) }"> 
-						<fmt:message key="label.remove" />
+				<td>
+                    <a href="${linkTo[EquipmentTypeController].delete(equipmentType) }" title="<fmt:message key="label.remove" />"> 
+                        <span class="glyphicon glyphicon-remove"></span>
 					</a>
 				</td>
 			</tr>

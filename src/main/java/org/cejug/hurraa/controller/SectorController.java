@@ -1,12 +1,29 @@
+/*
+* Hurraa is a web application conceived to manage resources
+* in companies that need manage IT resources. Create issues
+* and purchase IT materials. Copyright (C) 2014 CEJUG.
+*
+* Hurraa is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* Hurraa is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with Hurraa. If not, see http://www.gnu.org/licenses/gpl-3.0.html.
+*
+*/
 package org.cejug.hurraa.controller;
 
-import java.util.Map;
-
 import javax.inject.Inject;
+import javax.validation.Valid;
 
 import org.cejug.hurraa.model.Sector;
 import org.cejug.hurraa.model.bean.SectorBean;
-import org.cejug.hurraa.util.ValidationUtil;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
@@ -20,17 +37,15 @@ import br.com.caelum.vraptor.validator.Validator;
 public class SectorController {
 
     private Result result;
-    private ValidationUtil validationUtil;
     private SectorBean sectorBean;
     
     @Deprecated
     public SectorController() {	}
     
     @Inject
-    public SectorController(Result result, SectorBean sectorBean , ValidationUtil validationUtil) {
+    public SectorController(Result result, SectorBean sectorBean ) {
     	this.result = result;
     	this.sectorBean = sectorBean;
-    	this.validationUtil = validationUtil;
 	}
 
     @Path(value = { "", "/" })
@@ -50,8 +65,7 @@ public class SectorController {
     }
 
     @Post("/insert")
-    public void insert(Sector sector , Validator validator) {
-    	validator = validationUtil.validateBean("sector", sector , validator);
+    public void insert(@Valid Sector sector , Validator validator) {
     	validator.onErrorForwardTo( SectorController.class ).form();
     	
         sectorBean.insert(sector);
@@ -66,8 +80,7 @@ public class SectorController {
 
     @Post
     @Path("update")
-    public void update(Sector sector , Validator validator) {
-    	validator = validationUtil.validateBean("sector", sector , validator);
+    public void update(@Valid Sector sector , Validator validator) {
     	validator.onErrorForwardTo( SectorController.class ).form();
     	
         sectorBean.update(sector);

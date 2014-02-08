@@ -3,22 +3,40 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="cejug" %>
 <!DOCTYPE html>
-<html> 
-<body>
-	<c:if test="${not empty user}">
-		<c:set var="action" value="${linkTo[UserController].update}" />
-	</c:if>
-	<c:if test="${empty user}">
-		<c:set var="action" value="${linkTo[UserController].insert}" />
-	</c:if>
-	<form action="${action}" method="post">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title><fmt:message key="user.form.insert" /></title>
+    </head> 
+    <body>
+        <c:if test="${not empty user}">
+            <c:set var="action" value="${linkTo[UserController].update}" />
+        </c:if>
+        <c:if test="${empty user}">
+            <c:set var="action" value="${linkTo[UserController].insert}" />
+        </c:if>
+        
+        <div class="page-header">
+	      <h1><small><fmt:message key='user.form.insert' /></small></h1>
+	    </div>
+        
+        <div style="width: 50%;">
+        <form class="form-horizontal" role="form" action="${action}" method="post">
 
-		<cejug:textField name="user.name" value="${user.name }" /> <br/>
-		<cejug:textField name="user.email" value="${user.email }" /> <br/>
-		<cejug:textField name="user.password" value="${user.password }" /> <br/>
-
-		<input name="user.id" value="${user.id }" type="hidden" />
-		<button type="submit"> <fmt:message key="user.form.submit" /> </button>
-	</form>
-</body>
+          <cejug:textField type="text" name="user.name" value="${user.name}" errorsMap="${errors}" />
+          <cejug:textField type="email" name="user.email" value="${user.email}" errorsMap="${errors}" />
+          <cejug:textField type="password" name="user.password" value="${user.password}" errorsMap="${errors}" />
+          
+		  <div class="form-group">
+		    <div class="col-sm-offset-2 col-sm-10">
+		      <button type="submit" class="btn btn-default"> <fmt:message key="form.save" /> </button>
+		    </div>
+		  </div>
+		  
+		  <input name="user.id" value="${user.id }" type="hidden" />
+		  
+		</form>
+		</div>
+        
+    </body>
 </html>

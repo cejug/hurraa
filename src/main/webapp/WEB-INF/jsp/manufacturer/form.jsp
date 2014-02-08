@@ -1,22 +1,42 @@
-<%@ page pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib tagdir="/WEB-INF/tags" prefix="cejug" %>
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="cejug"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<body>
-	<c:if test="${not empty manufacturer}">
-		<c:set var="action" value="${linkTo[ManufacturerController].update}" />
-	</c:if>
-	<c:if test="${empty manufacturer}">
-		<c:set var="action" value="${linkTo[ManufacturerController].insert}" />
-	</c:if>
-	<form action="${action}" method="post">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title><fmt:message key="manufacturer.form.insert" /></title>
+    </head>
 
-		<cejug:textField name="manufacturer.name" value="${manufacturer.name }" /> <br/>
+    <body>
+        <c:if test="${not empty manufacturer or manufacturer.id != null}">
+            <c:set var="action" value="${linkTo[ManufacturerController].update}" />
+        </c:if>
+        <c:if test="${empty manufacturer or manufacturer.id == null}">
+            <c:set var="action" value="${linkTo[ManufacturerController].insert}" />
+        </c:if>
+        
+        <div class="page-header">
+	      <h1><small><fmt:message key='user.form.insert' /></small></h1>
+	    </div>
+        
+        <div style="width: 50%;">
+        <form class="form-horizontal" role="form" action="${action}" method="post">
 
-		<input name="manufacturer.id" value="${manufacturer.id }" type="hidden" />
-		<button type="submit"> <fmt:message key="manufacturer.form.submit" /> </button>
-	</form>
-</body>
+          <cejug:textField type="text" name="manufacturer.name" value="${manufacturer.name }" errorsMap="${errors}"/>
+          
+		  <div class="form-group">
+		    <div class="col-sm-offset-2 col-sm-10">
+		      <button type="submit" class="btn btn-default"> <fmt:message key="form.save" /> </button>
+		    </div>
+		  </div>
+		  
+		  <input name="manufacturer.id" value="${manufacturer.id }" type="hidden" />
+		  
+		</form>
+		</div>
+
+    </body>
 </html>

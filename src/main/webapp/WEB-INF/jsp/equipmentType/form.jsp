@@ -31,8 +31,8 @@
             </h1>
         </div>
     </c:if>
-
-    <div style="width: 50%;">
+    
+    <div style="width: 50%;"> 
         <form action="${action}" method="post">
             <fieldset>
                 <cejug:textFieldVertical name="equipmentType.name"

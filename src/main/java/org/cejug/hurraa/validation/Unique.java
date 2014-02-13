@@ -12,7 +12,7 @@ import javax.validation.ReportAsSingleViolation;
 
 import org.cejug.hurraa.validation.impl.UniqueValidator;
 
-@Target({ ElementType.TYPE })
+@Target({ ElementType.TYPE , ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = { UniqueValidator.class })
 @ReportAsSingleViolation

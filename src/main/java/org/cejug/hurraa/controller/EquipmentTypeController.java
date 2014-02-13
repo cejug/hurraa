@@ -19,6 +19,8 @@
 */
 package org.cejug.hurraa.controller;
 
+import java.util.ResourceBundle;
+
 import javax.inject.Inject;
 import javax.validation.Valid;
 
@@ -39,14 +41,16 @@ public class EquipmentTypeController {
 	
 	private Result result;
     private EquipmentTypeBean equipmentTypeBean;
+    private ResourceBundle messagesBundle;
     
     @Deprecated
     public EquipmentTypeController() {	}
     
     @Inject
-    public EquipmentTypeController( Result result , EquipmentTypeBean equipmentTypeBean  ) {
+    public EquipmentTypeController( Result result , EquipmentTypeBean equipmentTypeBean , ResourceBundle messagesBundle  ) {
     	this.result = result;
     	this.equipmentTypeBean = equipmentTypeBean;
+    	this.messagesBundle = messagesBundle;
 	}
 
     @Path(value = { "", "/" })
@@ -70,6 +74,7 @@ public class EquipmentTypeController {
     	validator.onErrorForwardTo( EquipmentTypeController.class ).form();
     	
     	equipmentTypeBean.insert(equipmentType);
+    	result.include("message", messagesBundle.getString("insert.success") );
         result.redirectTo(EquipmentTypeController.class).list();
     }
 
@@ -83,6 +88,7 @@ public class EquipmentTypeController {
     	validator.onErrorForwardTo( EquipmentTypeController.class ).form();
     	
     	equipmentTypeBean.update( equipmentType );
+    	result.include("message", messagesBundle.getString("update.success") );
         result.redirectTo(EquipmentTypeController.class).list();
     }
 
@@ -90,6 +96,7 @@ public class EquipmentTypeController {
     public void delete(@EquipmentTypeInUse EquipmentType equipmentType , Validator validator) {
         validator.onErrorForwardTo( EquipmentTypeController.class ).list();
         equipmentTypeBean.delete(equipmentType);
+        result.include("message", messagesBundle.getString("delete.success") );
         result.redirectTo(EquipmentTypeController.class).list();
     }
 	

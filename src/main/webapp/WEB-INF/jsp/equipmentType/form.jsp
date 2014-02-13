@@ -42,10 +42,12 @@
                     value="${equipmentType.id }" type="hidden" />
 
                 <div class="form-group" >
-                    <hr/>
-                    <button type="submit" class="btn btn-default">
-                        <fmt:message key="equipmentType.form.submit" />
+                    <button type="submit" class="btn btn-default btn-sm">
+                        <fmt:message key="form.save" />
                     </button>
+                    <a href="${linkTo[EquipmentTypeController].list}" class="btn btn-danger btn-sm" > 
+                        <fmt:message key="form.cancel" />
+                    </a>
                 </div>
             </fieldset>
         </form>

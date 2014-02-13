@@ -8,30 +8,48 @@
     <body>
         <c:if test="${not empty equipmentModel or equipmentModel.id != null}">
             <c:set var="action" value="${linkTo[EquipmentModelController].update}" />
+            <div class="page-header">
+                <h1>
+                    <small><fmt:message key='equipmentModel.form.update' /></small>
+                </h1>
+            </div>
         </c:if>
         <c:if test="${empty equipmentModel or equipmentModel.id == null}">
             <c:set var="action" value="${linkTo[EquipmentModelController].insert}" />
+            <div class="page-header">
+                <h1>
+                    <small><fmt:message key='equipmentModel.form.insert' /></small>
+                </h1>
+            </div>
         </c:if>
-
+    
+    
+        <div style="width: 50%;"> 
         <form action="${action}" method="post">
-            <cejug:textField name="equipmentModel.name"
-            value="${equipmentModel.name}" errorsMap="${errors}"/>
+            <cejug:textFieldVertical name="equipmentModel.name"
+                    value="${equipmentModel.name }" errorsMap="${errors}" />
             
-            <label for="equipmentModel.equipmentType"><fmt:message key="equipmentModel.equipmentType" /></label>
-            <select name="equipmentModel.equipmentType.id" id="equipmentModel.equipmentType.id" >
-                <option value=""><fmt:message  key="label.emptySelect"/></option>
-                <c:forEach items="${types}" var="type" >
-                    <option value="${type.id}" ${equipmentModel.equipmentType == type ? 'selected="selected"' : '' } >${type.name}</option>
-                </c:forEach>
-            </select>
-            <cejug:errorMessage name="equipmentModel.equipmentType.id" errorsMap="${errors}" />
+            <div class="form-group ${errors['equipmentModel.equipmentType'] != null ? 'has-error' : ''}"  >
+                <label for="equipmentModel.equipmentType">
+                    <fmt:message key="equipmentModel.equipmentType" />
+                    <cejug:errorMessage name="equipmentModel.equipmentType.id" errorsMap="${errors}" />                
+                </label>
+                <select name="equipmentModel.equipmentType.id" id="equipmentModel.equipmentType.id" class="form-control input-sm" >
+                    <option value=""><fmt:message  key="label.emptySelect"/></option>
+                    <c:forEach items="${types}" var="type" >
+                        <option value="${type.id}" ${equipmentModel.equipmentType == type ? 'selected="selected"' : '' } >${type.name}</option>
+                    </c:forEach>
+                </select>
+            </div>
             
-            <br />        
-            <input name="equipmentModel.id" value="${equipmentModel.id}"
-            type="hidden" />
-        <button type="submit" class="pure-button">
-            <fmt:message key="equipmentModel.form.submit" />
-        </button>
+            <input name="equipmentModel.id" value="${equipmentModel.id}" type="hidden" />
+            <button type="submit" class="btn btn-default btn-sm">
+                <fmt:message key="form.save" />
+            </button>
+            <a href="${linkTo[EquipmentModelController].list}" class="btn btn-danger btn-sm" > 
+                <fmt:message key="form.cancel" />
+            </a>
         </form>
+        </div>
     </body>
 </html>

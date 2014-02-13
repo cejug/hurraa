@@ -44,11 +44,9 @@ public class EquipmentModel {
     private Long id;
     
     @NotBlank
-    @EquipmentModelNameAvailable
     @Column(nullable = false , unique = true)
     private String name;
     
-    @NotNull
     @ManyToOne(optional = false)
     private EquipmentType equipmentType;
     

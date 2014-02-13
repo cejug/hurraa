@@ -10,18 +10,23 @@
       <h1><small><fmt:message key='title.equipmentType' /></small></h1>
     </div>
     
-    <div>
-        <a href="${linkTo[EquipmentTypeController].form}" class="btn btn-primary active" role="button">
-            <fmt:message key="link.text.add" />
-        </a>
-    </div>
-       
+    <c:if test="${message != null}">
+        <div class="alert alert-success">
+            <c:out value="${message}" />
+        </div>
+    </c:if>
     <c:if test='${errors["equipmentType"] != null}' >
         <div class="alert alert-danger">
           <strong>${errors["equipmentType"][0]}</strong>
         </div>
     </c:if>   
-    
+        
+    <div>
+        <a href="${linkTo[EquipmentTypeController].form}" class="btn btn-primary btn-sm" role="button">
+            <fmt:message key="link.text.add" />
+        </a>
+    </div>
+       
 	<table class="table table-striped table-condensed"> 
 		<tr>
 			<td><fmt:message key="equipmentType.id" /></td>

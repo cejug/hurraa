@@ -46,7 +46,6 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="${linkTo[IndexController].index}"><fmt:message key="menu.home" /></a></li>
                         <li><a href="#"><fmt:message key="menu.issues" /></a></li>
                         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="menu.admin" /> <b
                                 class="caret"></b></a>

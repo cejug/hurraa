@@ -47,3 +47,26 @@ code {
 .error{
     color: red;	
 }
+
+.hra-callout {
+    border-left: 3px solid #EEEEEE;
+    margin: 20px 0;
+    padding: 20px;
+}
+
+.hra-callout h4 {
+    margin-bottom: 5px;
+    margin-top: 0;
+}
+.hra-callout p:last-child {
+    margin-bottom: 0;
+}
+
+.hra-callout-info {
+    background-color: #FBFBFB;
+    border-color: #22AC1B;
+}
+
+.hra-callout-info h4 {
+    color: #22AC1B;
+}

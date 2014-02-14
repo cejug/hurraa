@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <c:if test="${not empty equipmentModel or equipmentModel.id != null}">
+        <c:if test="${not empty equipmentModel and equipmentModel.id != null}">
             <c:set var="action" value="${linkTo[EquipmentModelController].update}" />
             <div class="page-header">
                 <h1>

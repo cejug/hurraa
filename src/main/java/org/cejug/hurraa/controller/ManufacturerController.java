@@ -19,7 +19,10 @@
 */
 package org.cejug.hurraa.controller;
 
+import java.util.ResourceBundle;
+
 import javax.inject.Inject;
+import javax.validation.Valid;
 
 import org.cejug.hurraa.model.Manufacturer;
 import org.cejug.hurraa.model.bean.ManufacturerBean;
@@ -29,6 +32,7 @@ import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.validator.Validator;
 
 @Path("manufacturer")
 @Controller
@@ -36,15 +40,18 @@ public class ManufacturerController {
 
 	private Result result;
 	private ManufacturerBean manufacturerBean;
+	private ResourceBundle messagesBundle;
 
 	public ManufacturerController() {
 	}
 
 	@Inject
 	public ManufacturerController(Result result,
-			ManufacturerBean manufacturerBean) {
+			ManufacturerBean manufacturerBean,
+			ResourceBundle messagesBundle) {
 		this.result = result;
 		this.manufacturerBean = manufacturerBean;
+		this.messagesBundle = messagesBundle;
 	}
 	
 	@Path(value = { "", "/" })
@@ -65,8 +72,11 @@ public class ManufacturerController {
 
 	@Post
 	@Path("insert")
-	public void insert(Manufacturer manufacturer) {
+	public void insert(@Valid Manufacturer manufacturer , Validator validator) {
+	    validator.onErrorRedirectTo( ManufacturerController.class ).form();
+	    
 		manufacturerBean.insert(manufacturer);
+		result.include("message", messagesBundle.getString("insert.success") );
 		result.redirectTo("/manufacturer/list");
 	}
 
@@ -78,14 +88,18 @@ public class ManufacturerController {
 
 	@Post
 	@Path("update")
-	public void update(Manufacturer manufacturer) {
+	public void update(@Valid Manufacturer manufacturer , Validator validator) {
+	    validator.onErrorRedirectTo( ManufacturerController.class ).form();
+	    
 		manufacturerBean.update(manufacturer);
+		result.include("message", messagesBundle.getString("update.success") );
 		result.redirectTo(ManufacturerController.class).list();
 	}
 
 	@Path("delete/{manufacturer.id}")
 	public void delete(Manufacturer manufacturer) {
 		manufacturerBean.delete(manufacturer);
+		result.include("message", messagesBundle.getString("delete.success") );
 		result.redirectTo(ManufacturerController.class).list();
 	}
 }

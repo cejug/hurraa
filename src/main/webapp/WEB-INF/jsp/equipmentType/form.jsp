@@ -14,25 +14,21 @@
     <c:if test="${not empty equipmentType and equipmentType.id != null}">
         <c:set var="action"
             value="${linkTo[EquipmentTypeController].update}" />
-        <div class="page-header">
-            <h1>
-                <small><fmt:message
-                        key='equipmentType.form.update' /></small>
-            </h1>
-        </div>
+            <fmt:message key='equipmentType.form.update' var="formTitle" />
     </c:if>
     <c:if test="${empty equipmentType or equipmentType.id == null}">
         <c:set var="action"
             value="${linkTo[EquipmentTypeController].insert}" />
-        <div class="page-header">
-            <h1>
-                <small><fmt:message
-                        key='equipmentType.form.insert' /></small>
-            </h1>
-        </div>
+        <fmt:message key='equipmentType.form.insert' var="formTitle" />
     </c:if>
-    
-    <div style="width: 50%;"> 
+
+    <div class="page-header">
+        <h1>
+            <small><c:out value="${formTitle}" /></small>
+        </h1>
+    </div>
+
+    <div style="width: 50%;">
         <form action="${action}" method="post">
             <fieldset>
                 <cejug:textFieldVertical name="equipmentType.name"
@@ -41,12 +37,13 @@
                 <input name="equipmentType.id"
                     value="${equipmentType.id }" type="hidden" />
 
-                <div class="form-group" >
+                <div class="form-group">
                     <button type="submit" class="btn btn-default btn-sm">
                         <fmt:message key="form.save" />
                     </button>
-                    <a href="${linkTo[EquipmentTypeController].list}" class="btn btn-danger btn-sm" > 
-                        <fmt:message key="form.cancel" />
+                    <a href="${linkTo[EquipmentTypeController].list}"
+                        class="btn btn-danger btn-sm"> <fmt:message
+                            key="form.cancel" />
                     </a>
                 </div>
             </fieldset>

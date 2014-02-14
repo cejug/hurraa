@@ -29,14 +29,12 @@
        
 	<table class="table table-striped table-condensed"> 
 		<tr>
-			<td><fmt:message key="equipmentType.id" /></td>
 			<td><fmt:message key="equipmentType.name" /></td>
 			<td></td>
 			<td></td>
 		</tr>
 		<c:forEach items="${equipmentTypes }" var="equipmentType">
 			<tr>
-				<td>${equipmentType.id }</td>
 				<td>${equipmentType.name }</td>
 				<td>
                     <a href="${linkTo[EquipmentTypeController].form(equipmentType.id) }" title="<fmt:message key="label.update" />">

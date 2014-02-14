@@ -19,11 +19,14 @@
 */
 package org.cejug.hurraa.controller;
 
+import java.util.ResourceBundle;
+
 import javax.inject.Inject;
 import javax.validation.Valid;
 
 import org.cejug.hurraa.model.CostCenter;
 import org.cejug.hurraa.model.bean.CostCenterBean;
+import org.cejug.hurraa.validation.Unique;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
@@ -38,14 +41,16 @@ public class CostCenterController {
 	
 	private Result result;
     private CostCenterBean costCenterBean;
+    private ResourceBundle messagesBundle;
     
     @Deprecated
     public CostCenterController() {	}
     
     @Inject
-    public CostCenterController( Result result , CostCenterBean costCenterBean  ) {
+    public CostCenterController( Result result , CostCenterBean costCenterBean , ResourceBundle messagesBundle  ) {
     	this.result = result;
     	this.costCenterBean = costCenterBean;
+    	this.messagesBundle = messagesBundle;
 	}
 
     @Path(value = { "", "/" })
@@ -65,10 +70,14 @@ public class CostCenterController {
     }
 
     @Post("insert")
-    public void insert(@Valid CostCenter costCenter , Validator validator ) {
+    public void insert(
+        @Valid
+        @Unique(propertyName= "name" , identityPropertyName="id" , entityClass = CostCenter.class)
+        CostCenter costCenter , Validator validator ) {
     	validator.onErrorForwardTo( CostCenterController.class ).form();
     	
     	costCenterBean.insert(costCenter);
+    	result.include("message", messagesBundle.getString("insert.success") );
         result.redirectTo(CostCenterController.class).list();
     }
 
@@ -78,16 +87,20 @@ public class CostCenterController {
     }
 
     @Post("update")
-    public void update(@Valid CostCenter costCenter , Validator validator) {
+    public void update(@Valid 
+            @Unique(propertyName= "name" , identityPropertyName="id" , entityClass = CostCenter.class)
+            CostCenter costCenter , Validator validator) {
     	validator.onErrorForwardTo( CostCenterController.class ).form();
     	
     	costCenterBean.update( costCenter );
+    	result.include("message", messagesBundle.getString("update.success") );
         result.redirectTo(CostCenterController.class).list();
     }
 
     @Path("delete/{costCenter.id}")
     public void delete(CostCenter costCenter) {
     	costCenterBean.delete(costCenter);
+    	result.include("message", messagesBundle.getString("delete.success") );
         result.redirectTo(CostCenterController.class).list();
     }
 	

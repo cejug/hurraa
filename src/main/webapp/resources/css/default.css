@@ -35,7 +35,7 @@ body {
   margin: 20px 0;
 }
 
-.container .navbar-header .navbar-brand {
+.container > .navbar-brand {
 	float: left;
 	padding: 9px;
 	font-size: 18px;

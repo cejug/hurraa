@@ -39,11 +39,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="<c:url value="/" />"> 
+                </div>
+                <a class="navbar-brand" href="<c:url value="/" />"> 
                         <img alt="Home" src="<c:url value='/resources/images/logo/32x.png' />" />
                         <fmt:message key="page.title" />
-                    </a>
-                </div>
+                </a>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a href="#"><fmt:message key="menu.issues" /></a></li>

@@ -35,6 +35,14 @@ body {
   margin: 20px 0;
 }
 
+.container .navbar-header .navbar-brand {
+	float: left;
+	padding: 9px;
+	font-size: 18px;
+	line-height: 20px;
+	height: 20px;
+}
+
 #footer > .container {
   padding-left: 15px;
   padding-right: 15px;

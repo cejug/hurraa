@@ -6,7 +6,7 @@ Opensource project to resource management
 
 #### General Configuration
 
-Get module wildfly here: (MySQL Module for WildFly)[https://github.com/cejug/hurraa-docs/blob/master/hurraa-wildfly-driver-module/mysql.zip?raw=true]
+Get MySQL Module for WildFly [here](https://github.com/cejug/hurraa-docs/blob/master/hurraa-wildfly-driver-module/mysql.zip?raw=true) 
 and unpack in WILDFLY_HOME/modules/com
 
 Like the following video shows: http://www.youtube.com/watch?v=l1daP7PZxNA#t=2729 After 45 minutes

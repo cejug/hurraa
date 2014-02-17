@@ -56,8 +56,3 @@ WILDFLY_HOME=/your_path_to/wildfly-8.0.0.Final/
   </driver>
 </drivers>
 ```
-#### Wildfly Restriction
-Workaround to resolve the problem of the wildfly with the class MultableResponse. Edit the file standalone.xml and add as attribute of the tag servlet-container the property bellow:
-```xml
-allow-non-standard-wrappers="true"
-```

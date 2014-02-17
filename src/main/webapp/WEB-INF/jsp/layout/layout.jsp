@@ -47,7 +47,7 @@
                 
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="#"><fmt:message key="menu.issues" /></a></li>
+                        <li><a href="#"><fmt:message key="menu.incident" /></a></li>
                         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="menu.admin" /> <b
                                 class="caret"></b></a>
                             <ul class="dropdown-menu">

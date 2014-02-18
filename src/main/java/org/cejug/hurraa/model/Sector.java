@@ -21,6 +21,7 @@ package org.cejug.hurraa.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,8 +38,9 @@ public class Sector implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
     @NotNull
+    @Column(name = "name" , unique = true , nullable = false)
     private String name;
     
     @NotNull

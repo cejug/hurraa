@@ -26,7 +26,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-import org.cejug.hurraa.validation.EquipmentTypeNameAvailable;
 import org.cejug.hurraa.validation.Unique;
 import org.hibernate.validator.constraints.NotBlank;
 

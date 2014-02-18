@@ -43,10 +43,10 @@
                 type="hidden" />
             
             <div class="form-group">
-                <button type="submit" class="btn btn-default btn-sm">
+                <button id="submitBtn" type="submit" class="btn btn-default btn-sm">
                     <fmt:message key="form.save" />
                 </button>
-                <a href="${linkTo[CostCenterController].list}"
+                <a href="${linkTo[CostCenterController].list}" id="cancelBtn"
                     class="btn btn-danger btn-sm"> <fmt:message
                         key="form.cancel" />
                 </a>

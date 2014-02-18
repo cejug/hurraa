@@ -6,7 +6,7 @@ Opensource project to resource management
 
 #### General Configuration
 
-Get module wildfly here: https://docs.google.com/file/d/0B25_MAAKa3jEVFRCRnp5Sm9zZE0/edit 
+Get MySQL Module for WildFly [here](https://github.com/cejug/hurraa/wiki/hurraa-wildfly-driver-module/mysql.zip) 
 and unpack in WILDFLY_HOME/modules/com
 
 Like the following video shows: http://www.youtube.com/watch?v=l1daP7PZxNA#t=2729 After 45 minutes
@@ -55,9 +55,4 @@ WILDFLY_HOME=/your_path_to/wildfly-8.0.0.Final/
     <xa-datasource-class>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</xa-datasource-class>
   </driver>
 </drivers>
-```
-#### Wildfly Restriction
-Workaround to resolve the problem of the wildfly with the class MultableResponse. Edit the file standalone.xml and add as attribute of the tag servlet-container the property bellow:
-```xml
-allow-non-standard-wrappers="true"
 ```

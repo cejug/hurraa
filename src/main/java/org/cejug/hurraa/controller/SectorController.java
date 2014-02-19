@@ -70,10 +70,7 @@ public class SectorController {
     }
 
     @Post("/insert")
-    public void insert(
-            @Valid
-            @Unique(propertyName = "name" , identityPropertyName="id" , entityClass = Sector.class )
-            Sector sector , Validator validator) {
+    public void insert(@Valid Sector sector , Validator validator) {
     	validator.onErrorForwardTo( SectorController.class ).form();
     	
         sectorBean.insert(sector);
@@ -89,10 +86,7 @@ public class SectorController {
 
     @Post
     @Path("update")
-    public void update(
-            @Valid 
-            @Unique(propertyName = "name" , identityPropertyName="id" , entityClass = Sector.class )
-            Sector sector , Validator validator) {
+    public void update(@Valid Sector sector , Validator validator) {
     	validator.onErrorForwardTo( SectorController.class ).form();
     	
         sectorBean.update(sector);

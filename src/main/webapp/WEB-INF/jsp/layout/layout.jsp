@@ -65,8 +65,8 @@
                                 <li class="divider"></li>
                                 <li><a href="${linkTo[UserController].index}"><fmt:message key="menu.admin.user" /></a></li>
                                 
-                                <li><a href="loc?loc=en">EN</a></li>
-                                <li><a href="loc?loc=br">BR</a></li>
+                                <li><a href="${pageContext.request.contextPath}/loc?loc=en">EN</a></li>
+                                <li><a href="${pageContext.request.contextPath}/loc?loc=br">BR</a></li>
                                 
                             </ul></li>
                     </ul>

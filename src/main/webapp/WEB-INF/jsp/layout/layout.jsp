@@ -29,6 +29,11 @@
 <d:head />
 </head>
 <body>
+    
+    <c:if test="${not empty param.loc}">
+       <fmt:setLocale value="${param.loc}" scope="session"/>
+    </c:if>
+    
     <header id="wrap">
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
@@ -59,6 +64,10 @@
                                 <li><a href="${linkTo[CostCenterController].index}"><fmt:message key="menu.admin.costCenter" /></a></li>
                                 <li class="divider"></li>
                                 <li><a href="${linkTo[UserController].index}"><fmt:message key="menu.admin.user" /></a></li>
+                                
+                                <li><a href="loc?loc=en">EN</a></li>
+                                <li><a href="loc?loc=br">BR</a></li>
+                                
                             </ul></li>
                     </ul>
                 </div>

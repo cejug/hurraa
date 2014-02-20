@@ -45,6 +45,7 @@ public class UniqueValidator implements ConstraintValidator< Unique  ,  Object >
     
     private String fieldName;
     private String identityFieldName;
+    @SuppressWarnings("rawtypes")
     private Class entityClass;
     
     @Override

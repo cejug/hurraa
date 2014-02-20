@@ -26,7 +26,7 @@
     </c:if>   
     
 	<div>
-		<a href="${linkTo[CostCenterController].form}" class="btn btn-primary btn-sm" role="button"> <fmt:message key="link.text.add" /> </a>
+		<a href="${linkTo[CostCenterController].form}" id="linkToAdd" class="btn btn-primary btn-sm" role="button"><fmt:message key="link.text.add" /></a>
 	</div>
 	
 	<table class="table table-condensed table-hover table-striped">

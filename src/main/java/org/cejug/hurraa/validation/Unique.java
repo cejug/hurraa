@@ -25,6 +25,7 @@ public @interface Unique {
     
     String identityPropertyName();
     
+    @SuppressWarnings("rawtypes")
     Class entityClass();
  
     Class<?>[] groups() default {};

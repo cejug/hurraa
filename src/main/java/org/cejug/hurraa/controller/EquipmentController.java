@@ -19,18 +19,24 @@
 */
 package org.cejug.hurraa.controller;
 
+import java.util.ResourceBundle;
+
 import javax.inject.Inject;
 import javax.validation.Valid;
 
 import org.cejug.hurraa.model.Equipment;
+import org.cejug.hurraa.model.EquipmentModel;
 import org.cejug.hurraa.model.bean.EquipmentBean;
 import org.cejug.hurraa.model.bean.EquipmentModelBean;
+import org.cejug.hurraa.producer.ValidationMessages;
+import org.cejug.hurraa.validation.Unique;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.validator.SimpleMessage;
 import br.com.caelum.vraptor.validator.Validator;
 
 @Path("equipment")
@@ -41,15 +47,20 @@ public class EquipmentController {
 	private Result result;
 	private EquipmentBean equipmentBean;
 	private EquipmentModelBean equipmentModelBean;
+    private ResourceBundle validationBundle;
+    private ResourceBundle messagesBundle;
 
 	@Deprecated
 	public EquipmentController() {};
 
 	@Inject
-	public EquipmentController(Result result, EquipmentBean equipmentBean, EquipmentModelBean equipmentModelBean ) {
+	public EquipmentController(Result result, EquipmentBean equipmentBean, EquipmentModelBean equipmentModelBean,
+			ResourceBundle messagesBundle , @ValidationMessages ResourceBundle validationBundle) {
         this.result = result;
         this.equipmentBean = equipmentBean;
         this.equipmentModelBean = equipmentModelBean;
+        this.validationBundle = validationBundle;
+        this.messagesBundle = messagesBundle;
 	}
 	
     @Path(value = { "", "/" })
@@ -71,9 +82,15 @@ public class EquipmentController {
     }
     
     @Post("insert")
-    public void insert(@Valid  Equipment equipment, Validator validator ) {
+    public void insert(@Valid  
+    		@Unique(propertyName = "serialId" , identityPropertyName="id" , entityClass =Equipment.class )
+    		Equipment equipment, Validator validator ) {
+    	
+    	verifyIfSelectedEquipmentModel(equipment, validator);
     	validator.onErrorForwardTo( EquipmentController.class ).form();
     	equipmentBean.insert(equipment);
+    	
+        result.include("message", messagesBundle.getString("insert.success") );
         result.redirectTo(EquipmentController.class).list();
     }
     
@@ -84,8 +101,13 @@ public class EquipmentController {
     
     @Post
     @Path("update")
-    public void update(@Valid Equipment equipment, Validator validator) {
-    	validator.onErrorForwardTo( SectorController.class ).form();
+    public void update(@Valid 
+    		@Unique(propertyName = "serialId" , identityPropertyName="id" , entityClass =Equipment.class )
+    		Equipment equipment, Validator validator) {
+    	
+    	verifyIfSelectedEquipmentModel(equipment, validator);
+    	validator.onErrorForwardTo( EquipmentController.class ).form();       
+        
     	equipmentBean.update(equipment);
     	result.redirectTo(EquipmentController.class).list();
     }
@@ -96,6 +118,12 @@ public class EquipmentController {
         result.redirectTo(EquipmentController.class).list();
     }
     
+    
+    protected void verifyIfSelectedEquipmentModel(Equipment equipment, Validator validator ){
+        if(equipment.getEquipmentModel() == null || equipment.getEquipmentModel().getId() == null) { 
+            validator.add( new SimpleMessage( "equipment.equipmentModel.id" , validationBundle.getString("equipment.equipmentModel.required") ) );
+        }
+    }
 
 
 }

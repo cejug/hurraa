@@ -26,13 +26,14 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-import org.cejug.hurraa.validation.EquipmentTypeNameAvailable;
+import org.cejug.hurraa.validation.Unique;
 import org.hibernate.validator.constraints.NotBlank;
 
 @NamedQueries({
     @NamedQuery(name="NAME_IN_USE" , query="FROM EquipmentType e WHERE e.name = :name")
 })
 @Entity
+@Unique(propertyName = "name" , identityPropertyName = "id" , entityClass = EquipmentType.class)
 public class EquipmentType {
 	
 	@Id
@@ -40,7 +41,6 @@ public class EquipmentType {
 	private Long id;
 	
 	@NotBlank
-	@EquipmentTypeNameAvailable
 	private String name;
 	
 	@Override

@@ -54,12 +54,30 @@ public class CejugMethodValidator extends MethodValidator {
 		Iterator<Node> node = violation.getPropertyPath().iterator();
 		int index =  getFirstParameterIndex( node );  
 		node = violation.getPropertyPath().iterator();// Reset the interator
-		return mountCategory( node ).replace( "arg" + index , params[index].getName() );
+		StringBuilder joinedCategoryBuilder = new StringBuilder( mountCategory( node ).replace( "arg" + index , params[index].getName() ) );
+		return appendPropertyNameIfDefined( joinedCategoryBuilder , violation ) ;
 	}
 	
 	private String mountCategory( Iterator<Node> node ){
 		ignoreMethodName( node );
-		return Joiner.on(".").join( node );
+		String joined = Joiner.on(".").join( node );
+		return removeLastDotIndexIfAny(joined);
+	}
+	
+	private String removeLastDotIndexIfAny(String joined){
+	    int lastDotIndex = joined.lastIndexOf('.');
+        if( lastDotIndex == ( joined.length() - 1 )  ){
+            joined = joined.substring( 0 , lastDotIndex );
+        }
+        return joined;
+	}
+	
+	private String appendPropertyNameIfDefined( StringBuilder joinedCategoryBuilder  , ConstraintViolation<Object> violation ){
+	    Object propertyName = violation.getConstraintDescriptor().getAttributes().get("propertyName");
+	    if( propertyName != null){
+	        joinedCategoryBuilder.append(".").append( propertyName );
+	    }
+	    return joinedCategoryBuilder.toString();
 	}
 	
 	private void ignoreMethodName( Iterator<Node> node ){

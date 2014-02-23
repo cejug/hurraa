@@ -1,6 +1,17 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <html>
 <body>
-    It works!! ${variable}
+    
+    <div class="hra-callout hra-callout-info">
+      <h4><fmt:message key='title.whatsnew' /></h4>
+      <p><fmt:message key='text.whatsnew' /></p>
+    </div>
+    
+    <div class="hra-callout hra-callout-info">
+      <h4><fmt:message key='title.futureRelease' /></h4>
+      <p><fmt:message key='text.futureRelease' /></p>
+    </div>
+    
 </body>
 </html>

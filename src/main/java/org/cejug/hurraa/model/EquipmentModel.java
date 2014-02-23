@@ -27,9 +27,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.validation.constraints.NotNull;
 
-import org.cejug.hurraa.validation.EquipmentModelNameAvailable;
 import org.hibernate.validator.constraints.NotBlank;
 
 @NamedQueries(value = {
@@ -44,11 +42,9 @@ public class EquipmentModel {
     private Long id;
     
     @NotBlank
-    @EquipmentModelNameAvailable
     @Column(nullable = false , unique = true)
     private String name;
     
-    @NotNull
     @ManyToOne(optional = false)
     private EquipmentType equipmentType;
     

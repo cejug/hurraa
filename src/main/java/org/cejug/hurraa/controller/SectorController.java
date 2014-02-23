@@ -19,11 +19,14 @@
 */
 package org.cejug.hurraa.controller;
 
+import java.util.ResourceBundle;
+
 import javax.inject.Inject;
 import javax.validation.Valid;
 
 import org.cejug.hurraa.model.Sector;
 import org.cejug.hurraa.model.bean.SectorBean;
+import org.cejug.hurraa.validation.Unique;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
@@ -38,14 +41,16 @@ public class SectorController {
 
     private Result result;
     private SectorBean sectorBean;
+    private ResourceBundle messagesBundle;
     
     @Deprecated
     public SectorController() {	}
     
     @Inject
-    public SectorController(Result result, SectorBean sectorBean ) {
+    public SectorController(Result result, SectorBean sectorBean , ResourceBundle messagesBundle ) {
     	this.result = result;
     	this.sectorBean = sectorBean;
+    	this.messagesBundle = messagesBundle;
 	}
 
     @Path(value = { "", "/" })
@@ -69,6 +74,7 @@ public class SectorController {
     	validator.onErrorForwardTo( SectorController.class ).form();
     	
         sectorBean.insert(sector);
+        result.include("message", messagesBundle.getString("insert.success") );
         result.redirectTo(SectorController.class).list();
     }
 
@@ -84,12 +90,14 @@ public class SectorController {
     	validator.onErrorForwardTo( SectorController.class ).form();
     	
         sectorBean.update(sector);
+        result.include("message", messagesBundle.getString("update.success") );
         result.redirectTo(SectorController.class).list();
     }
 
     @Path("delete/{sector.id}")
     public void delete(Sector sector) {
         sectorBean.delete(sector);
+        result.include("message", messagesBundle.getString("delete.success") );
         result.redirectTo(SectorController.class).list();
     }
 }

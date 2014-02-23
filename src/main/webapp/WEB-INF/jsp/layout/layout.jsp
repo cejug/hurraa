@@ -29,6 +29,11 @@
 <d:head />
 </head>
 <body>
+    
+    <c:if test="${not empty param.loc}">
+       <fmt:setLocale value="${param.loc}" scope="session"/>
+    </c:if>
+    
     <header id="wrap">
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
@@ -42,12 +47,12 @@
                     <a class="navbar-brand" href="<c:url value="/" />"> 
                         <img alt="Home" src="<c:url value='/resources/images/logo/32x.png' />" />
                         <fmt:message key="page.title" />
-                    </a>
+                	</a>	
                 </div>
+                
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="${linkTo[IndexController].index}"><fmt:message key="menu.home" /></a></li>
-                        <li><a href="#"><fmt:message key="menu.issues" /></a></li>
+                        <li><a href="#"><fmt:message key="menu.incident" /></a></li>
                         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="menu.admin" /> <b
                                 class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -59,6 +64,9 @@
                                 <li><a href="${linkTo[CostCenterController].index}"><fmt:message key="menu.admin.costCenter" /></a></li>
                                 <li class="divider"></li>
                                 <li><a href="${linkTo[UserController].index}"><fmt:message key="menu.admin.user" /></a></li>
+                                
+                                <li><a href="${linkTo[ChangeLocaleController].changeLocale('en')}">EN</a></li>
+                                <li><a href="${linkTo[ChangeLocaleController].changeLocale('pt_BR')}">BR</a></li>
                             </ul></li>
                     </ul>
                 </div>

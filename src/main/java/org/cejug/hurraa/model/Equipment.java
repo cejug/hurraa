@@ -28,6 +28,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class Equipment {
@@ -36,12 +39,14 @@ public class Equipment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotBlank
 	@Column(name="serial_id")
 	private String serialId;
 	
+	@NotNull
 	@Column(name="end_of_warranty")
 	private Date endOfWarranty;
-	
+
 	@Column(name="last_maintenance")
 	private Date lastMaintenance;
 	

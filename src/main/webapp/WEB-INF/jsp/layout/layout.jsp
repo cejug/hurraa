@@ -1,3 +1,4 @@
+<%@page import="javax.servlet.jsp.jstl.core.Config"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="d" uri="http://www.opensymphony.com/sitemesh/decorator"%>
@@ -19,7 +20,9 @@
 <link rel="stylesheet" href="<c:url value='/resources/css/default.css'/>" type="text/css">
 <link rel="stylesheet" href="<c:url value='/resources/libs/bootstrap/css/bootstrap.min.css' />">
 <link rel="stylesheet" href="<c:url value='/resources/libs/bootstrap/css/bootstrap-theme.min.css' />">
+<link rel="stylesheet" href="<c:url value='/resources/libs/bootstrap/css/datepicker.css' />">
 
+<script src="<c:url value='/resources/js/lazy-jquery-init.js' />"></script>
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -65,8 +68,8 @@
                                 <li class="divider"></li>
                                 <li><a href="${linkTo[UserController].index}"><fmt:message key="menu.admin.user" /></a></li>
                                 
-                                <li><a href="${linkTo[ChangeLocaleController].changeLocale('en')}">EN</a></li>
-                                <li><a href="${linkTo[ChangeLocaleController].changeLocale('pt_BR')}">BR</a></li>
+                                <li><a href="${linkTo[ChangeLocaleController].changeLocale( 'en' , 'US' )}">EN</a></li>
+                                <li><a href="${linkTo[ChangeLocaleController].changeLocale( 'pt' , 'BR' )}">BR</a></li>
                             </ul></li>
                     </ul>
                 </div>
@@ -90,6 +93,8 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="<c:url value='/resources/libs/jquery/js/jquery-2.1.0.min.js' />"></script>
     <script src="<c:url value='/resources/libs/bootstrap/js/bootstrap.min.js' />"></script>
+    <script src="<c:url value='/resources/libs/bootstrap/js/bootstrap-datepicker.js' />"></script>
     <script src="<c:url value='/resources/js/webapp-standalone.js' />"></script>
+    <script src="<c:url value='/resources/js/finish-lazy-jquery-init.js' />"></script>
 </body>
 </html>

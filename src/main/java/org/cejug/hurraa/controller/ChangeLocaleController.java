@@ -19,9 +19,9 @@ import br.com.caelum.vraptor.Result;
 public class ChangeLocaleController {
     
     
-    @Path("/change-location/{locationName}")
-    public void changeLocale(String locationName , Result result, HttpSession session , HttpServletRequest request ){
-        Locale locale = new Locale( locationName );
+    @Path("/change-location/{lenguageName}/{country}")
+    public void changeLocale(String lenguageName , String country , Result result, HttpSession session , HttpServletRequest request ){
+        Locale locale = new Locale( lenguageName , country );
         Config.set( session, Config.FMT_FALLBACK_LOCALE, locale);
         Config.set (session, Config.FMT_LOCALE, locale);
         redirectBack(result , request);

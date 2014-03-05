@@ -5,29 +5,42 @@
 <!DOCTYPE html>
 <html>
 <body>
-	<div class="page-header">
-		<a href="${linkTo[EquipmentController].form}" class="btn btn-primary active" role="button"> 
-			<fmt:message key="equipment.form.insert" />
+
+<div class="page-header">
+      <h1><small><fmt:message key='title.equipment' /></small></h1>
+    </div>
+    
+     <c:if test="${message != null}">
+        <div class="alert alert-success">
+            <c:out value="${message}" />
+        </div>
+    </c:if>
+    <c:if test='${errors["equipment"] != null}' >
+        <div class="alert alert-danger">
+          <strong>${errors["equipment"][0]}</strong>
+        </div>
+    </c:if>   
+    
+    <div>
+		<a href="${linkTo[EquipmentController].form}" class="btn btn-primary btn-sm" role="button"> 
+			<fmt:message key="link.text.add" />
 		</a>
-	</div>
+    </div>
+        
 	<table class="table table-condensed table-hover table-striped">
 		<tr>
-			<td><fmt:message key="equipment.id" /></td>
 			<td><fmt:message key="equipment.serialId" /></td>
 			<td><fmt:message key="equipment.endOfWarranty" /></td>
 			<td><fmt:message key="equipment.lastMaintenance" /></td>
-			<td><fmt:message key="equipment.maintenanceDescription" /></td>
 			<td><fmt:message key="equipment.equipmentModel" /></td>
 			<td></td>
 			<td></td>
 		</tr>
 		<c:forEach items="${equipments}" var="equipment">
 			<tr>
-				<td>${equipment.id }</td>
 				<td>${equipment.serialId }</td>
-				<td>${equipment.endOfWarranty }</td>
-				<td>${equipment.lastMaintenance }</td>
-				<td>${equipment.maintenanceDescription }</td>
+				<td><fmt:formatDate value="${equipment.endOfWarranty}" type="date"  /></td>
+				<td><fmt:formatDate value="${equipment.lastMaintenance}" type="date" /></td>
 				<td>${equipment.equipmentModel.name }</td>
 				<td><a href="${linkTo[EquipmentController].form(equipment.id) }"> 
 						<fmt:message key="label.update" />

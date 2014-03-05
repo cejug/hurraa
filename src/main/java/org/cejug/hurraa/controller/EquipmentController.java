@@ -19,6 +19,7 @@
 */
 package org.cejug.hurraa.controller;
 
+import java.text.DateFormat;
 import java.util.ResourceBundle;
 
 import javax.inject.Inject;

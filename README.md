@@ -7,7 +7,7 @@ Opensource project to resource management
 #### General Configuration
 
 Get MySQL Module for WildFly [here](https://github.com/cejug/hurraa/wiki/hurraa-wildfly-driver-module/mysql.zip) 
-and unpack in WILDFLY_HOME/modules/com
+and unpack in "WILDFLY_HOME/modules/com", in the end you should have a structure like this "WILDFLY_HOME/modules/com/mysql/main" verify this structure before following the next steps
 
 Like the following video shows: http://www.youtube.com/watch?v=l1daP7PZxNA#t=2729 After 45 minutes
 

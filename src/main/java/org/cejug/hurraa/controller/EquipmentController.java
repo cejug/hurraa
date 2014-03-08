@@ -26,7 +26,6 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 
 import org.cejug.hurraa.model.Equipment;
-import org.cejug.hurraa.model.EquipmentModel;
 import org.cejug.hurraa.model.bean.EquipmentBean;
 import org.cejug.hurraa.model.bean.EquipmentModelBean;
 import org.cejug.hurraa.producer.ValidationMessages;

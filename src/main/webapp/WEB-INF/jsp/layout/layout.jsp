@@ -65,6 +65,7 @@
                                 <li><a href="${linkTo[EquipmentController].index}"><fmt:message key="menu.admin.equipment" /></a></li>
                                 <li><a href="${linkTo[ManufacturerController].index}"><fmt:message key="menu.admin.manufacturer" /></a></li>
                                 <li><a href="${linkTo[CostCenterController].index}"><fmt:message key="menu.admin.costCenter" /></a></li>
+                                <li><a href="${linkTo[ProblemTypeController].index}"><fmt:message key="menu.admin.problemType" /></a></li>
                                 <li class="divider"></li>
                                 <li><a href="${linkTo[UserController].index}"><fmt:message key="menu.admin.user" /></a></li>
                                 

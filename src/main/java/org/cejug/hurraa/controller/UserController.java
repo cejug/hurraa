@@ -19,6 +19,8 @@
 */
 package org.cejug.hurraa.controller;
 
+import java.util.ResourceBundle;
+
 import javax.inject.Inject;
 import javax.validation.Valid;
 
@@ -38,15 +40,17 @@ public class UserController {
 
 	private Result result;
 	private UserBean userBean;
+	private ResourceBundle messagesBundle;
 
 	public UserController() {
 		super();
 	}
 
 	@Inject
-	public UserController(Result result, UserBean userBean) {
+	public UserController(Result result, UserBean userBean , ResourceBundle bundle) {
 		this.result = result;
 		this.userBean = userBean;
+		this.messagesBundle = bundle;
 	}
 	
 	@Path(value = { "", "/" })
@@ -69,7 +73,9 @@ public class UserController {
 	@Path("insert")
 	public void insert(@Valid User user, Validator validator) {
 		validator.onErrorForwardTo(UserController.class).form();
+		
 		userBean.insert(user);
+		result.include("message", messagesBundle.getString("insert.success") );
 		result.redirectTo("/user/list");
 	}
 
@@ -83,13 +89,16 @@ public class UserController {
 	@Path("update")
 	public void update(@Valid User user, Validator validator) {
 		validator.onErrorForwardTo(UserController.class).form();
+		
 		userBean.update(user);
+		result.include("message", messagesBundle.getString("update.success") );
 		result.redirectTo(UserController.class).list();
 	}
 
 	@Path("delete/{user.id}")
 	public void delete(User user) {
 		userBean.delete(user);
+		result.include("message", messagesBundle.getString("delete.success") );
 		result.redirectTo(UserController.class).list();
 	}
 }

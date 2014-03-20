@@ -56,7 +56,7 @@
                 </select>
             </div>
 
-            <br /> <input name="equipment.id" value="${equipment.id}"
+            <input name="equipment.id" value="${equipment.id}"
                 type="hidden" />
 
             <button type="submit" class="btn btn-default btn-sm">

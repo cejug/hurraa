@@ -17,5 +17,5 @@
         <cejug:errorMessage name="${name}" errorsMap="${errorsMap}" showAllErrors="${showAllErrors}" />
       </c:if>
   </label>
-  <input type="${type}" class="form-control input-sm col-sm-10" name="${name}" id="${name}" value="${value}" placeholder="${placeholder}"/>
+  <input type="${type}" class="form-control input-sm" name="${name}" id="${name}" value="${value}" placeholder="${placeholder}"/>
 </div>

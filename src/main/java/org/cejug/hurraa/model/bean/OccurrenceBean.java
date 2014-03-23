@@ -19,21 +19,31 @@
 */
 package org.cejug.hurraa.model.bean;
 
+import java.util.Date;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.cejug.hurraa.model.Ocurrence;
+import org.cejug.hurraa.model.Occurrence;
 
 @Stateless
-public class OcurrenceBean extends AbstractBean<Ocurrence> {
+public class OccurrenceBean extends AbstractBean<Occurrence> {
 	
-	public OcurrenceBean() {
-		super(Ocurrence.class);
+	public OccurrenceBean() {
+		super(Occurrence.class);
 	}
-
+	
 	@PersistenceContext
 	private EntityManager entityManager;
+	
+	@Override
+	public void insert(Occurrence entity) {
+		entity.setDateOfOppening( new Date() );
+		entity.setStatus( "Novo" );
+		super.insert(entity);
+	}
+	
 	
 	@Override
 	protected EntityManager getEntityManager() {

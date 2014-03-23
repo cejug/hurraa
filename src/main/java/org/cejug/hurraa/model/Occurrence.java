@@ -30,9 +30,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-public class Ocurrence implements Serializable {
+public class Occurrence implements Serializable {
 	
 	private static final long serialVersionUID = -9182122904967670112L;
 
@@ -45,6 +48,7 @@ public class Ocurrence implements Serializable {
 	
 	private String serialId;
 	
+	@NotEmpty
 	private String description;
 	
 	private String status;
@@ -54,10 +58,14 @@ public class Ocurrence implements Serializable {
 	private ProblemType problemType;
 	
 	@ManyToOne
+	@JoinColumn(name = "sector_id" , nullable = false)
+	private Sector sector;
+	
+	@ManyToOne
 	@JoinColumn(name = "user_id" , nullable = false)
 	private User user;
 	
-	public Ocurrence() { }
+	public Occurrence() { }
 	
 	
 	
@@ -115,6 +123,18 @@ public class Ocurrence implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+
+
+	public Sector getSector() {
+		return sector;
+	}
+
+
+
+	public void setSector(Sector sector) {
+		this.sector = sector;
 	}
 	
 }

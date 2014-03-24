@@ -48,11 +48,9 @@ public class OpenOccurrenceController {
 	private OccurrenceBean occurrenceBean;
 	private ResourceBundle messageBundle;
 	private ResourceBundle validationBundle;
-
-	@Inject
 	private ProblemTypeBean problemTypeBean;
-	@Inject
 	private SectorBean sectorBean;
+	
 	@Inject
 	private UserBean userBean;
 
@@ -62,6 +60,8 @@ public class OpenOccurrenceController {
 
 	@Inject
 	public OpenOccurrenceController(Result result, OccurrenceBean occurrenceBean,
+			ProblemTypeBean problemTypeBean,
+			SectorBean sectorBean,
 			ResourceBundle messagesBundle,
 			@ValidationMessages ResourceBundle validationBundle) {
 		this.result = result;
@@ -84,7 +84,7 @@ public class OpenOccurrenceController {
 		verifyIfSelectedProblemType(occurrence, validator);
 		validator.onErrorForwardTo(OpenOccurrenceController.class).form();
 		
-		//TODO
+		//TODO Add user from the session
 		occurrence.setUser( userBean.findAll().get(0) );
 		
 		occurrenceBean.insert(occurrence);

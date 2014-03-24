@@ -18,6 +18,12 @@
 		</h1>
 	</div>
 
+    <c:if test="${message != null}">
+        <div class="alert alert-success">
+            <c:out value="${message}" />
+        </div>
+    </c:if>
+
 	<div style="width: 100%;" class="container-fluid">
 		<form class="form-horizontal" role="form"
 			action="${linkTo[OpenOccurrenceController].processForm}" method="post">

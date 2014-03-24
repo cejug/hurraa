@@ -29,6 +29,7 @@ import org.cejug.hurraa.model.Occurrence;
 import org.cejug.hurraa.model.bean.OccurrenceBean;
 import org.cejug.hurraa.model.bean.ProblemTypeBean;
 import org.cejug.hurraa.model.bean.SectorBean;
+import org.cejug.hurraa.model.bean.UserBean;
 import org.cejug.hurraa.producer.ValidationMessages;
 
 import br.com.caelum.vraptor.Controller;
@@ -52,6 +53,8 @@ public class OpenOccurrenceController {
 	private ProblemTypeBean problemTypeBean;
 	@Inject
 	private SectorBean sectorBean;
+	@Inject
+	private UserBean userBean;
 
 	@Deprecated
 	public OpenOccurrenceController() {
@@ -75,14 +78,17 @@ public class OpenOccurrenceController {
 	}
 
 	@Post
+	@Path("/")
 	public void processForm(@Valid Occurrence occurrence, Validator validator) {
 		verifyIfSelectedSector(occurrence, validator);
 		verifyIfSelectedProblemType(occurrence, validator);
 		validator.onErrorForwardTo(OpenOccurrenceController.class).form();
 		
+		//TODO
+		occurrence.setUser( userBean.findAll().get(0) );
 		
 		occurrenceBean.insert(occurrence);
-		
+		result.include("message" , messageBundle.getString("openOccurrence.messageSuccess") );
 		result.forwardTo(OpenOccurrenceController.class).form();
 	}
 

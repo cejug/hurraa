@@ -30,8 +30,8 @@ public class IndexController {
 
 	private Result result;
 
-	public IndexController() {
-	}
+	@Deprecated
+	public IndexController() {}
 
 	@Inject
 	public IndexController(Result result) {
@@ -40,12 +40,6 @@ public class IndexController {
 
 	@Path("/")
 	public void index() {
-		result.include("variable", "Hi!!!");
-	}
-
-	@Path("listar")
-	public void listar() {
-		result.include("text", "User Teste");
 	}
 
 }

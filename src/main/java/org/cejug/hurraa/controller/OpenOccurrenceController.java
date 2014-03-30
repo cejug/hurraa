@@ -68,6 +68,8 @@ public class OpenOccurrenceController {
 		this.occurrenceBean = occurrenceBean;
 		this.messageBundle = messagesBundle;
 		this.validationBundle = validationBundle;
+		this.problemTypeBean = problemTypeBean;
+		this.sectorBean = sectorBean;
 	}
 
 	@Get

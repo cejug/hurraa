@@ -42,7 +42,8 @@
             <tr>
                 <td>${sector.name }</td>
                 <td>${sector.respondsOccurrence }</td>
-                <td>${sector.active }</td>
+                <td>${sector.active }</td>                
+                
                 <td><a
                     href="${linkTo[SectorController].form(sector.id)}"
                     title="<fmt:message key='label.update' />"> <span

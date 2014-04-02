@@ -33,6 +33,15 @@
 					value="${user.email}" errorsMap="${errors}" />
 				<cejug:textFieldVertical type="password" name="user.password"
 					value="${user.password}" errorsMap="${errors}" />
+				
+				<c:set var="passwordConfirmation" value=""/>
+				
+				<c:if test="${not empty user and user.id != null and (empty errors['passwordConfirmation'])}">
+					<c:set var="passwordConfirmation" value="${user.password}" />
+				</c:if> 
+				
+			    <cejug:textFieldVertical type="password" name="passwordConfirmation"
+					value="${passwordConfirmation}" errorsMap="${errors}" />
 
 				<input name="user.id" value="${user.id }" type="hidden" />
 

@@ -117,6 +117,7 @@
 			<p class="text-muted">
 				<span class="glyphicon glyphicon-copyright-mark"></span>
 				<fmt:message key="page.copyright" />
+				- <fmt:message key="app.version" />
 			</p>
 		</div>
 	</footer>

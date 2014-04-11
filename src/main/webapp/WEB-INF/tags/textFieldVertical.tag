@@ -8,14 +8,17 @@
 <%@ attribute name="placeholder" required="false"%>
 <%@ attribute name="showFieldError" required="false" %>
 <%@ attribute name="showAllErrors" required="false" %>
+<%@ attribute name="readonly" required="false" %>
 <%@ attribute name="errorsMap" required="false" type="java.util.Map" %>
 <c:set var="showFieldError" value="${(empty showFieldError) ? true : showFieldError}" />
 <c:set var="showAllErrors" value="${(empty showAllErrors) ? false : showAllErrors}" />
+<c:set var="readonly" value="${(empty readonly) ? false : readonly}" />
 <div class="form-group ${errors[name] != null ? 'has-error' : ''}"  >
   <label for="${name}"><fmt:message key="${name}" />
       <c:if test="${showFieldError == true and not empty errorsMap}">
         <cejug:errorMessage name="${name}" errorsMap="${errorsMap}" showAllErrors="${showAllErrors}" />
       </c:if>
   </label>
-  <input type="${type}" class="form-control input-sm" name="${name}" id="${name}" value="${value}" placeholder="${placeholder}"/>
+  <input type="${type}" class="form-control input-sm" name="${name}" id="${name}" value="${value}" placeholder="${placeholder}"
+   ${readonly == true ? 'readonly="readonly"' : '' } />
 </div>

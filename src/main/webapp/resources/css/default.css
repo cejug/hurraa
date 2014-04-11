@@ -78,3 +78,7 @@ code {
 .hra-callout-info h4 {
     color: #22AC1B;
 }
+
+.selectableOccurrence {
+	cursor: pointer;
+}

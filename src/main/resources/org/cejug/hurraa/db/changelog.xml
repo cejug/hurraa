@@ -19,6 +19,7 @@
     <include file="org/cejug/hurraa/db/changelogs/20140224-1-emanuelcordeiro.sql"/>
     <include file="org/cejug/hurraa/db/changelogs/20140307-1-diogodias86.sql"/>
     <include file="org/cejug/hurraa/db/changelogs/20140323-11-efraimgentil.sql"/>
+    <include file="org/cejug/hurraa/db/changelogs/20140411-12-efraimgentil.sql"/>
     
     
 </databaseChangeLog>

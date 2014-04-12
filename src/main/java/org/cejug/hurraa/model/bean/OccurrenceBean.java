@@ -39,11 +39,10 @@ public class OccurrenceBean extends AbstractBean<Occurrence> {
 	
 	@Override
 	public void insert(Occurrence entity) {
-		entity.setDateOfOppening( new Date() );
+		entity.setDateOfOpening( new Date() );
 		entity.setStatus( "Novo" );
 		super.insert(entity);
 	}
-	
 	
 	@Override
 	protected EntityManager getEntityManager() {

@@ -34,7 +34,7 @@
         <c:forEach items="${occurrences }" var="occurrence">
             <tr class="selectableOccurrence" data-occurrence-id="${occurrence.id}" >
                 <td>
-                    <fmt:formatDate value="${occurrence.dateOfOppening}" type="both" />
+                    <fmt:formatDate value="${occurrence.dateOfOpening}" type="both" />
                 </td>
                 <td>${occurrence.problemType.name }</td>
                 <td>${occurrence.sector.name }</td>

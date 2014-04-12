@@ -37,7 +37,7 @@
                         </label>
                         
                         <input type="text" class="form-control input-sm" 
-                           value="<fmt:formatDate value="${occurrence.dateOfOppening}" type="both"/>"
+                           value="<fmt:formatDate value="${occurrence.dateOfOpening}" type="both"/>"
                            readonly="readonly" />
                     </div>
                 </div>

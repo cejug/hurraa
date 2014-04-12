@@ -46,7 +46,7 @@ public class Occurrence implements Serializable {
 	private Long id;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date dateOfOppening;
+	private Date dateOfOpening;
 	
 	private String serialId;
 	
@@ -80,12 +80,12 @@ public class Occurrence implements Serializable {
 		this.id = id;
 	}
 
-	public Date getDateOfOppening() {
-		return dateOfOppening;
+	public Date getDateOfOpening() {
+		return dateOfOpening;
 	}
 
-	public void setDateOfOppening(Date dateOfOppening) {
-		this.dateOfOppening = dateOfOppening;
+	public void setDateOfOpening(Date dateOfOpening) {
+		this.dateOfOpening = dateOfOpening;
 	}
 
 	public String getSerialId() {
@@ -128,13 +128,9 @@ public class Occurrence implements Serializable {
 		this.user = user;
 	}
 
-
-
 	public Sector getSector() {
 		return sector;
 	}
-
-
 
 	public void setSector(Sector sector) {
 		this.sector = sector;

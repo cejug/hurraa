@@ -41,8 +41,24 @@
         <c:forEach items="${sectors }" var="sector">
             <tr>
                 <td>${sector.name }</td>
-                <td>${sector.respondsOccurrence }</td>
-                <td>${sector.active }</td>                
+                
+                <c:choose>
+                	<c:when test="${sector.respondsOccurrence }">
+                		<td><fmt:message key="label.yes" /></td>
+                	</c:when>
+                	<c:otherwise>
+                		<td><fmt:message key="label.no" /></td>
+                	</c:otherwise>
+                </c:choose>
+                
+                <c:choose>
+                	<c:when test="${sector.active }">
+                		<td><fmt:message key="label.yes" /></td>
+                	</c:when>
+                	<c:otherwise>
+                		<td><fmt:message key="label.no" /></td>
+                	</c:otherwise>
+                </c:choose>                
                 
                 <td><a
                     href="${linkTo[SectorController].form(sector.id)}"

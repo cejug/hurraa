@@ -73,6 +73,8 @@
 							<ul class="dropdown-menu">
 								<li><a href="${linkTo[OpenOccurrenceController].form}"><fmt:message
 											key="menu.incident.open" /></a></li>
+								<li><a href="${linkTo[ListOccurrenceController].list}"><fmt:message
+                                            key="menu.incident.list" /></a></li>
 							</ul>
 						</li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle"

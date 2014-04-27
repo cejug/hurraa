@@ -22,19 +22,6 @@ After **General Configuration** section:
 5. ./subsystem=datasources/jdbc-driver=com.mysql:add(driver-name="com.mysql", driver-module-name="com.mysql", driver-xa-datasource-class-name="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource" )
 6. ./subsystem=datasources/data-source=hurraaDS:add(enabled=true , jndi-name="java:/hurraaDS" , use-java-context=true, driver-name="com.mysql" , min-pool-size=10 , max-pool-size=100 , pool-prefill=true, user-name="root" , connection-url="jdbc:mysql://localhost:3306/hurraa" )
 
-### Configuration environment vars.
-Create a env variable WILDFLY_HOME for arquillian.xml config
-
-1. LINUX - most of linux distributions: create a file wf.sh in /etc/profile.d with this content 
-```bash
-export WILDFLY_HOME=/your_path_to/wildfly-8.0.0.Final
-```
-2. MAC - add this content into /etc/profile
-```bash
-WILDFLY_HOME=/your_path_to/wildfly-8.0.0.Final/ 
-```
-
-
 #### Configuration of the datasource at standalone.xml file
 
 ```xml
@@ -55,4 +42,16 @@ WILDFLY_HOME=/your_path_to/wildfly-8.0.0.Final/
     <xa-datasource-class>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</xa-datasource-class>
   </driver>
 </drivers>
+```
+
+### Configuration environment vars.
+Create a env variable WILDFLY_HOME for arquillian.xml config
+
+1. LINUX - most of linux distributions: create a file wf.sh in /etc/profile.d with this content 
+```bash
+export WILDFLY_HOME=/your_path_to/wildfly-8.0.0.Final
+```
+2. MAC - add this content into /etc/profile
+```bash
+WILDFLY_HOME=/your_path_to/wildfly-8.0.0.Final/ 
 ```

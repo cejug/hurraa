@@ -53,5 +53,5 @@ export WILDFLY_HOME=/your_path_to/wildfly-8.0.0.Final
 ```
 2. MAC - add this content into /etc/profile
 ```bash
-WILDFLY_HOME=/your_path_to/wildfly-8.0.0.Final/ 
+WILDFLY_HOME=/your_path_to/wildfly-8.0.0.Final/
 ```

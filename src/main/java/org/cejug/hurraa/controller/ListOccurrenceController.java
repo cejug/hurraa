@@ -19,14 +19,23 @@
 */
 package org.cejug.hurraa.controller;
 
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
 import javax.inject.Inject;
 
 import org.cejug.hurraa.model.Occurrence;
 import org.cejug.hurraa.model.bean.OccurrenceBean;
+import org.cejug.hurraa.producer.ValidationMessages;
+
+import com.opensymphony.module.sitemesh.Page;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
+import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.validator.SimpleMessage;
+import br.com.caelum.vraptor.validator.Validator;
 
 @Path(value = "occurrences")
 @Controller
@@ -34,20 +43,24 @@ public class ListOccurrenceController {
 	
 	private Result result;
 	private OccurrenceBean occurrenceBean;
+	private ResourceBundle validationBundle;
 	
 	@Deprecated
 	public ListOccurrenceController() {	}
 
 	@Inject
-	public ListOccurrenceController(Result result, OccurrenceBean occurrenceBean) {
+	public ListOccurrenceController(Result result, OccurrenceBean occurrenceBean , @ValidationMessages ResourceBundle validationBundle) {
 		super();
 		this.result = result;
 		this.occurrenceBean = occurrenceBean;
+		this.validationBundle = validationBundle;
 	}
 	
 	@Path( { "/" , "" } )
 	public void list(){
-		result.include("occurrences",  occurrenceBean.findAll() );
+		if( !result.included().containsKey("occurrences") ){
+			result.include("occurrences",  occurrenceBean.findAll() );
+		}
 	}
 	
 	@Path("/{ocurrenceId}")
@@ -55,6 +68,16 @@ public class ListOccurrenceController {
 		Occurrence occurrence = occurrenceBean.findById(ocurrenceId);
 		result.include( "occurrence" , occurrence );
 	}
-
+	
+	@Path("find")
+	public void find( Long filter , Validator validator ){
+		if( validator.hasErrors() ){
+			validator.add( new SimpleMessage( "occurrences", validationBundle.getString("occurrence.wrongFilter") ) );
+		}
+		validator.onErrorUsePageOf( ListOccurrenceController.class ).list();
+		
+		result.include("occurrences",  new ArrayList<Occurrence>() );
+		result.forwardTo( ListOccurrenceController.class ).list(); 
+	}
 	
 }

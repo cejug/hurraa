@@ -23,6 +23,11 @@
             <c:out value="${message}" />
         </div>
     </c:if>
+    <c:if test='${errorMessage!= null}'>
+        <div class="alert alert-danger">
+            <strong>${errorMessage}</strong>
+        </div>
+    </c:if>
 
 	<div style="width: 100%;" class="container-fluid">
 		<form class="form-horizontal" role="form"

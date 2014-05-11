@@ -17,22 +17,27 @@
             <c:out value="${message}" />
         </div>
     </c:if>
-    <c:if test='${errors["costCenter"] != null}'>
+    <c:if test='${errors["occurrences"] != null}'>
         <div class="alert alert-danger">
-            <strong>${errors["costCenter"][0]}</strong>
+            <strong>${errors["occurrences"][0]}</strong>
         </div>
     </c:if>
 
     <table class="table table-condensed table-hover table-striped">
         <tr>
+            <td><fmt:message key="occurrence.id" /></td>
             <td><fmt:message key="occurrence.dateOfOpening" /></td>
             <td><fmt:message key="occurrence.problemType" /></td>
             <td><fmt:message key="occurrence.sector" /></td>
             <td><fmt:message key="occurrence.status" /></td>
             <td></td>
         </tr>
+        <c:if test="${empty occurrences}">
+            <tr><td colspan="5"><fmt:message key="label.emptyResult" /></td></tr> 
+        </c:if>
         <c:forEach items="${occurrences }" var="occurrence">
             <tr class="selectableOccurrence" data-occurrence-id="${occurrence.id}" >
+	            <td>${occurrence.id }</td>
                 <td>
                     <fmt:formatDate value="${occurrence.dateOfOpening}" type="both" />
                 </td>

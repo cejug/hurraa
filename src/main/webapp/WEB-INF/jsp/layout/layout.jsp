@@ -105,6 +105,14 @@
 									href="${linkTo[ChangeLocaleController].changeLocale( 'pt' , 'BR' )}">BR</a></li>
 							</ul></li>
 					</ul>
+					<form class="navbar-form navbar-right" action="${linkTo[ListOccurrenceController].find}" 
+					    role="search" method="get" >
+				        <div class="form-group">
+				          <input type="text" name="filter" id="filter"
+				                 class="form-control" placeholder="<fmt:message key="occurence.findOccurrence" />">
+				        </div>
+				        <button type="submit" class="btn btn-default"><fmt:message key="label.find" /></button>
+				      </form>
 				</div>
 			</div>
 		</nav>

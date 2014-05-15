@@ -24,7 +24,6 @@ import java.util.ResourceBundle;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
-import org.cejug.hurraa.model.EquipmentModel;
 import org.cejug.hurraa.model.Occurrence;
 import org.cejug.hurraa.model.bean.OccurrenceBean;
 import org.cejug.hurraa.model.bean.ProblemTypeBean;

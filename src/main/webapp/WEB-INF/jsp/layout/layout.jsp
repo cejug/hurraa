@@ -91,6 +91,8 @@
 											key="menu.admin.equipment" /></a></li>
 								<li><a href="${linkTo[ManufacturerController].index}"><fmt:message
 											key="menu.admin.manufacturer" /></a></li>
+								<li><a href="${linkTo[OccurrenceStateController].index}"><fmt:message
+                                            key="menu.admin.occurrenceState" /></a></li>
 								<li><a href="${linkTo[CostCenterController].index}"><fmt:message
 											key="menu.admin.costCenter" /></a></li>
 								<li><a href="${linkTo[ProblemTypeController].index}"><fmt:message

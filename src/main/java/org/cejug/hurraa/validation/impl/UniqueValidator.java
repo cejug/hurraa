@@ -58,10 +58,10 @@ public class UniqueValidator implements ConstraintValidator< Unique  ,  Object >
     @Override
     public boolean isValid(Object value,
             ConstraintValidatorContext context) {
-        return testeHaduken(value, context);
+        return validateUniqueness(value, context);
     }
     
-    public boolean testeHaduken(Object value,
+    public boolean validateUniqueness(Object value,
             ConstraintValidatorContext context){
         try {
             Field field = value.getClass().getDeclaredField(fieldName);

@@ -3,6 +3,7 @@
 src/main/webapp/WEB-INF/classes*
 src/main/webapp/WEB-INF/.gitignore
 target
+/target
 
 # Package Files #
 *.jar
@@ -13,8 +14,13 @@ target
 .classpath
 .project
 .settings*
-/target
+
+# Netbeans Files #
 nb-configuration.xml
+
+# Intellij Files #
+*.iml
+.idea
 
 # Other Editors #
 *~

@@ -66,9 +66,33 @@
 					</div>
 				</div>
 			</div>
-
-			<cejug:textFieldVertical name="occurrence.serialId"
-				value="${occurrence.serialId}" errorsMap="${errors}" />
+            
+            <div class="row">
+                <div class="col-md-6">
+					<cejug:textFieldVertical name="occurrence.serialId"
+						value="${occurrence.serialId}" errorsMap="${errors}" />
+				</div>
+				 <div class="col-md-6">
+				    <div
+                        class="form-group ${errors['occurrence.occurrenceState'] != null ? 'has-error' : ''}">
+                        <label for="occurrence.occurrenceState"> <fmt:message
+                                key="occurrence.occurrenceState" /> <cejug:errorMessage
+                                name="occurrence.occurrenceState" errorsMap="${errors}" />
+                        </label> 
+                        <select name="occurrence.occurrenceState.id" id="occurrence.occurrenceState"
+                            class="form-control input-sm">
+                            <option value="">
+                                <fmt:message key="label.emptySelect" />
+                            </option>
+                            <c:forEach items="${occurrenceStates}" var="state">
+                                <option value="${state.id}"
+                                    ${occurrence.occurrenceState == state ? 'selected="selected"' : '' }>${state.name}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+				 
+				</div>
+			</div>
 
 			<div class="row">
 				<div class="col-md-12 ">

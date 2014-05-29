@@ -84,8 +84,24 @@
 				</div>
 			</div>
 
-			<cejug:textFieldVertical name="occurrence.serialId" readonly="true"
-				value="${occurrence.serialId}" errorsMap="${errors}" />
+			<div class="row">
+                <div class="col-md-6">
+                    <cejug:textFieldVertical name="occurrence.serialId" readonly="true"
+                        value="${occurrence.serialId}" errorsMap="${errors}" />
+                </div>
+                 <div class="col-md-6">
+                    <div
+                        class="form-group ${errors['occurrence.occurrenceState'] != null ? 'has-error' : ''}">
+                        <label for="occurrence.occurrenceState"> <fmt:message
+                                key="occurrence.occurrenceState" /> <cejug:errorMessage
+                                name="occurrence.occurrenceState" errorsMap="${errors}" />
+                        </label> 
+                        <input type="text" class="form-control input-sm" 
+                           value="${occurrence.occurrenceState.name}"  readonly="readonly" />
+                    </div>
+                </div> 
+            </div>				
+				
 
 			<div class="row">
 				<div class="col-md-12 ">

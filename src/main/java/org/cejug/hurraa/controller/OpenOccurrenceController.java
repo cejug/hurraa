@@ -26,6 +26,7 @@ import javax.validation.Valid;
 
 import org.cejug.hurraa.model.Occurrence;
 import org.cejug.hurraa.model.bean.OccurrenceBean;
+import org.cejug.hurraa.model.bean.OccurrenceStateBean;
 import org.cejug.hurraa.model.bean.ProblemTypeBean;
 import org.cejug.hurraa.model.bean.SectorBean;
 import org.cejug.hurraa.model.bean.UserBean;
@@ -48,6 +49,7 @@ public class OpenOccurrenceController {
 	private ResourceBundle messageBundle;
 	private ResourceBundle validationBundle;
 	private ProblemTypeBean problemTypeBean;
+	private OccurrenceStateBean occurrenceStateBean;
 	private SectorBean sectorBean;
 	
 	@Inject
@@ -61,10 +63,12 @@ public class OpenOccurrenceController {
 	public OpenOccurrenceController(Result result, OccurrenceBean occurrenceBean,
 			ProblemTypeBean problemTypeBean,
 			SectorBean sectorBean,
+			OccurrenceStateBean occurrenceStateBean,
 			ResourceBundle messagesBundle,
 			@ValidationMessages ResourceBundle validationBundle) {
 		this.result = result;
 		this.occurrenceBean = occurrenceBean;
+		this.occurrenceStateBean = occurrenceStateBean;
 		this.messageBundle = messagesBundle;
 		this.validationBundle = validationBundle;
 		this.problemTypeBean = problemTypeBean;
@@ -76,6 +80,7 @@ public class OpenOccurrenceController {
 	public void form() {
 		result.include("problemTypes", problemTypeBean.findAll());
 		result.include("sectors", sectorBean.findAll());
+		result.include("occurrenceStates" , occurrenceStateBean.findAll() );
 	}
 
 	@Post
@@ -83,6 +88,7 @@ public class OpenOccurrenceController {
 	public void processForm(@Valid Occurrence occurrence, Validator validator) {
 		verifyIfSelectedSector(occurrence, validator);
 		verifyIfSelectedProblemType(occurrence, validator);
+		verifyIfSelectedOccurrenceState(occurrence, validator);
 		validator.onErrorForwardTo(OpenOccurrenceController.class).form();
 		
 		//TODO Add user from the session
@@ -93,20 +99,30 @@ public class OpenOccurrenceController {
 		result.forwardTo(OpenOccurrenceController.class).form();
 	}
 
-	protected void verifyIfSelectedSector(Occurrence ocurrence,
+	private void verifyIfSelectedOccurrenceState(Occurrence occurrence,
 			Validator validator) {
-		if (ocurrence.getSector() == null
-				|| ocurrence.getSector().getId() == null) {
+		if (occurrence.getOccurrenceState() == null
+				|| occurrence.getOccurrenceState().getId() == null) {
+			validator
+					.add(new SimpleMessage("occurrence.occurrenceState", validationBundle
+							.getString("occurrence.occurrenceState.required")));
+		}
+	}
+
+	protected void verifyIfSelectedSector(Occurrence occurrence,
+			Validator validator) {
+		if (occurrence.getSector() == null
+				|| occurrence.getSector().getId() == null) {
 			validator
 					.add(new SimpleMessage("occurrence.sector", validationBundle
 							.getString("occurrence.sector.required")));
 		}
 	}
 	
-	protected void verifyIfSelectedProblemType(Occurrence ocurrence,
+	protected void verifyIfSelectedProblemType(Occurrence occurrence,
 			Validator validator) {
-		if (ocurrence.getProblemType() == null
-				|| ocurrence.getProblemType().getId() == null) {
+		if (occurrence.getProblemType() == null
+				|| occurrence.getProblemType().getId() == null) {
 			validator
 					.add(new SimpleMessage("occurrence.problemType", validationBundle
 							.getString("occurrence.problemType.required")));

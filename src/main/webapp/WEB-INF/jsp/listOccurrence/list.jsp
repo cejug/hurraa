@@ -29,7 +29,7 @@
             <td><fmt:message key="occurrence.dateOfOpening" /></td>
             <td><fmt:message key="occurrence.problemType" /></td>
             <td><fmt:message key="occurrence.sector" /></td>
-            <td><fmt:message key="occurrence.status" /></td>
+            <td><fmt:message key="occurrence.occurrenceState" /></td>
             <td></td>
         </tr>
         <c:if test="${empty occurrences}">
@@ -43,7 +43,7 @@
                 </td>
                 <td>${occurrence.problemType.name }</td>
                 <td>${occurrence.sector.name }</td>
-                <td>${occurrence.status }</td>                
+                <td>${occurrence.occurrenceState.name }</td>                
                 
                 <td><a
                     href="${linkTo[ListOccurrenceController].detail(occurrence.id)}"

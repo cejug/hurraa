@@ -125,6 +125,21 @@
 				</configuration>
 			</plugin>
 
+            <!-- this is for those using intellij community to start, stop, deploy... -->
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>1.0.1.Final</version>
+                <configuration>
+                    <jboss-home>${env.WILDFLY_HOME}</jboss-home>
+                    <modules-path>
+                        <paths>
+                            <path>${env.WILDFLY_HOME}/modules</path>
+                        </paths>
+                    </modules-path>
+                </configuration>
+            </plugin>
+
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.12</version>

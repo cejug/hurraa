@@ -30,6 +30,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -54,7 +55,9 @@ public class Occurrence implements Serializable {
 	@Lob
 	private String description;
 
-	private String status;
+	@ManyToOne
+	@JoinColumn(name="occurrenceState_id")
+	private OccurrenceState occurrenceState;
 	
 	@ManyToOne
 	@JoinColumn(name = "problemType_id" , nullable = false)
@@ -70,7 +73,10 @@ public class Occurrence implements Serializable {
 	
 	public Occurrence() { }
 	
-	
+	@PrePersist
+	public void runBeforeCreate(){
+		dateOfOpening = new Date();
+	}
 	
 	public Long getId() {
 		return id;
@@ -104,14 +110,6 @@ public class Occurrence implements Serializable {
 		this.description = description;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 	public ProblemType getProblemType() {
 		return problemType;
 	}
@@ -134,6 +132,18 @@ public class Occurrence implements Serializable {
 
 	public void setSector(Sector sector) {
 		this.sector = sector;
+	}
+
+
+
+	public OccurrenceState getOccurrenceState() {
+		return occurrenceState;
+	}
+
+
+
+	public void setOccurrenceState(OccurrenceState occurrenceState) {
+		this.occurrenceState = occurrenceState;
 	}
 	
 }

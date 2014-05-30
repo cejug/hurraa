@@ -151,14 +151,6 @@
 				</configuration>
 			</plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.4</version>
-				<configuration>					
-					<encoding>ISO-8859-1</encoding>
-				</configuration>
-			</plugin>
 		</plugins>
 
 		<resources>

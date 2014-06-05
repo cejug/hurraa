@@ -40,79 +40,72 @@ import br.com.caelum.vraptor.validator.Validator;
 @Controller
 public class UserController {
 
-	private Result result;
-	private UserBean userBean;
-	private ResourceBundle messagesBundle;
-	private ResourceBundle validationBundle;
+    @Inject
+    private Result result;
+    @Inject
+    private UserBean userBean;
+    @Inject
+    private ResourceBundle messagesBundle;
+    @Inject
+    @ValidationMessages
+    private ResourceBundle validationBundle;
 
-	public UserController() {
-		super();
-	}
-
-	@Inject
-	public UserController(Result result, UserBean userBean , ResourceBundle bundle, @ValidationMessages ResourceBundle validationBundle) {
-		this.result = result;
-		this.userBean = userBean;
-		this.messagesBundle = bundle;
-		this.validationBundle = validationBundle;
-	}
-	
-	@Path(value = { "", "/" })
+    @Path(value = {"", "/"})
     public void index() {
         result.forwardTo(UserController.class).list();
     }
 
-	@Path("form")
-	public void form() {
+    @Path("form")
+    public void form() {
 
-	}
+    }
 
-	@Path("form/{id}")
-	public void form(Long id) {
-		User user = userBean.findById(id);
-		result.include(user);
-	}
+    @Path("form/{id}")
+    public void form(Long id) {
+        User user = userBean.findById(id);
+        result.include(user);
+    }
 
-	@Post
-	@Path("insert")
-	public void insert(@Valid User user, String passwordConfirmation, Validator validator) {		
-		verifyPasswordConfirmation(user, passwordConfirmation, validator);
-		validator.onErrorForwardTo(UserController.class).form();
-		
-		userBean.insert(user);
-		result.include("message", messagesBundle.getString("insert.success") );
-		result.redirectTo("/user/list");
-	}
+    @Post
+    @Path("insert")
+    public void insert(@Valid User user, String passwordConfirmation, Validator validator) {
+        verifyPasswordConfirmation(user, passwordConfirmation, validator);
+        validator.onErrorForwardTo(UserController.class).form();
 
-	@Get
-	@Path("list")
-	public void list() {
-		result.include("users", userBean.findAll());
-	}
+        userBean.insert(user);
+        result.include("message", messagesBundle.getString("insert.success"));
+        result.redirectTo("/user/list");
+    }
 
-	@Post
-	@Path("update")
-	public void update(@Valid User user, String passwordConfirmation, Validator validator) {		
-		verifyPasswordConfirmation(user, passwordConfirmation, validator);
-		validator.onErrorForwardTo(UserController.class).form();
-		
-		userBean.update(user);
-		result.include("message", messagesBundle.getString("update.success") );
-		result.redirectTo(UserController.class).list();
-	}
+    @Get
+    @Path("list")
+    public void list() {
+        result.include("users", userBean.findAll());
+    }
 
-	@Path("delete/{user.id}")
-	public void delete(User user) {
-		userBean.delete(user);
-		result.include("message", messagesBundle.getString("delete.success") );
-		result.redirectTo(UserController.class).list();
-	}
-	
-	protected void verifyPasswordConfirmation(User user, String passwordConfirmation, Validator validator) {
-		if ((user != null) && (user.getPassword() != null)) {
-			if (!user.getPassword().equals(passwordConfirmation)) {				
-				validator.add(new SimpleMessage("passwordConfirmation", validationBundle.getString("user.passwordConfirmationNotEquals")));
-			}
-		}
-	}
+    @Post
+    @Path("update")
+    public void update(@Valid User user, String passwordConfirmation, Validator validator) {
+        verifyPasswordConfirmation(user, passwordConfirmation, validator);
+        validator.onErrorForwardTo(UserController.class).form();
+
+        userBean.update(user);
+        result.include("message", messagesBundle.getString("update.success"));
+        result.redirectTo(UserController.class).list();
+    }
+
+    @Path("delete/{user.id}")
+    public void delete(User user) {
+        userBean.delete(user);
+        result.include("message", messagesBundle.getString("delete.success"));
+        result.redirectTo(UserController.class).list();
+    }
+
+    protected void verifyPasswordConfirmation(User user, String passwordConfirmation, Validator validator) {
+        if ((user != null) && (user.getPassword() != null)) {
+            if (!user.getPassword().equals(passwordConfirmation)) {
+                validator.add(new SimpleMessage("passwordConfirmation", validationBundle.getString("user.passwordConfirmationNotEquals")));
+            }
+        }
+    }
 }

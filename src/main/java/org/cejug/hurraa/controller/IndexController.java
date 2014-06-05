@@ -28,18 +28,12 @@ import br.com.caelum.vraptor.Result;
 @Controller
 public class IndexController {
 
+    @Inject
 	private Result result;
-
-	@Deprecated
-	public IndexController() {}
-
-	@Inject
-	public IndexController(Result result) {
-		this.result = result;
-	}
 
 	@Path("/")
 	public void index() {
+
 	}
 
 }

@@ -39,72 +39,66 @@ import br.com.caelum.vraptor.validator.Validator;
 @Controller
 public class ProblemTypeController {
 
-	private Result result;
-	private ProblemTypeBean problemTypeBean;	
-	private ResourceBundle messagesBundle;
+    @Inject
+    private Result result;
+    @Inject
+    private ProblemTypeBean problemTypeBean;
+    @Inject
+    private ResourceBundle messagesBundle;
 
-	@Deprecated
-	public ProblemTypeController() {};
+    @Path(value = {"", "/"})
+    public void index() {
+        result.forwardTo(this).list();
+    }
 
-	@Inject
-	public ProblemTypeController(Result result, ProblemTypeBean problemTypeBean, ResourceBundle messagesBundle) {
-		this.result = result;
-		this.problemTypeBean = problemTypeBean;
-		this.messagesBundle = messagesBundle;		
-	}
-	
-	@Path(value = { "", "/" })
-	public void index() {
-		result.forwardTo(this).list();
-	}
-	
-	@Path("form")
-	public void form() {}
-	
-	@Path("form/{id}")
-	public void form(Long id) {
-		ProblemType problemType = problemTypeBean.findById(id);
-		result.include(problemType);
-	}
-	
-	@Post("insert")
-	public void insert(
-			@Valid
-			@Unique(identityPropertyName = "id", propertyName = "name", entityClass = ProblemType.class)			
-			ProblemType problemType, Validator validator) {
-		
-		validator.onErrorForwardTo(this).form();
-		
-		problemTypeBean.insert(problemType);
-		
-		result.include("message", messagesBundle.getString("insert.success"));
-		result.redirectTo(this).list();
-	}
-	
-	@Post
-	@Path("update")
-	public void update(
-			@Valid
-			@Unique(identityPropertyName = "id", propertyName = "name", entityClass = ProblemType.class)
-			ProblemType problemType, Validator validator) {
-		validator.onErrorForwardTo(this).form();
-		
-		problemTypeBean.update(problemType);
-		
-		result.include("message", messagesBundle.getString("update.success"));		
-		result.redirectTo(this).list();		
-	}
-	
-	@Get("list")
-	public void list() {
-		result.include("problemTypes", problemTypeBean.findAll());		
-	}
-	
-	@Path("delete/{problemType.id}")
-	public void delete(ProblemType problemType) {
-		problemTypeBean.delete(problemType);
-		
-		result.include("message", messagesBundle.getString("delete.success"));
-		result.redirectTo(this).list();
-	}
+    @Path("form")
+    public void form() {
+    }
+
+    @Path("form/{id}")
+    public void form(Long id) {
+        ProblemType problemType = problemTypeBean.findById(id);
+        result.include(problemType);
+    }
+
+    @Post("insert")
+    public void insert(
+            @Valid
+            @Unique(identityPropertyName = "id", propertyName = "name", entityClass = ProblemType.class)
+            ProblemType problemType, Validator validator) {
+
+        validator.onErrorForwardTo(this).form();
+
+        problemTypeBean.insert(problemType);
+
+        result.include("message", messagesBundle.getString("insert.success"));
+        result.redirectTo(this).list();
+    }
+
+    @Post
+    @Path("update")
+    public void update(
+            @Valid
+            @Unique(identityPropertyName = "id", propertyName = "name", entityClass = ProblemType.class)
+            ProblemType problemType, Validator validator) {
+        validator.onErrorForwardTo(this).form();
+
+        problemTypeBean.update(problemType);
+
+        result.include("message", messagesBundle.getString("update.success"));
+        result.redirectTo(this).list();
+    }
+
+    @Get("list")
+    public void list() {
+        result.include("problemTypes", problemTypeBean.findAll());
+    }
+
+    @Path("delete/{problemType.id}")
+    public void delete(ProblemType problemType) {
+        problemTypeBean.delete(problemType);
+
+        result.include("message", messagesBundle.getString("delete.success"));
+        result.redirectTo(this).list();
+    }
 }

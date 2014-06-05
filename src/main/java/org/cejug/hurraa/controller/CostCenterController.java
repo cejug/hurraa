@@ -38,22 +38,15 @@ import br.com.caelum.vraptor.validator.Validator;
 @Path("cost-center")
 @Controller
 public class CostCenterController {
-	
-	private Result result;
-    private CostCenterBean costCenterBean;
-    private ResourceBundle messagesBundle;
-    
-    @Deprecated
-    public CostCenterController() {	}
-    
-    @Inject
-    public CostCenterController( Result result , CostCenterBean costCenterBean , ResourceBundle messagesBundle  ) {
-    	this.result = result;
-    	this.costCenterBean = costCenterBean;
-    	this.messagesBundle = messagesBundle;
-	}
 
-    @Path(value = { "", "/" })
+    @Inject
+    private Result result;
+    @Inject
+    private CostCenterBean costCenterBean;
+    @Inject
+    private ResourceBundle messagesBundle;
+
+    @Path(value = {"", "/"})
     public void index() {
         result.forwardTo(CostCenterController.class).list();
     }
@@ -66,18 +59,18 @@ public class CostCenterController {
     @Path("form/{id}")
     public void form(Long id) {
         CostCenter costCenter = costCenterBean.findById(id);
-        result.include( costCenter );
+        result.include(costCenter);
     }
 
     @Post("insert")
     public void insert(
-        @Valid
-        @Unique(propertyName= "name" , identityPropertyName="id" , entityClass = CostCenter.class)
-        CostCenter costCenter , Validator validator ) {
-    	validator.onErrorForwardTo( CostCenterController.class ).form();
-    	
-    	costCenterBean.insert(costCenter);
-    	result.include("message", messagesBundle.getString("insert.success") );
+            @Valid
+            @Unique(propertyName = "name", identityPropertyName = "id", entityClass = CostCenter.class)
+            CostCenter costCenter, Validator validator) {
+        validator.onErrorForwardTo(CostCenterController.class).form();
+
+        costCenterBean.insert(costCenter);
+        result.include("message", messagesBundle.getString("insert.success"));
         result.redirectTo(CostCenterController.class).list();
     }
 
@@ -87,21 +80,21 @@ public class CostCenterController {
     }
 
     @Post("update")
-    public void update(@Valid 
-            @Unique(propertyName= "name" , identityPropertyName="id" , entityClass = CostCenter.class)
-            CostCenter costCenter , Validator validator) {
-    	validator.onErrorForwardTo( CostCenterController.class ).form();
-    	
-    	costCenterBean.update( costCenter );
-    	result.include("message", messagesBundle.getString("update.success") );
+    public void update(@Valid
+                       @Unique(propertyName = "name", identityPropertyName = "id", entityClass = CostCenter.class)
+                       CostCenter costCenter, Validator validator) {
+        validator.onErrorForwardTo(CostCenterController.class).form();
+
+        costCenterBean.update(costCenter);
+        result.include("message", messagesBundle.getString("update.success"));
         result.redirectTo(CostCenterController.class).list();
     }
 
     @Path("delete/{costCenter.id}")
     public void delete(CostCenter costCenter) {
-    	costCenterBean.delete(costCenter);
-    	result.include("message", messagesBundle.getString("delete.success") );
+        costCenterBean.delete(costCenter);
+        result.include("message", messagesBundle.getString("delete.success"));
         result.redirectTo(CostCenterController.class).list();
     }
-	
+
 }

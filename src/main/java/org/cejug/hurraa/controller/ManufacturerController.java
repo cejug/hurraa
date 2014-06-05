@@ -38,68 +38,59 @@ import br.com.caelum.vraptor.validator.Validator;
 @Controller
 public class ManufacturerController {
 
-	private Result result;
-	private ManufacturerBean manufacturerBean;
-	private ResourceBundle messagesBundle;
+    @Inject
+    private Result result;
+    @Inject
+    private ManufacturerBean manufacturerBean;
+    @Inject
+    private ResourceBundle messagesBundle;
 
-	public ManufacturerController() {
-	}
-
-	@Inject
-	public ManufacturerController(Result result,
-			ManufacturerBean manufacturerBean,
-			ResourceBundle messagesBundle) {
-		this.result = result;
-		this.manufacturerBean = manufacturerBean;
-		this.messagesBundle = messagesBundle;
-	}
-	
-	@Path(value = { "", "/" })
+    @Path(value = {"", "/"})
     public void index() {
         result.forwardTo(ManufacturerController.class).list();
     }
 
-	@Path("form")
-	public void form() {
+    @Path("form")
+    public void form() {
 
-	}
+    }
 
-	@Path("form/{id}")
-	public void form(Long id) {
-		Manufacturer manufacturer = manufacturerBean.findById(id);
-		result.include(manufacturer);
-	}
+    @Path("form/{id}")
+    public void form(Long id) {
+        Manufacturer manufacturer = manufacturerBean.findById(id);
+        result.include(manufacturer);
+    }
 
-	@Post
-	@Path("insert")
-	public void insert(@Valid Manufacturer manufacturer , Validator validator) {
-	    validator.onErrorRedirectTo( ManufacturerController.class ).form();
-	    
-		manufacturerBean.insert(manufacturer);
-		result.include("message", messagesBundle.getString("insert.success") );
-		result.redirectTo("/manufacturer/list");
-	}
+    @Post
+    @Path("insert")
+    public void insert(@Valid Manufacturer manufacturer, Validator validator) {
+        validator.onErrorRedirectTo(ManufacturerController.class).form();
 
-	@Get
-	@Path("list")
-	public void list() {
-		result.include("manufacturers", manufacturerBean.findAll());
-	}
+        manufacturerBean.insert(manufacturer);
+        result.include("message", messagesBundle.getString("insert.success"));
+        result.redirectTo("/manufacturer/list");
+    }
 
-	@Post
-	@Path("update")
-	public void update(@Valid Manufacturer manufacturer , Validator validator) {
-	    validator.onErrorRedirectTo( ManufacturerController.class ).form();
-	    
-		manufacturerBean.update(manufacturer);
-		result.include("message", messagesBundle.getString("update.success") );
-		result.redirectTo(ManufacturerController.class).list();
-	}
+    @Get
+    @Path("list")
+    public void list() {
+        result.include("manufacturers", manufacturerBean.findAll());
+    }
 
-	@Path("delete/{manufacturer.id}")
-	public void delete(Manufacturer manufacturer) {
-		manufacturerBean.delete(manufacturer);
-		result.include("message", messagesBundle.getString("delete.success") );
-		result.redirectTo(ManufacturerController.class).list();
-	}
+    @Post
+    @Path("update")
+    public void update(@Valid Manufacturer manufacturer, Validator validator) {
+        validator.onErrorRedirectTo(ManufacturerController.class).form();
+
+        manufacturerBean.update(manufacturer);
+        result.include("message", messagesBundle.getString("update.success"));
+        result.redirectTo(ManufacturerController.class).list();
+    }
+
+    @Path("delete/{manufacturer.id}")
+    public void delete(Manufacturer manufacturer) {
+        manufacturerBean.delete(manufacturer);
+        result.include("message", messagesBundle.getString("delete.success"));
+        result.redirectTo(ManufacturerController.class).list();
+    }
 }

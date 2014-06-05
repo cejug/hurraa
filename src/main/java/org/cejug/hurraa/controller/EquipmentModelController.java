@@ -41,53 +41,45 @@ import br.com.caelum.vraptor.validator.Validator;
 @Path("equipment-model")
 @Controller
 public class EquipmentModelController {
-    
-    private Result result;
-    private EquipmentModelBean equipmentModelBean;
-    private EquipmentTypeBean equipmentTypeBean;
-    private ResourceBundle validationBundle;
-    private ResourceBundle messagesBundle;
-    
-    @Deprecated
-    public EquipmentModelController() {  }
-    
-    @Inject
-    public EquipmentModelController( Result result , EquipmentModelBean equipmentModelBean, EquipmentTypeBean equipmentTypeBean,
-            ResourceBundle messagesBundle , @ValidationMessages ResourceBundle validationBundle ) {
-        this.result = result;
-        this.equipmentModelBean = equipmentModelBean;
-        this.equipmentTypeBean = equipmentTypeBean;
-        this.validationBundle = validationBundle;
-        this.messagesBundle = messagesBundle;
-    }
 
-    @Path(value = { "", "/" })
+    @Inject
+    private Result result;
+    @Inject
+    private EquipmentModelBean equipmentModelBean;
+    @Inject
+    private EquipmentTypeBean equipmentTypeBean;
+    @Inject
+    private ResourceBundle validationBundle;
+    @Inject
+    @ValidationMessages
+    private ResourceBundle messagesBundle;
+
+    @Path(value = {"", "/"})
     public void index() {
         result.forwardTo(EquipmentModelController.class).list();
     }
 
     @Path("form")
     public void form() {
-        result.include("types" , equipmentTypeBean.findAll() );
+        result.include("types", equipmentTypeBean.findAll());
     }
 
     @Path("form/{id}")
     public void form(Long id) {
         EquipmentModel equipmentModel = equipmentModelBean.findById(id);
-        result.include( equipmentModel );
-        result.include("types" , equipmentTypeBean.findAll() );
+        result.include(equipmentModel);
+        result.include("types", equipmentTypeBean.findAll());
     }
 
     @Post("insert")
-    public void insert(@Valid 
-            @Unique(propertyName = "name" , identityPropertyName="id" , entityClass =EquipmentModel.class )
-            EquipmentModel equipmentModel
-            , Validator validator) {
-        verifyIfSelectedEquipmentType(equipmentModel , validator);
-        validator.onErrorForwardTo( EquipmentModelController.class ).form();
-        
+    public void insert(@Valid
+                       @Unique(propertyName = "name", identityPropertyName = "id", entityClass = EquipmentModel.class)
+                       EquipmentModel equipmentModel, Validator validator) {
+        verifyIfSelectedEquipmentType(equipmentModel, validator);
+        validator.onErrorForwardTo(EquipmentModelController.class).form();
+
         equipmentModelBean.insert(equipmentModel);
-        result.include("message", messagesBundle.getString("insert.success") );
+        result.include("message", messagesBundle.getString("insert.success"));
         result.redirectTo(EquipmentModelController.class).list();
     }
 
@@ -98,28 +90,27 @@ public class EquipmentModelController {
 
     @Post("update")
     public void update(@Valid
-            @Unique(propertyName = "name" , identityPropertyName="id" , entityClass =EquipmentModel.class )
-            EquipmentModel equipmentModel
-            , Validator validator) {
-        verifyIfSelectedEquipmentType(equipmentModel , validator);
-        validator.onErrorForwardTo( EquipmentModelController.class ).form();
-        
-        equipmentModelBean.update( equipmentModel );
-        result.include("message", messagesBundle.getString("update.success") );
+                       @Unique(propertyName = "name", identityPropertyName = "id", entityClass = EquipmentModel.class)
+                       EquipmentModel equipmentModel, Validator validator) {
+        verifyIfSelectedEquipmentType(equipmentModel, validator);
+        validator.onErrorForwardTo(EquipmentModelController.class).form();
+
+        equipmentModelBean.update(equipmentModel);
+        result.include("message", messagesBundle.getString("update.success"));
         result.redirectTo(EquipmentModelController.class).list();
     }
 
     @Path("delete/{equipmentModel.id}")
     public void delete(EquipmentModel equipmentModel) {
         equipmentModelBean.delete(equipmentModel);
-        result.include("message", messagesBundle.getString("delete.success") );
+        result.include("message", messagesBundle.getString("delete.success"));
         result.redirectTo(EquipmentModelController.class).list();
     }
-    
-    protected void verifyIfSelectedEquipmentType(EquipmentModel equipmentModel , Validator validator ){
-        if(equipmentModel.getEquipmentType() == null || equipmentModel.getEquipmentType().getId() == null ){
-            validator.add( new SimpleMessage( "equipmentModel.equipmentType.id" , validationBundle.getString("equipmentModel.equipmentType.required") ) );
+
+    protected void verifyIfSelectedEquipmentType(EquipmentModel equipmentModel, Validator validator) {
+        if (equipmentModel.getEquipmentType() == null || equipmentModel.getEquipmentType().getId() == null) {
+            validator.add(new SimpleMessage("equipmentModel.equipmentType.id", validationBundle.getString("equipmentModel.equipmentType.required")));
         }
     }
-    
+
 }

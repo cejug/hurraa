@@ -38,22 +38,15 @@ import br.com.caelum.vraptor.validator.Validator;
 @Path("equipment-type")
 @Controller
 public class EquipmentTypeController {
-	
-	private Result result;
-    private EquipmentTypeBean equipmentTypeBean;
-    private ResourceBundle messagesBundle;
-    
-    @Deprecated
-    public EquipmentTypeController() {	}
-    
-    @Inject
-    public EquipmentTypeController( Result result , EquipmentTypeBean equipmentTypeBean , ResourceBundle messagesBundle  ) {
-    	this.result = result;
-    	this.equipmentTypeBean = equipmentTypeBean;
-    	this.messagesBundle = messagesBundle;
-	}
 
-    @Path(value = { "", "/" })
+    @Inject
+    private Result result;
+    @Inject
+    private EquipmentTypeBean equipmentTypeBean;
+    @Inject
+    private ResourceBundle messagesBundle;
+
+    @Path(value = {"", "/"})
     public void index() {
         result.forwardTo(EquipmentTypeController.class).list();
     }
@@ -66,15 +59,15 @@ public class EquipmentTypeController {
     @Path("form/{id}")
     public void form(Long id) {
         EquipmentType equipmentType = equipmentTypeBean.findById(id);
-        result.include( equipmentType );
+        result.include(equipmentType);
     }
 
     @Post("insert")
-    public void insert(@Valid EquipmentType equipmentType , Validator validator ) {
-    	validator.onErrorForwardTo( EquipmentTypeController.class ).form();
-    	
-    	equipmentTypeBean.insert(equipmentType);
-    	result.include("message", messagesBundle.getString("insert.success") );
+    public void insert(@Valid EquipmentType equipmentType, Validator validator) {
+        validator.onErrorForwardTo(EquipmentTypeController.class).form();
+
+        equipmentTypeBean.insert(equipmentType);
+        result.include("message", messagesBundle.getString("insert.success"));
         result.redirectTo(EquipmentTypeController.class).list();
     }
 
@@ -84,20 +77,20 @@ public class EquipmentTypeController {
     }
 
     @Post("update")
-    public void update(@Valid EquipmentType equipmentType , Validator validator) {
-    	validator.onErrorForwardTo( EquipmentTypeController.class ).form();
-    	
-    	equipmentTypeBean.update( equipmentType );
-    	result.include("message", messagesBundle.getString("update.success") );
+    public void update(@Valid EquipmentType equipmentType, Validator validator) {
+        validator.onErrorForwardTo(EquipmentTypeController.class).form();
+
+        equipmentTypeBean.update(equipmentType);
+        result.include("message", messagesBundle.getString("update.success"));
         result.redirectTo(EquipmentTypeController.class).list();
     }
 
     @Path("delete/{equipmentType.id}")
-    public void delete(@EquipmentTypeInUse EquipmentType equipmentType , Validator validator) {
-        validator.onErrorForwardTo( EquipmentTypeController.class ).list();
+    public void delete(@EquipmentTypeInUse EquipmentType equipmentType, Validator validator) {
+        validator.onErrorForwardTo(EquipmentTypeController.class).list();
         equipmentTypeBean.delete(equipmentType);
-        result.include("message", messagesBundle.getString("delete.success") );
+        result.include("message", messagesBundle.getString("delete.success"));
         result.redirectTo(EquipmentTypeController.class).list();
     }
-	
+
 }

@@ -39,21 +39,14 @@ import br.com.caelum.vraptor.validator.Validator;
 @Controller
 public class SectorController {
 
-    private Result result;
-    private SectorBean sectorBean;
-    private ResourceBundle messagesBundle;
-    
-    @Deprecated
-    public SectorController() {	}
-    
     @Inject
-    public SectorController(Result result, SectorBean sectorBean , ResourceBundle messagesBundle ) {
-    	this.result = result;
-    	this.sectorBean = sectorBean;
-    	this.messagesBundle = messagesBundle;
-	}
+    private Result result;
+    @Inject
+    private SectorBean sectorBean;
+    @Inject
+    private ResourceBundle messagesBundle;
 
-    @Path(value = { "", "/" })
+    @Path(value = {"", "/"})
     public void index() {
         result.forwardTo(SectorController.class).list();
     }
@@ -70,11 +63,11 @@ public class SectorController {
     }
 
     @Post("/insert")
-    public void insert(@Valid Sector sector , Validator validator) {
-    	validator.onErrorForwardTo( SectorController.class ).form();
-    	
+    public void insert(@Valid Sector sector, Validator validator) {
+        validator.onErrorForwardTo(SectorController.class).form();
+
         sectorBean.insert(sector);
-        result.include("message", messagesBundle.getString("insert.success") );
+        result.include("message", messagesBundle.getString("insert.success"));
         result.redirectTo(SectorController.class).list();
     }
 
@@ -86,18 +79,18 @@ public class SectorController {
 
     @Post
     @Path("update")
-    public void update(@Valid Sector sector , Validator validator) {
-    	validator.onErrorForwardTo( SectorController.class ).form();
-    	
+    public void update(@Valid Sector sector, Validator validator) {
+        validator.onErrorForwardTo(SectorController.class).form();
+
         sectorBean.update(sector);
-        result.include("message", messagesBundle.getString("update.success") );
+        result.include("message", messagesBundle.getString("update.success"));
         result.redirectTo(SectorController.class).list();
     }
 
     @Path("delete/{sector.id}")
     public void delete(Sector sector) {
         sectorBean.delete(sector);
-        result.include("message", messagesBundle.getString("delete.success") );
+        result.include("message", messagesBundle.getString("delete.success"));
         result.redirectTo(SectorController.class).list();
     }
 }

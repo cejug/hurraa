@@ -19,13 +19,25 @@
 */
 package org.cejug.hurraa.model.bean;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import org.cejug.hurraa.model.Occurrence;
+import org.cejug.hurraa.model.OccurrenceFieldUpdate;
+import org.cejug.hurraa.model.OccurrenceState;
+import org.cejug.hurraa.model.OccurrenceUpdate;
+import org.cejug.hurraa.model.ProblemType;
+import org.cejug.hurraa.model.Sector;
+import org.cejug.hurraa.model.builder.OccurrenceFieldUpdateBuilder;
 
 @Stateless
 public class OccurrenceBean extends AbstractBean<Occurrence> {
@@ -40,6 +52,44 @@ public class OccurrenceBean extends AbstractBean<Occurrence> {
 	@Override
 	public void insert(Occurrence entity) {
 		super.insert(entity);
+	}
+	
+	public void updateOccurrence(Occurrence occurrence , String updateNote){
+		OccurrenceUpdate occurrenceUpdate = new OccurrenceUpdate( occurrence , updateNote);
+		Occurrence oldOccurrence = findById(occurrence.getId());
+		occurrenceUpdate = checkDiffInTheFields( occurrenceUpdate , oldOccurrence );
+		
+		update(occurrence);
+		entityManager.persist(occurrenceUpdate);
+	}
+	
+	public OccurrenceUpdate checkDiffInTheFields(OccurrenceUpdate occurrenceUpdate, Occurrence oldOccurrence) {
+		List<OccurrenceFieldUpdate>  updatedFields = new ArrayList<>();
+		Occurrence occurrence = occurrenceUpdate.getOccurrence();
+		OccurrenceFieldUpdateBuilder builder = new OccurrenceFieldUpdateBuilder();
+		
+		OccurrenceFieldUpdate fieldUpdate;
+		if(!oldOccurrence.getSector().equals(occurrence.getSector())){
+			String newValue = entityManager.find( Sector.class , occurrence.getSector().getId() ).getName();
+			fieldUpdate = builder.withFieldName("sector").withNewValue( newValue )
+					.withOldValue( oldOccurrence.getSector().getName() ).forOccurrenceUpdate(occurrenceUpdate).build();
+			updatedFields.add(fieldUpdate);
+		}
+		if(!oldOccurrence.getProblemType().equals(occurrence.getProblemType() )){
+			String newValue = entityManager.find( ProblemType.class , occurrence.getProblemType().getId() ).getName();
+			fieldUpdate = builder.withFieldName("problemType").withNewValue( newValue )
+					.withOldValue( oldOccurrence.getProblemType().getName() ).forOccurrenceUpdate(occurrenceUpdate).build();
+			updatedFields.add(fieldUpdate);
+		}
+		if(!oldOccurrence.getOccurrenceState().equals( occurrence.getOccurrenceState() )){
+			String newValue = entityManager.find( OccurrenceState.class , occurrence.getOccurrenceState().getId() ).getName();
+			fieldUpdate = builder.withFieldName("occurrenceState").withNewValue( newValue )
+					.withOldValue( oldOccurrence.getOccurrenceState().getName() ).forOccurrenceUpdate(occurrenceUpdate).build();
+			updatedFields.add(fieldUpdate);
+		}
+		
+		occurrenceUpdate.setUpdatedFields(updatedFields);
+		return occurrenceUpdate;
 	}
 	
 	@Override

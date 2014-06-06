@@ -22,6 +22,7 @@
     <include file="org/cejug/hurraa/db/changelogs/20140411-12-efraimgentil.sql"/>
     <include file="org/cejug/hurraa/db/changelogs/20140514-13-efraimgentil.sql"/>
     <include file="org/cejug/hurraa/db/changelogs/20140528-14-efraimgentil.sql"/>
+    <include file="org/cejug/hurraa/db/changelogs/20140605-15-efraimgentil.sql"/>
     
     
 </databaseChangeLog>

@@ -13,78 +13,45 @@
 	</properties>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>br.com.caelum</groupId>
 			<artifactId>vraptor</artifactId>
 			<version>4.0.0-RC2</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
 			<version>3.0.7</version>
 		</dependency>
-
 		<dependency>
 			<groupId>opensymphony</groupId>
 			<artifactId>sitemesh</artifactId>
 			<version>2.4.2</version>
 		</dependency>
-
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 			<scope>provided</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-web-api</artifactId>
 			<version>7.0</version>
 			<scope>provided</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>5.0.1.Final</version>
 		</dependency>
-
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.8.1</version>
 			<scope>test</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>org.jboss.arquillian.junit</groupId>
-			<artifactId>arquillian-junit-container</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.wildfly</groupId>
-			<artifactId>wildfly-arquillian-container-managed</artifactId>
-			<version>8.0.0.CR1</version>
-			<scope>test</scope>
-		</dependency>
-
 	</dependencies>
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.jboss.arquillian</groupId>
-				<artifactId>arquillian-bom</artifactId>
-				<version>1.1.2.Final</version>
-				<scope>import</scope>
-				<type>pom</type>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 	<build>
 		<finalName>hurraa</finalName>

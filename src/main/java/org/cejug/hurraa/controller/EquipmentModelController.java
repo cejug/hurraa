@@ -49,9 +49,9 @@ public class EquipmentModelController {
     @Inject
     private EquipmentTypeBean equipmentTypeBean;
     @Inject
+    @ValidationMessages
     private ResourceBundle validationBundle;
     @Inject
-    @ValidationMessages
     private ResourceBundle messagesBundle;
 
     @Path(value = {"", "/"})

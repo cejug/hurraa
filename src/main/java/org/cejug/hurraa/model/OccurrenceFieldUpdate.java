@@ -23,6 +23,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -37,11 +39,11 @@ public class OccurrenceFieldUpdate implements Serializable {
 	private static final long serialVersionUID = 5317998715760939361L;
 
 	@Id
-	@Column(name="occurrenceUpdate_id" )
-	private Long ocurrenceUpdateId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	
 	@ManyToOne
-	@JoinColumn( name="occurrenceUpdate_id" , insertable = false , updatable = false )
+	@JoinColumn( name="occurrenceUpdate_id" )
 	private OccurrenceUpdate occurrenceUpdate;
 	
 	@NotBlank
@@ -53,25 +55,14 @@ public class OccurrenceFieldUpdate implements Serializable {
 	@NotNull
 	private String newValue;
 	
-	@PrePersist
-	public void prePersisteRoutine(){
-		ocurrenceUpdateId = occurrenceUpdate.getId();
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("OccurrenceFieldUpdate [ocurrenceUpdateId=");
-		builder.append(ocurrenceUpdateId);
-		builder.append(", occurrenceUpdate=");
-		builder.append(occurrenceUpdate);
-		builder.append(", fieldName=");
-		builder.append(fieldName);
-		builder.append(", oldValue=");
-		builder.append(oldValue);
-		builder.append(", newValue=");
-		builder.append(newValue);
-		builder.append("]");
+		builder.append("OccurrenceFieldUpdate [id=").append(id)
+				.append(", occurrenceUpdate=").append(occurrenceUpdate)
+				.append(", fieldName=").append(fieldName).append(", oldValue=")
+				.append(oldValue).append(", newValue=").append(newValue)
+				.append("]");
 		return builder.toString();
 	}
 
@@ -107,12 +98,12 @@ public class OccurrenceFieldUpdate implements Serializable {
 		this.newValue = newValue;
 	}
 
-	public Long getOcurrenceUpdateId() {
-		return ocurrenceUpdateId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setOcurrenceUpdateId(Long ocurrenceUpdateId) {
-		this.ocurrenceUpdateId = ocurrenceUpdateId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 }

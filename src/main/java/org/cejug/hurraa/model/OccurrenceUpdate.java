@@ -27,6 +27,7 @@ import java.util.List;
 import javax.ejb.Timeout;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -64,14 +65,21 @@ public class OccurrenceUpdate implements Serializable {
 	@JoinColumn(name="occurrence_id", nullable = false)
 	private Occurrence occurrence;
 	
-	@OneToMany(mappedBy="occurrenceUpdate" , orphanRemoval=true , cascade = CascadeType.ALL )
+	@OneToMany(mappedBy="occurrenceUpdate" , orphanRemoval=true , cascade = CascadeType.ALL  , fetch = FetchType.EAGER)
 	private List<OccurrenceFieldUpdate> updatedFields;
 	
 	@PrePersist
 	public void prePersistRoutine(){
 		updateDate = new Date();
 	}
-
+	
+	public boolean occurrenceWasChanged(){
+		return ( updateNote != null && !updateNote.isEmpty() )
+				|| ( updatedFields != null && !updatedFields.isEmpty() );
+	}
+	
+	public OccurrenceUpdate() {	}
+	
 	public OccurrenceUpdate( Occurrence occurrence , String updateNote ) {
 		this.occurrence = occurrence;
 		this.updateNote = updateNote;

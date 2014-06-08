@@ -23,12 +23,17 @@
 			<c:out value="${message}" />
 		</div>
 	</c:if>
+	<c:if test="${errorMessage != null}">
+        <div class="alert alert-danger">
+            <c:out value="${errorMessage}" />
+        </div>
+    </c:if>
 
 	<div style="width: 100%;" class="container-fluid">
 		<form class="form-horizontal" role="form"
-			action="${linkTo[UpdateOccurrenceController].processForm}"
+			action="${linkTo[UpdateOccurrenceController].processForm( occurrence.id )}"
 			method="post">
-            <input type="hidden" name="occurrence.id" value="${occurrence.id}">
+			<input type="hidden" name="occurrence.id" value="${occurrence.id}">
 			<div class="row">
 				<div class="col-md-6">
 					<div
@@ -51,7 +56,8 @@
 						<label for="occurrence.problemType"> <fmt:message
 								key="occurrence.problemType" /> <cejug:errorMessage
 								name="occurrence.problemType" errorsMap="${errors}" />
-						</label> <select name="occurrence.problemType.id"
+						</label>
+						<select name="occurrence.problemType.id"
 							id="occurrence.problemType" class="form-control input-sm">
 							<c:forEach items="${problemTypes}" var="type">
 								<option value="${type.id}"
@@ -101,11 +107,27 @@
 
 			<div class="row">
 				<div class="col-md-12 ">
+				    <h3><fmt:message key="updateOccurrence.updates" /></h3>
+					<c:forEach items="${occurrence.updates}" var="occurrenceUpdate">
+						<blockquote>
+                            <c:forEach items="${occurrenceUpdate.updatedFields}" var="fieldUpdate">
+                              <b><fmt:message key="occurrence.${fieldUpdate.fieldName}" />: ${fieldUpdate.oldValue} -> ${fieldUpdate.newValue}</b>
+                            </c:forEach> 
+                            <p>${occurrenceUpdate.updateNote}</p>
+                            <footer><fmt:formatDate value="${occurrenceUpdate.updateDate}" type="both" />
+                                 - <fmt:message key="occurrenceUpdate.madeBy" />: ${occurrenceUpdate.user.name}</footer>
+                        </blockquote>
+					</c:forEach>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12 ">
 					<div class="panel panel-default">
-						<div class="panel-heading">Update Note</div>
+						<div class="panel-heading"><fmt:message key="occurrenceUpdate.updateNote" /></div>
 						<div class="panel-body">
-						    <textarea class="form-control" rows="3"
-                                    name="updateNote" id="updateNote">${occurrence.description}</textarea>   
+							<textarea class="form-control" rows="3" name="updateNote"
+								id="updateNote"></textarea>
 						</div>
 					</div>
 				</div>
@@ -115,7 +137,7 @@
 				<button type="submit" class="btn btn-default btn-sm">
 					<fmt:message key="form.save" />
 				</button>
-				<a href="#youshouldchangethat" class="btn btn-danger btn-sm"> <fmt:message
+				<a href="${linkTo[ListOccurrenceController].list()}" class="btn btn-danger btn-sm"> <fmt:message
 						key="form.cancel" />
 				</a>
 			</div>

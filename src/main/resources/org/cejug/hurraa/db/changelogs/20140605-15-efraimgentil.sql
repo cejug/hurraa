@@ -12,11 +12,11 @@ create table OccurrenceUpdate (
 --rollback drop table OccurrenceUpdate;
 
 create table OccurrenceFieldUpdate (
+    id             bigint       not null primary key auto_increment,
     occurrenceUpdate_id         bigint,
     fieldName      varchar(255) not null,
     newValue       varchar(255) not null,
     oldValue       varchar(255) not null,
-    PRIMARY KEY (occurrenceUpdate_id),
     FOREIGN KEY (occurrenceUpdate_id) REFERENCES OccurrenceUpdate(id)
 ) engine = innodb;
 --rollback drop table OccurrenceUpdate;

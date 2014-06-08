@@ -25,11 +25,13 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 
 import org.cejug.hurraa.model.Occurrence;
+import org.cejug.hurraa.model.User;
 import org.cejug.hurraa.model.bean.OccurrenceBean;
 import org.cejug.hurraa.model.bean.OccurrenceStateBean;
 import org.cejug.hurraa.model.bean.ProblemTypeBean;
 import org.cejug.hurraa.model.bean.SectorBean;
 import org.cejug.hurraa.model.bean.UserBean;
+import org.cejug.hurraa.model.bean.exception.NoChangeInOccurrenceException;
 import org.cejug.hurraa.producer.ValidationMessages;
 
 import br.com.caelum.vraptor.Controller;
@@ -87,16 +89,19 @@ public class UpdateOccurrenceController {
 	}
 	
 	@Post
-	@Path("/")
-	public void processForm(String updateNote, @Valid Occurrence occurrence, Validator validator) {
+	@Path("/{occurrenceId}")
+	public void processForm(Long occurrenceId, String updateNote, @Valid Occurrence occurrence, Validator validator) {
 		validator.onErrorForwardTo(OpenOccurrenceController.class).form();
 		
 		//TODO Add user from the session
-		occurrence.setUser( userBean.findAll().get(0) );
-		
-		occurrenceBean.updateOccurrence( occurrence  , updateNote );
-		result.include("message" , messageBundle.getString("openOccurrence.messageSuccess") );
-		result.forwardTo(OpenOccurrenceController.class).form();
+		User user = userBean.findAll().get(0);
+		try {
+			occurrenceBean.updateOccurrence( occurrence  , updateNote , user);
+			result.include("message" , messageBundle.getString("updateOccurrence.messageSuccess") );
+		} catch (NoChangeInOccurrenceException e) {
+			result.include("errorMessage" , messageBundle.getString("updateOccurrence.messageError") );
+		}
+		result.forwardTo(this.getClass()).form( occurrenceId );
 	}
 	
 	@Get

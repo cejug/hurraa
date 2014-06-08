@@ -45,11 +45,17 @@
                 <td>${occurrence.sector.name }</td>
                 <td>${occurrence.occurrenceState.name }</td>                
                 
-                <td><a
+                <td>
+                <a
+                    href="${linkTo[UpdateOccurrenceController].form(occurrence.id)}"
+                    title="<fmt:message key='label.detail' />"><span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                <a
                     href="${linkTo[ListOccurrenceController].detail(occurrence.id)}"
                     title="<fmt:message key='label.detail' />"> <span
                         class="glyphicon glyphicon-zoom-in"></span>
-                </a></td>
+                </a>
+                </td>
             </tr>
         </c:forEach>
     </table>

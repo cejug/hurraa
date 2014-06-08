@@ -37,7 +37,11 @@ import org.cejug.hurraa.model.OccurrenceState;
 import org.cejug.hurraa.model.OccurrenceUpdate;
 import org.cejug.hurraa.model.ProblemType;
 import org.cejug.hurraa.model.Sector;
+import org.cejug.hurraa.model.User;
+import org.cejug.hurraa.model.bean.exception.NoChangeInOccurrenceException;
 import org.cejug.hurraa.model.builder.OccurrenceFieldUpdateBuilder;
+
+import com.opensymphony.sitemesh.compatability.OldDecorator2NewDecorator;
 
 @Stateless
 public class OccurrenceBean extends AbstractBean<Occurrence> {
@@ -54,13 +58,18 @@ public class OccurrenceBean extends AbstractBean<Occurrence> {
 		super.insert(entity);
 	}
 	
-	public void updateOccurrence(Occurrence occurrence , String updateNote){
+	public void updateOccurrence(Occurrence occurrence , String updateNote, User user) throws NoChangeInOccurrenceException{
+		Occurrence oldOccurrence = findById( occurrence.getId() );
 		OccurrenceUpdate occurrenceUpdate = new OccurrenceUpdate( occurrence , updateNote);
-		Occurrence oldOccurrence = findById(occurrence.getId());
+		occurrenceUpdate.setUser(user);
 		occurrenceUpdate = checkDiffInTheFields( occurrenceUpdate , oldOccurrence );
 		
-		update(occurrence);
-		entityManager.persist(occurrenceUpdate);
+		if( occurrenceUpdate.occurrenceWasChanged() ){
+			updateNewValues( occurrence , oldOccurrence );
+			entityManager.persist(occurrenceUpdate);
+		}else{
+			throw new NoChangeInOccurrenceException();
+		}
 	}
 	
 	public OccurrenceUpdate checkDiffInTheFields(OccurrenceUpdate occurrenceUpdate, Occurrence oldOccurrence) {
@@ -90,6 +99,13 @@ public class OccurrenceBean extends AbstractBean<Occurrence> {
 		
 		occurrenceUpdate.setUpdatedFields(updatedFields);
 		return occurrenceUpdate;
+	}
+	
+	private void updateNewValues(Occurrence occurrence , Occurrence oldOccurrence){
+		oldOccurrence.setSector( occurrence.getSector()  );
+		oldOccurrence.setOccurrenceState( occurrence.getOccurrenceState() );
+		oldOccurrence.setProblemType( occurrence.getProblemType() );
+		update( oldOccurrence );
 	}
 	
 	@Override

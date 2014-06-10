@@ -49,9 +49,9 @@ Create a env variable WILDFLY_HOME for arquillian.xml config
 
 1. LINUX - most of linux distributions: create a file wf.sh in /etc/profile.d with this content 
 ```bash
-export WILDFLY_HOME=/your_path_to/wildfly-8.0.0.Final
+export WILDFLY_HOME=/your_path_to/wildfly-8.1.0.Final
 ```
 2. MAC - add this content into /etc/profile
 ```bash
-WILDFLY_HOME=/your_path_to/wildfly-8.0.0.Final/
+WILDFLY_HOME=/your_path_to/wildfly-8.1.0.Final/
 ```

@@ -7,21 +7,21 @@ WF_FILE=/etc/profile.d/wf.sh;
 if ! [ -f "$WF_FILE" ]; then
 	echo "Setting environment variable";
 	echo "creating $WF_FILE...";
-	echo "export WILDFLY_HOME=/opt/wildfly-8.0.0.Final" >> $WF_FILE;
+	echo "export WILDFLY_HOME=/opt/wildfly-8.1.0.Final" >> $WF_FILE;
 fi;
 
 source $WF_FILE;
 ######################### WILDFLY SERVER ###############################
 
-WILDFLY_ZIP=wildfly-8.0.0.Final.zip;
+WILDFLY_ZIP=wildfly-8.1.0.Final.zip;
 
 if ! [ -d "$WILDFLY_HOME/bin" ]; then
 	if ! [ -f "$WILDFLY_ZIP" ]; then
 		echo "Downloading Wildfly 8 Final...";
-		wget http://download.jboss.org/wildfly/8.0.0.Final/wildfly-8.0.0.Final.zip;
+		wget http://download.jboss.org/wildfly/8.1.0.Final/wildfly-8.1.0.Final.zip;
 	fi;
 	echo "Extracting $WILDFLY_ZIP to /opt...";
-	unzip wildfly-8.0.0.Final.zip -d /opt;	
+	unzip wildfly-8.1.0.Final.zip -d /opt;
 fi;
 
 ######################### MYSQL DRIVER #################################

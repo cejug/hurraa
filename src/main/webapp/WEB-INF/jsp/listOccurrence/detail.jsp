@@ -112,10 +112,26 @@
 								name="occurrence.description" errorsMap="${errors}" />
 						</label>
 						<textarea class="form-control" rows="3"
-							name="occurrence.description" id="occurrence.description" readonly="true" >${occurrence.description}</textarea>
+							name="occurrence.description" id="occurrence.description" readonly="readonly" >${occurrence.description}</textarea>
 					</div>
 				</div>
 			</div>
+			
+			<div class="row">
+                <div class="col-md-12 ">
+                    <h3><fmt:message key="updateOccurrence.updates" /></h3>
+                    <c:forEach items="${occurrence.updates}" var="occurrenceUpdate">
+                        <blockquote>
+                            <c:forEach items="${occurrenceUpdate.updatedFields}" var="fieldUpdate">
+                              <b><fmt:message key="occurrence.${fieldUpdate.fieldName}" />: ${fieldUpdate.oldValue} -> ${fieldUpdate.newValue}</b>
+                            </c:forEach> 
+                            <p>${occurrenceUpdate.updateNote}</p>
+                            <footer><fmt:formatDate value="${occurrenceUpdate.updateDate}" type="both" />
+                                 - <fmt:message key="occurrenceUpdate.madeBy" />: ${occurrenceUpdate.user.name}</footer>
+                        </blockquote>
+                    </c:forEach>
+                </div>
+            </div>
 
 			<div class="form-group">
 				<a href="${linkTo[ListOccurrenceController].list()}" class="btn btn-danger btn-sm">

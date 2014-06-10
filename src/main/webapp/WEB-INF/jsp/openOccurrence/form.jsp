@@ -103,7 +103,7 @@
 								name="occurrence.description" errorsMap="${errors}" />
 						</label>
 						<textarea class="form-control" rows="3"
-							name="occurrence.description" id="occurrence.description" ></textarea>
+							name="occurrence.description" id="occurrence.description" >${occurrence.description}</textarea>
 					</div>
 				</div>
 			</div>

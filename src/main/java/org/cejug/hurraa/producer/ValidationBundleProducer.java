@@ -26,7 +26,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
-import br.com.caelum.vraptor.core.SafeResourceBundle;
+import br.com.caelum.vraptor.util.SafeResourceBundle;
 
 @RequestScoped
 public class ValidationBundleProducer {

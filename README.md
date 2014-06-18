@@ -2,6 +2,9 @@
 
 Opensource project to resource management
 
+### Script configuration
+hurraa/configWildfly8.sh
+
 ### Datasource configuration
 
 #### General Configuration

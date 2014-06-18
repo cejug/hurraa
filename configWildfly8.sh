@@ -1,5 +1,22 @@
 #!/bin/bash
-echo "Starting configurations...";
+echo "STARTING CONFIGURATIONS...";
+
+echo "ENTRE COM O DIRETÓRIO ONDE DESEJA INSTALAR O WILDFLY. EX: /home/usuario";
+read WILDFLY_INSTALL;
+
+
+WILDFLY_DIR=$WILDFLY_INSTALL/wildfly-8.1.0.Final;
+
+
+echo "DIGITE SUA SENHA PARA UTILIZAÇÃO NO COMANDO SUDO: " 
+sudo chmod -R 777 /tmp 																#SERVE APENAS PARA ABILITAR O SUDO NO CACHE
+
+##################### CRIA BANCO DE DADOS E USUÁRIO ####################
+
+echo "DIGITE A SENHA DO USUARIO ROOT DO MYSQL"
+read MYSQL_SENHA;
+mysql -u root -p$MYSQL_SENHA -e 'create database hurraa'
+mysql -u root -p$MYSQL_SENHA -e "grant all privileges on hurraa to hurraa@localhost identified by 'hurraa'"
 
 ######################### ENVIRONMENT VARIABLE #########################
 WF_FILE=/etc/profile.d/wf.sh;
@@ -7,476 +24,71 @@ WF_FILE=/etc/profile.d/wf.sh;
 if ! [ -f "$WF_FILE" ]; then
 	echo "Setting environment variable";
 	echo "creating $WF_FILE...";
-	echo "export WILDFLY_HOME=/opt/wildfly-8.1.0.Final" >> $WF_FILE;
+	sudo echo "export WILDFLY_HOME=/opt/wildfly-8.1.0.Final" >> $WF_FILE;
 fi;
 
-source $WF_FILE;
+
 ######################### WILDFLY SERVER ###############################
+cd /tmp;
 
 WILDFLY_ZIP=wildfly-8.1.0.Final.zip;
-
-if ! [ -d "$WILDFLY_HOME/bin" ]; then
+ 
+if ! [ -d "$WILDFLY_DIR" ]; then
 	if ! [ -f "$WILDFLY_ZIP" ]; then
-		echo "Downloading Wildfly 8 Final...";
+		echo "DOWNLOADING WILDFLY 8 FINAL...";
 		wget http://download.jboss.org/wildfly/8.1.0.Final/wildfly-8.1.0.Final.zip;
 	fi;
-	echo "Extracting $WILDFLY_ZIP to /opt...";
-	unzip wildfly-8.1.0.Final.zip -d /opt;
-fi;
-
-######################### MYSQL DRIVER #################################
-
-MYSQL_DRIVE_ZIP=mysql.zip;
-if ! [ -f "$WILDFLY_HOME/modules/com/mysql/main/mysql-connector-java-5.1.18-bin.jar" ]; then
-	echo "setting mysql driver";
-	mkdir -p "$WILDFLY_HOME/modules/com/";
-	
-	if ! [ -f "$MYSQL_DRIVE_ZIP" ]; then
-		echo "Downloading $MYSQL_DRIVE_ZIP...";
-		wget https://github.com/cejug/hurraa/wiki/hurraa-wildfly-driver-module/mysql.zip;
-	fi;
-	
-	echo "Extracting $MYSQL_DRIVE_ZIP...";
-	unzip $MYSQL_DRIVE_ZIP -d $WILDFLY_HOME/modules/com/;
+	echo "EXTRACTING $WILDFLY_ZIP";
+	mkdir -p $WILDFLY_INSTALL;
+	unzip wildfly-8.1.0.Final.zip -d $WILDFLY_INSTALL;	
 fi;
 
 #################### WILDFLY SERVER CONFIGURATION ######################
-echo "Setting the server Wildfly"
+echo "SETTING THE SERVER WILDFLY";
+echo "STARTING SERVER WILDFLY";
 
-STANDALONE=$WILDFLY_HOME/standalone/configuration/standalone.xml;
+$WILDFLY_DIR/bin/./standalone.sh &
 
-echo "Type user database:";
-read username;
-echo "Type password database:";
-read password;
-	
-if [ -f "$STANDALONE" ]; then
-	rm $STANDALONE;
+sleep 10
+
+
+######################### ADD MODULOS #################################
+
+MYSQLDRIVER=/tmp/mysql-connector-java-5.1.29.jar;
+if ! [ -f $MYSQLDRIVER ]; then
+	echo "DOWNLOADING MYSQL DRIVER 5.1.29";
+	wget http://repo1.maven.org/maven2/mysql/mysql-connector-java/5.1.29/mysql-connector-java-5.1.29.jar;
+
 fi;
 
 
-echo "<?xml version='1.0' encoding='UTF-8'?>" >> $STANDALONE;
-echo "" >> $STANDALONE;
-echo "<server xmlns=\"urn:jboss:domain:2.0\">" >> $STANDALONE;
-echo "" >> $STANDALONE;
-echo "    <extensions>" >> $STANDALONE;
-echo "        <extension module=\"org.jboss.as.clustering.infinispan\"/>" >> $STANDALONE;
-echo "        <extension module=\"org.jboss.as.connector\"/>" >> $STANDALONE;
-echo "        <extension module=\"org.jboss.as.deployment-scanner\"/>" >> $STANDALONE;
-echo "        <extension module=\"org.jboss.as.ee\"/>" >> $STANDALONE;
-echo "        <extension module=\"org.jboss.as.ejb3\"/>" >> $STANDALONE;
-echo "        <extension module=\"org.jboss.as.jaxrs\"/>" >> $STANDALONE;
-echo "        <extension module=\"org.jboss.as.jdr\"/>" >> $STANDALONE;
-echo "        <extension module=\"org.jboss.as.jmx\"/>" >> $STANDALONE;
-echo "        <extension module=\"org.jboss.as.jpa\"/>" >> $STANDALONE;
-echo "        <extension module=\"org.jboss.as.jsf\"/>" >> $STANDALONE;
-echo "        <extension module=\"org.jboss.as.logging\"/>" >> $STANDALONE;
-echo "        <extension module=\"org.jboss.as.mail\"/>" >> $STANDALONE;
-echo "        <extension module=\"org.jboss.as.naming\"/>" >> $STANDALONE;
-echo "        <extension module=\"org.jboss.as.pojo\"/>" >> $STANDALONE;
-echo "        <extension module=\"org.jboss.as.remoting\"/>" >> $STANDALONE;
-echo "        <extension module=\"org.jboss.as.sar\"/>" >> $STANDALONE;
-echo "        <extension module=\"org.jboss.as.security\"/>" >> $STANDALONE;
-echo "        <extension module=\"org.jboss.as.threads\"/>" >> $STANDALONE;
-echo "        <extension module=\"org.jboss.as.transactions\"/>" >> $STANDALONE;
-echo "        <extension module=\"org.jboss.as.webservices\"/>" >> $STANDALONE;
-echo "        <extension module=\"org.jboss.as.weld\"/>" >> $STANDALONE;
-echo "        <extension module=\"org.wildfly.extension.batch\"/>" >> $STANDALONE;
-echo "        <extension module=\"org.wildfly.extension.io\"/>" >> $STANDALONE;
-echo "        <extension module=\"org.wildfly.extension.undertow\"/>" >> $STANDALONE;
-echo "    </extensions>" >> $STANDALONE;
-echo "" >> $STANDALONE;
 
-echo "    <management>" >> $STANDALONE;
-echo "        <security-realms>" >> $STANDALONE;
-echo "            <security-realm name=\"ManagementRealm\">" >> $STANDALONE;
-echo "                <authentication>" >> $STANDALONE;
-echo "                    <local default-user=\"\\$local\"/>" >> $STANDALONE;
-echo "                    <properties path=\"mgmt-users.properties\" relative-to=\"jboss.server.config.dir\"/>" >> $STANDALONE;
-echo "                </authentication>" >> $STANDALONE;
-echo "                <authorization map-groups-to-roles=\"false\">" >> $STANDALONE;
-echo "                    <properties path=\"mgmt-groups.properties\" relative-to=\"jboss.server.config.dir\"/>" >> $STANDALONE;
-echo "                </authorization>" >> $STANDALONE;
-echo "            </security-realm>" >> $STANDALONE;
-echo "            <security-realm name=\"ApplicationRealm\">" >> $STANDALONE;
-echo "                <authentication>" >> $STANDALONE;
-echo "                    <local default-user=\"\$local\" allowed-users=\"*\"/>" >> $STANDALONE;
-echo "                    <properties path=\"application-users.properties\" relative-to=\"jboss.server.config.dir\"/>" >> $STANDALONE;
-echo "                </authentication>" >> $STANDALONE;
-echo "                <authorization>" >> $STANDALONE;
-echo "                    <properties path=\"application-roles.properties\" relative-to=\"jboss.server.config.dir\"/>" >> $STANDALONE;
-echo "                </authorization>" >> $STANDALONE;
-echo "            </security-realm>" >> $STANDALONE;
-echo "        </security-realms>" >> $STANDALONE;
-echo "        <audit-log>" >> $STANDALONE;
-echo "            <formatters>" >> $STANDALONE;
-echo "                <json-formatter name=\"json-formatter\"/>" >> $STANDALONE;
-echo "            </formatters>" >> $STANDALONE;
-echo "            <handlers>" >> $STANDALONE;
-echo "                <file-handler name=\"file\" formatter=\"json-formatter\" path=\"audit-log.log\" relative-to=\"jboss.server.data.dir\"/>" >> $STANDALONE;
-echo "            </handlers>" >> $STANDALONE;
-echo "            <logger log-boot=\"true\" log-read-only=\"false\" enabled=\"false\">" >> $STANDALONE;
-echo "                <handlers>" >> $STANDALONE;
-echo "                    <handler name=\"file\"/>" >> $STANDALONE;
-echo "                </handlers>" >> $STANDALONE;
-echo "            </logger>" >> $STANDALONE;
-echo "        </audit-log>" >> $STANDALONE;
-echo "        <management-interfaces>" >> $STANDALONE;
-echo "            <http-interface security-realm=\"ManagementRealm\" http-upgrade-enabled=\"true\">" >> $STANDALONE;
-echo "                <socket-binding http=\"management-http\"/>" >> $STANDALONE;
-echo "            </http-interface>" >> $STANDALONE;
-echo "        </management-interfaces>" >> $STANDALONE;
-echo "        <access-control provider=\"simple\">" >> $STANDALONE;
-echo "            <role-mapping>" >> $STANDALONE;
-echo "                <role name=\"SuperUser\">" >> $STANDALONE;
-echo "                    <include>" >> $STANDALONE;
-echo "                        <user name=\"\$local\"/>" >> $STANDALONE;
-echo "                    </include>" >> $STANDALONE;
-echo "                </role>" >> $STANDALONE;
-echo "            </role-mapping>" >> $STANDALONE;
-echo "        </access-control>" >> $STANDALONE;
-echo "    </management>" >> $STANDALONE;
-echo "" >> $STANDALONE;
-echo "    <profile>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:logging:2.0\">" >> $STANDALONE;
-echo "            <console-handler name=\"CONSOLE\">" >> $STANDALONE;
-echo "                <level name=\"INFO\"/>" >> $STANDALONE;
-echo "                <formatter>" >> $STANDALONE;
-echo "                    <named-formatter name=\"COLOR-PATTERN\"/>" >> $STANDALONE;
-echo "                </formatter>" >> $STANDALONE;
-echo "            </console-handler>" >> $STANDALONE;
-echo "            <periodic-rotating-file-handler name=\"FILE\" autoflush=\"true\">" >> $STANDALONE;
-echo "                <formatter>" >> $STANDALONE;
-echo "                    <named-formatter name=\"PATTERN\"/>" >> $STANDALONE;
-echo "                </formatter>" >> $STANDALONE;
-echo "                <file relative-to=\"jboss.server.log.dir\" path=\"server.log\"/>" >> $STANDALONE;
-echo "                <suffix value=\".yyyy-MM-dd\"/>" >> $STANDALONE;
-echo "                <append value=\"true\"/>" >> $STANDALONE;
-echo "            </periodic-rotating-file-handler>" >> $STANDALONE;
-echo "            <logger category=\"com.arjuna\">" >> $STANDALONE;
-echo "                <level name=\"WARN\"/>" >> $STANDALONE;
-echo "            </logger>" >> $STANDALONE;
-echo "            <logger category=\"org.apache.tomcat.util.modeler\">" >> $STANDALONE;
-echo "                <level name=\"WARN\"/>" >> $STANDALONE;
-echo "            </logger>" >> $STANDALONE;
-echo "            <logger category=\"org.jboss.as.config\">" >> $STANDALONE;
-echo "                <level name=\"DEBUG\"/>" >> $STANDALONE;
-echo "            </logger>" >> $STANDALONE;
-echo "            <logger category=\"sun.rmi\">" >> $STANDALONE;
-echo "                <level name=\"WARN\"/>" >> $STANDALONE;
-echo "            </logger>" >> $STANDALONE;
-echo "            <logger category=\"jacorb\">" >> $STANDALONE;
-echo "                <level name=\"WARN\"/>" >> $STANDALONE;
-echo "            </logger>" >> $STANDALONE;
-echo "            <logger category=\"jacorb.config\">" >> $STANDALONE;
-echo "                <level name=\"ERROR\"/>" >> $STANDALONE;
-echo "            </logger>" >> $STANDALONE;
-echo "            <root-logger>" >> $STANDALONE;
-echo "                <level name=\"INFO\"/>" >> $STANDALONE;
-echo "                <handlers>" >> $STANDALONE;
-echo "                    <handler name=\"CONSOLE\"/>" >> $STANDALONE;
-echo "                    <handler name=\"FILE\"/>" >> $STANDALONE;
-echo "                </handlers>" >> $STANDALONE;
-echo "            </root-logger>" >> $STANDALONE;
-echo "            <formatter name=\"PATTERN\">" >> $STANDALONE;
-echo "                <pattern-formatter pattern=\"%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p [%c] (%t) %s%E%n\"/>" >> $STANDALONE;
-echo "            </formatter>" >> $STANDALONE;
-echo "            <formatter name=\"COLOR-PATTERN\">" >> $STANDALONE;
-echo "                <pattern-formatter pattern=\"%K{level}%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%E%n\"/>" >> $STANDALONE;
-echo "            </formatter>" >> $STANDALONE;
-echo "        </subsystem>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:batch:1.0\">" >> $STANDALONE;
-echo "            <job-repository>" >> $STANDALONE;
-echo "                <in-memory/>" >> $STANDALONE;
-echo "            </job-repository>" >> $STANDALONE;
-echo "            <thread-pool>" >> $STANDALONE;
-echo "                <max-threads count=\"10\"/>" >> $STANDALONE;
-echo "                <keepalive-time time=\"100\" unit=\"milliseconds\"/>" >> $STANDALONE;
-echo "            </thread-pool>" >> $STANDALONE;
-echo "        </subsystem>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:datasources:2.0\">" >> $STANDALONE;
-echo "            <datasources>" >> $STANDALONE;
-echo "                <datasource jndi-name=\"java:jboss/datasources/ExampleDS\" pool-name=\"ExampleDS\" enabled=\"true\" use-java-context=\"true\">" >> $STANDALONE;
-echo "                    <connection-url>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE</connection-url>" >> $STANDALONE;
-echo "                    <driver>h2</driver>" >> $STANDALONE;
-echo "                    <security>" >> $STANDALONE;
-echo "                        <user-name>sa</user-name>" >> $STANDALONE;
-echo "                        <password>sa</password>" >> $STANDALONE;
-echo "                    </security>" >> $STANDALONE;
-echo "                </datasource>" >> $STANDALONE;
-echo "                <datasource jndi-name=\"java:/hurraaDS\" pool-name=\"hurraaDS\" enabled=\"true\" use-java-context=\"true\">" >> $STANDALONE;
-echo "                    <connection-url>jdbc:mysql://localhost:3306/hurraa</connection-url>" >> $STANDALONE;
-echo "                    <driver>com.mysql</driver>" >> $STANDALONE;
-echo "                    <pool>" >> $STANDALONE;
-echo "                        <min-pool-size>10</min-pool-size>" >> $STANDALONE;
-echo "                        <max-pool-size>100</max-pool-size>" >> $STANDALONE;
-echo "                        <prefill>true</prefill>" >> $STANDALONE;
-echo "                    </pool>" >> $STANDALONE;
-echo "                    <security>" >> $STANDALONE;
-echo "                        <user-name>$username</user-name>" >> $STANDALONE;
-echo "                        <password>$password</password>" >> $STANDALONE;
-echo "                    </security>" >> $STANDALONE;
-echo "                </datasource>" >> $STANDALONE;
-echo "                <drivers>" >> $STANDALONE;
-echo "                    <driver name=\"h2\" module=\"com.h2database.h2\">" >> $STANDALONE;
-echo "                        <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>" >> $STANDALONE;
-echo "                    </driver>" >> $STANDALONE;
-echo "                    <driver name=\"com.mysql\" module=\"com.mysql\">" >> $STANDALONE;
-echo "                        <xa-datasource-class>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</xa-datasource-class>" >> $STANDALONE;
-echo "                    </driver>" >> $STANDALONE;
-echo "                </drivers>" >> $STANDALONE;
-echo "            </datasources>" >> $STANDALONE;
-echo "        </subsystem>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:deployment-scanner:2.0\">" >> $STANDALONE;
-echo "            <deployment-scanner path=\"deployments\" relative-to=\"jboss.server.base.dir\" scan-interval=\"5000\"/>" >> $STANDALONE;
-echo "        </subsystem>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:ee:2.0\">" >> $STANDALONE;
-echo "            <spec-descriptor-property-replacement>false</spec-descriptor-property-replacement>" >> $STANDALONE;
-echo "            <jboss-descriptor-property-replacement>true</jboss-descriptor-property-replacement>" >> $STANDALONE;
-echo "            <annotation-property-replacement>false</annotation-property-replacement>" >> $STANDALONE;
-echo "            <concurrent>" >> $STANDALONE;
-echo "                <context-services>" >> $STANDALONE;
-echo "                    <context-service name=\"default\" jndi-name=\"java:jboss/ee/concurrency/context/default\" use-transaction-setup-provider=\"true\"/>" >> $STANDALONE;
-echo "                </context-services>" >> $STANDALONE;
-echo "                <managed-thread-factories>" >> $STANDALONE;
-echo "                    <managed-thread-factory name=\"default\" jndi-name=\"java:jboss/ee/concurrency/factory/default\" context-service=\"default\"/>" >> $STANDALONE;
-echo "                </managed-thread-factories>" >> $STANDALONE;
-echo "                <managed-executor-services>" >> $STANDALONE;
-echo "                    <managed-executor-service name=\"default\" jndi-name=\"java:jboss/ee/concurrency/executor/default\" context-service=\"default\" hung-task-threshold=\"60000\" core-threads=\"5\" max-threads=\"25\" keepalive-time=\"5000\"/>" >> $STANDALONE;
-echo "                </managed-executor-services>" >> $STANDALONE;
-echo "                <managed-scheduled-executor-services>" >> $STANDALONE;
-echo "                    <managed-scheduled-executor-service name=\"default\" jndi-name=\"java:jboss/ee/concurrency/scheduler/default\" context-service=\"default\" hung-task-threshold=\"60000\" core-threads=\"2\" keepalive-time=\"3000\"/>" >> $STANDALONE;
-echo "                </managed-scheduled-executor-services>" >> $STANDALONE;
-echo "            </concurrent>" >> $STANDALONE;
-echo "            <default-bindings context-service=\"java:jboss/ee/concurrency/context/default\" datasource=\"java:jboss/datasources/ExampleDS\" jms-connection-factory=\"java:jboss/DefaultJMSConnectionFactory\" managed-executor-service=\"java:jboss/ee/concurrency/executor/default\" managed-scheduled-executor-service=\"java:jboss/ee/concurrency/scheduler/default\" managed-thread-factory=\"java:jboss/ee/concurrency/factory/default\"/>" >> $STANDALONE;
-echo "        </subsystem>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:ejb3:2.0\">" >> $STANDALONE;
-echo "            <session-bean>" >> $STANDALONE;
-echo "                <stateful default-access-timeout=\"5000\" cache-ref=\"simple\" passivation-disabled-cache-ref=\"simple\"/>" >> $STANDALONE;
-echo "                <singleton default-access-timeout=\"5000\"/>" >> $STANDALONE;
-echo "            </session-bean>" >> $STANDALONE;
-echo "            <pools>" >> $STANDALONE;
-echo "                <bean-instance-pools>" >> $STANDALONE;
-echo "                    <strict-max-pool name=\"slsb-strict-max-pool\" max-pool-size=\"20\" instance-acquisition-timeout=\"5\" instance-acquisition-timeout-unit=\"MINUTES\"/>" >> $STANDALONE;
-echo "                    <strict-max-pool name=\"mdb-strict-max-pool\" max-pool-size=\"20\" instance-acquisition-timeout=\"5\" instance-acquisition-timeout-unit=\"MINUTES\"/>" >> $STANDALONE;
-echo "                </bean-instance-pools>" >> $STANDALONE;
-echo "            </pools>" >> $STANDALONE;
-echo "            <caches>" >> $STANDALONE;
-echo "                <cache name=\"simple\"/>" >> $STANDALONE;
-echo "                <cache name=\"distributable\" passivation-store-ref=\"infinispan\" aliases=\"passivating clustered\"/>" >> $STANDALONE;
-echo "            </caches>" >> $STANDALONE;
-echo "            <passivation-stores>" >> $STANDALONE;
-echo "                <passivation-store name=\"infinispan\" cache-container=\"ejb\" max-size=\"10000\"/>" >> $STANDALONE;
-echo "            </passivation-stores>" >> $STANDALONE;
-echo "            <async thread-pool-name=\"default\"/>" >> $STANDALONE;
-echo "            <timer-service thread-pool-name=\"default\" default-data-store=\"default-file-store\">" >> $STANDALONE;
-echo "                <data-stores>" >> $STANDALONE;
-echo "                    <file-data-store name=\"default-file-store\" path=\"timer-service-data\" relative-to=\"jboss.server.data.dir\"/>" >> $STANDALONE;
-echo "                </data-stores>" >> $STANDALONE;
-echo "            </timer-service>" >> $STANDALONE;
-echo "            <remote connector-ref=\"http-remoting-connector\" thread-pool-name=\"default\"/>" >> $STANDALONE;
-echo "            <thread-pools>" >> $STANDALONE;
-echo "                <thread-pool name=\"default\">" >> $STANDALONE;
-echo "                    <max-threads count=\"10\"/>" >> $STANDALONE;
-echo "                    <keepalive-time time=\"100\" unit=\"milliseconds\"/>" >> $STANDALONE;
-echo "                </thread-pool>" >> $STANDALONE;
-echo "            </thread-pools>" >> $STANDALONE;
-echo "            <default-security-domain value=\"other\"/>" >> $STANDALONE;
-echo "            <default-missing-method-permissions-deny-access value=\"true\"/>" >> $STANDALONE;
-echo "        </subsystem>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:io:1.0\">" >> $STANDALONE;
-echo "            <worker name=\"default\" io-threads=\"3\"/>" >> $STANDALONE;
-echo "            <buffer-pool name=\"default\" buffer-size=\"16384\" buffers-per-slice=\"128\"/>" >> $STANDALONE;
-echo "        </subsystem>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:infinispan:2.0\">" >> $STANDALONE;
-echo "            <cache-container name=\"web\" default-cache=\"passivation\" module=\"org.wildfly.clustering.web.infinispan\">" >> $STANDALONE;
-echo "                <local-cache name=\"passivation\" batching=\"true\">" >> $STANDALONE;
-echo "                    <file-store passivation=\"true\" purge=\"false\"/>" >> $STANDALONE;
-echo "                </local-cache>" >> $STANDALONE;
-echo "                <local-cache name=\"persistent\" batching=\"true\">" >> $STANDALONE;
-echo "                    <file-store passivation=\"false\" purge=\"false\"/>" >> $STANDALONE;
-echo "                </local-cache>" >> $STANDALONE;
-echo "            </cache-container>" >> $STANDALONE;
-echo "            <cache-container name=\"ejb\" default-cache=\"passivation\" module=\"org.wildfly.clustering.ejb.infinispan\" aliases=\"sfsb\">" >> $STANDALONE;
-echo "                <local-cache name=\"passivation\" batching=\"true\">" >> $STANDALONE;
-echo "                    <file-store passivation=\"true\" purge=\"false\"/>" >> $STANDALONE;
-echo "                </local-cache>" >> $STANDALONE;
-echo "                <local-cache name=\"persistent\" batching=\"true\">" >> $STANDALONE;
-echo "                    <file-store passivation=\"false\" purge=\"false\"/>" >> $STANDALONE;
-echo "                </local-cache>" >> $STANDALONE;
-echo "            </cache-container>" >> $STANDALONE;
-echo "            <cache-container name=\"hibernate\" default-cache=\"local-query\" module=\"org.hibernate\">" >> $STANDALONE;
-echo "                <local-cache name=\"entity\">" >> $STANDALONE;
-echo "                    <transaction mode=\"NON_XA\"/>" >> $STANDALONE;
-echo "                    <eviction strategy=\"LRU\" max-entries=\"10000\"/>" >> $STANDALONE;
-echo "                    <expiration max-idle=\"100000\"/>" >> $STANDALONE;
-echo "                </local-cache>" >> $STANDALONE;
-echo "                <local-cache name=\"local-query\">" >> $STANDALONE;
-echo "                    <transaction mode=\"NONE\"/>" >> $STANDALONE;
-echo "                    <eviction strategy=\"LRU\" max-entries=\"10000\"/>" >> $STANDALONE;
-echo "                    <expiration max-idle=\"100000\"/>" >> $STANDALONE;
-echo "                </local-cache>" >> $STANDALONE;
-echo "                <local-cache name=\"timestamps\">" >> $STANDALONE;
-echo "                    <transaction mode=\"NONE\"/>" >> $STANDALONE;
-echo "                    <eviction strategy=\"NONE\"/>" >> $STANDALONE;
-echo "                </local-cache>" >> $STANDALONE;
-echo "            </cache-container>" >> $STANDALONE;
-echo "        </subsystem>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:jaxrs:1.0\"/>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:jca:2.0\">" >> $STANDALONE;
-echo "            <archive-validation enabled=\"true\" fail-on-error=\"true\" fail-on-warn=\"false\"/>" >> $STANDALONE;
-echo "            <bean-validation enabled=\"true\"/>" >> $STANDALONE;
-echo "            <default-workmanager>" >> $STANDALONE;
-echo "                <short-running-threads>" >> $STANDALONE;
-echo "                    <core-threads count=\"50\"/>" >> $STANDALONE;
-echo "                    <queue-length count=\"50\"/>" >> $STANDALONE;
-echo "                    <max-threads count=\"50\"/>" >> $STANDALONE;
-echo "                    <keepalive-time time=\"10\" unit=\"seconds\"/>" >> $STANDALONE;
-echo "                </short-running-threads>" >> $STANDALONE;
-echo "                <long-running-threads>" >> $STANDALONE;
-echo "                    <core-threads count=\"50\"/>" >> $STANDALONE;
-echo "                    <queue-length count=\"50\"/>" >> $STANDALONE;
-echo "                    <max-threads count=\"50\"/>" >> $STANDALONE;
-echo "                    <keepalive-time time=\"10\" unit=\"seconds\"/>" >> $STANDALONE;
-echo "                </long-running-threads>" >> $STANDALONE;
-echo "            </default-workmanager>" >> $STANDALONE;
-echo "            <cached-connection-manager/>" >> $STANDALONE;
-echo "        </subsystem>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:jdr:1.0\"/>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:jmx:1.3\">" >> $STANDALONE;
-echo "            <expose-resolved-model/>" >> $STANDALONE;
-echo "            <expose-expression-model/>" >> $STANDALONE;
-echo "            <remoting-connector/>" >> $STANDALONE;
-echo "        </subsystem>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:jpa:1.1\">" >> $STANDALONE;
-echo "            <jpa default-datasource=\"\" default-extended-persistence-inheritance=\"DEEP\"/>" >> $STANDALONE;
-echo "        </subsystem>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:jsf:1.0\"/>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:mail:2.0\">" >> $STANDALONE;
-echo "            <mail-session name=\"default\" jndi-name=\"java:jboss/mail/Default\">" >> $STANDALONE;
-echo "                <smtp-server outbound-socket-binding-ref=\"mail-smtp\"/>" >> $STANDALONE;
-echo "            </mail-session>" >> $STANDALONE;
-echo "        </subsystem>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:naming:2.0\">" >> $STANDALONE;
-echo "            <remote-naming/>" >> $STANDALONE;
-echo "        </subsystem>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:pojo:1.0\"/>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:remoting:2.0\">" >> $STANDALONE;
-echo "            <endpoint worker=\"default\"/>" >> $STANDALONE;
-echo "            <http-connector name=\"http-remoting-connector\" connector-ref=\"default\" security-realm=\"ApplicationRealm\"/>" >> $STANDALONE;
-echo "        </subsystem>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:resource-adapters:2.0\"/>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:sar:1.0\"/>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:security:1.2\">" >> $STANDALONE;
-echo "            <security-domains>" >> $STANDALONE;
-echo "                <security-domain name=\"other\" cache-type=\"default\">" >> $STANDALONE;
-echo "                    <authentication>" >> $STANDALONE;
-echo "                        <login-module code=\"Remoting\" flag=\"optional\">" >> $STANDALONE;
-echo "                            <module-option name=\"password-stacking\" value=\"useFirstPass\"/>" >> $STANDALONE;
-echo "                        </login-module>" >> $STANDALONE;
-echo "                        <login-module code=\"RealmDirect\" flag=\"required\">" >> $STANDALONE;
-echo "                            <module-option name=\"password-stacking\" value=\"useFirstPass\"/>" >> $STANDALONE;
-echo "                        </login-module>" >> $STANDALONE;
-echo "                    </authentication>" >> $STANDALONE;
-echo "                </security-domain>" >> $STANDALONE;
-echo "                <security-domain name=\"jboss-web-policy\" cache-type=\"default\">" >> $STANDALONE;
-echo "                    <authorization>" >> $STANDALONE;
-echo "                        <policy-module code=\"Delegating\" flag=\"required\"/>" >> $STANDALONE;
-echo "                    </authorization>" >> $STANDALONE;
-echo "                </security-domain>" >> $STANDALONE;
-echo "                <security-domain name=\"jboss-ejb-policy\" cache-type=\"default\">" >> $STANDALONE;
-echo "                    <authorization>" >> $STANDALONE;
-echo "                        <policy-module code=\"Delegating\" flag=\"required\"/>" >> $STANDALONE;
-echo "                    </authorization>" >> $STANDALONE;
-echo "                </security-domain>" >> $STANDALONE;
-echo "            </security-domains>" >> $STANDALONE;
-echo "        </subsystem>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:threads:1.1\"/>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:transactions:2.0\">" >> $STANDALONE;
-echo "            <core-environment>" >> $STANDALONE;
-echo "                <process-id>" >> $STANDALONE;
-echo "                    <uuid/>" >> $STANDALONE;
-echo "                </process-id>" >> $STANDALONE;
-echo "            </core-environment>" >> $STANDALONE;
-echo "            <recovery-environment socket-binding=\"txn-recovery-environment\" status-socket-binding=\"txn-status-manager\"/>" >> $STANDALONE;
-echo "            <coordinator-environment default-timeout=\"300\"/>" >> $STANDALONE;
-echo "        </subsystem>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:undertow:1.0\">" >> $STANDALONE;
-echo "            <buffer-caches>" >> $STANDALONE;
-echo "                <buffer-cache name=\"default\" buffer-size=\"1024\" buffers-per-region=\"1024\" max-regions=\"10\"/>" >> $STANDALONE;
-echo "            </buffer-caches>" >> $STANDALONE;
-echo "            <server name=\"default-server\">" >> $STANDALONE;
-echo "                <http-listener name=\"default\" socket-binding=\"http\"/>" >> $STANDALONE;
-echo "                <host name=\"default-host\" alias=\"localhost\">" >> $STANDALONE;
-echo "                    <location name=\"/\" handler=\"welcome-content\"/>" >> $STANDALONE;
-echo "                    <filter-ref name=\"server-header\"/>" >> $STANDALONE;
-echo "                    <filter-ref name=\"x-powered-by-header\"/>" >> $STANDALONE;
-echo "                </host>" >> $STANDALONE;
-echo "            </server>" >> $STANDALONE;
-echo "            <servlet-container name=\"default\" default-buffer-cache=\"default\" stack-trace-on-error=\"local-only\">" >> $STANDALONE;
-echo "                <jsp-config/>" >> $STANDALONE;
-echo "            </servlet-container>" >> $STANDALONE;
-echo "            <handlers>" >> $STANDALONE;
-echo "                <file name=\"welcome-content\" path=\"\${jboss.home.dir}/welcome-content\" directory-listing=\"true\"/>" >> $STANDALONE;
-echo "            </handlers>" >> $STANDALONE;
-echo "            <filters>" >> $STANDALONE;
-echo "                <response-header name=\"server-header\" header-name=\"Server\" header-value=\"Wildfly 8\"/>" >> $STANDALONE;
-echo "                <response-header name=\"x-powered-by-header\" header-name=\"X-Powered-By\" header-value=\"Undertow 1\"/>" >> $STANDALONE;
-echo "            </filters>" >> $STANDALONE;
-echo "        </subsystem>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:webservices:1.2\">" >> $STANDALONE;
-echo "            <modify-wsdl-address>true</modify-wsdl-address>" >> $STANDALONE;
-echo "            <wsdl-host>\${jboss.bind.address:127.0.0.1}</wsdl-host>" >> $STANDALONE;
-echo "            <endpoint-config name=\"Standard-Endpoint-Config\"/>" >> $STANDALONE;
-echo "            <endpoint-config name=\"Recording-Endpoint-Config\">" >> $STANDALONE;
-echo "                <pre-handler-chain name=\"recording-handlers\" protocol-bindings=\"##SOAP11_HTTP ##SOAP11_HTTP_MTOM ##SOAP12_HTTP ##SOAP12_HTTP_MTOM\">" >> $STANDALONE;
-echo "                    <handler name=\"RecordingHandler\" class=\"org.jboss.ws.common.invocation.RecordingServerHandler\"/>" >> $STANDALONE;
-echo "                </pre-handler-chain>" >> $STANDALONE;
-echo "            </endpoint-config>" >> $STANDALONE;
-echo "            <client-config name=\"Standard-Client-Config\"/>" >> $STANDALONE;
-echo "        </subsystem>" >> $STANDALONE;
-echo "        <subsystem xmlns=\"urn:jboss:domain:weld:2.0\"/>" >> $STANDALONE;
-echo "    </profile>" >> $STANDALONE;
-echo "" >> $STANDALONE;
-echo "    <interfaces>" >> $STANDALONE;
-echo "        <interface name=\"management\">" >> $STANDALONE;
-echo "            <inet-address value=\"\${jboss.bind.address.management:127.0.0.1}\"/>" >> $STANDALONE;
-echo "        </interface>" >> $STANDALONE;
-echo "        <interface name=\"public\">" >> $STANDALONE;
-echo "            <inet-address value=\"\${jboss.bind.address:127.0.0.1}\"/>" >> $STANDALONE;
-echo "        </interface>" >> $STANDALONE;
-echo "        <interface name=\"unsecure\">" >> $STANDALONE;
-echo "            <inet-address value=\"\${jboss.bind.address.unsecure:127.0.0.1}\"/>" >> $STANDALONE;
-echo "        </interface>" >> $STANDALONE;
-echo "    </interfaces>" >> $STANDALONE;
-echo "" >> $STANDALONE;
-echo "    <socket-binding-group name=\"standard-sockets\" default-interface=\"public\" port-offset=\"\${jboss.socket.binding.port-offset:0}\">" >> $STANDALONE;
-echo "        <socket-binding name=\"management-http\" interface=\"management\" port=\"\${jboss.management.http.port:9990}\"/>" >> $STANDALONE;
-echo "        <socket-binding name=\"management-https\" interface=\"management\" port=\"\${jboss.management.https.port:9993}\"/>" >> $STANDALONE;
-echo "        <socket-binding name=\"ajp\" port=\"\${jboss.ajp.port:8009}\"/>" >> $STANDALONE;
-echo "        <socket-binding name=\"http\" port=\"\${jboss.http.port:8080}\"/>" >> $STANDALONE;
-echo "        <socket-binding name=\"https\" port=\"\${jboss.https.port:8443}\"/>" >> $STANDALONE;
-echo "        <socket-binding name=\"txn-recovery-environment\" port=\"4712\"/>" >> $STANDALONE;
-echo "        <socket-binding name=\"txn-status-manager\" port=\"4713\"/>" >> $STANDALONE;
-echo "        <outbound-socket-binding name=\"mail-smtp\">" >> $STANDALONE;
-echo "            <remote-destination host=\"localhost\" port=\"25\"/>" >> $STANDALONE;
-echo "        </outbound-socket-binding>" >> $STANDALONE;
-echo "    </socket-binding-group>" >> $STANDALONE;
-echo "</server>" >> $STANDALONE;
+$WILDFLY_DIR/bin/./jboss-cli.sh --connect --command='module add --name=com.mysql --resources=/tmp/mysql-connector-java-5.1.29.jar --dependencies=javax.api' 
 
 
+######################### POOL MYSQL #################################
+echo "SETTING POOLS";
+													  
+$WILDFLY_DIR/bin/./jboss-cli.sh --connect --commands='./subsystem=datasources/jdbc-driver=com.mysql:add(driver-name="com.mysql", driver-module-name="com.mysql", driver-xa-datasource-class-name="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource", driver-class-name="com.mysql.jdbc.Driver" )';
 
-#################### WILDFLY SERVER PERMISSIONS ######################
-chmod -R 777 $WILDFLY_HOME;
+######################### DEFININDO DATASOURCES #################################
 
-########################################################################
-echo;
-echo "############################################";
-echo "# Created by: Clairton Carneiro Luz        #"
-echo "# Created to: CEJUG                        #";
-echo "############################################";
-echo;
-echo "End";
+echo "SETTING DATASOURCES";
+$WILDFLY_DIR/bin/./jboss-cli.sh --connect --commands='./subsystem=datasources/data-source=hurraaDS:add(enabled=true , jndi-name="java:/hurraaDS" , use-java-context=true, driver-name="com.mysql" , min-pool-size=10 , max-pool-size=100 , pool-prefill=true, user-name="hurraa", password="hurraa" , connection-url="jdbc:mysql://localhost:3306/hurraa" )'
+
+sleep 2
+
+killall java
+
+sleep 2
+
+echo "#######################################################";
+echo "#                                                     #";
+echo "# CREATE BY: CLAIRTON CARNEIRO LUZ                    #";
+echo "# CREATE TO: CEJUG                                    #";
+echo "#                                                     #";
+echo "#                    TERMINOU                         #";
+echo "#######################################################";
 
 
 

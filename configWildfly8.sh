@@ -16,7 +16,7 @@ sudo chmod -R 777 /tmp 																#SERVE APENAS PARA ABILITAR O SUDO NO CAC
 echo "DIGITE A SENHA DO USUARIO ROOT DO MYSQL"
 read MYSQL_SENHA;
 mysql -u root -p$MYSQL_SENHA -e 'create database hurraa'
-mysql -u root -p$MYSQL_SENHA -e "grant all privileges on hurraa to hurraa@localhost identified by 'hurraa'"
+mysql -u root -p$MYSQL_SENHA -e "grant all privileges on hurraa.* to hurraa@localhost identified by 'hurraa'"
 
 ######################### ENVIRONMENT VARIABLE #########################
 WF_FILE=/etc/profile.d/wf.sh;

@@ -8,6 +8,7 @@
 <%@ attribute name="placeholder" required="false"%>
 <%@ attribute name="showFieldError" required="false" %>
 <%@ attribute name="showAllErrors" required="false" %>
+<%@ attribute name="autoFocus" required="false" %>
 <%@ attribute name="readonly" required="false" %>
 <%@ attribute name="errorsMap" required="false" type="java.util.Map" %>
 <c:set var="showFieldError" value="${(empty showFieldError) ? true : showFieldError}" />
@@ -20,5 +21,5 @@
       </c:if>
   </label>
   <input type="${type}" class="form-control input-sm" name="${name}" id="${name}" value="${value}" placeholder="${placeholder}"
-   ${readonly == true ? 'readonly="readonly"' : '' } />
+   ${readonly == true ? 'readonly="readonly"' : '' } ${autoFocus == true ? 'autofocus' : ''} />
 </div>

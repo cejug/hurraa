@@ -27,7 +27,7 @@
     <div style="width: 50%;">
         <form action="${action}" method="post">
             <cejug:textFieldVertical name="equipmentModel.name"
-                value="${equipmentModel.name }" errorsMap="${errors}" />
+                value="${equipmentModel.name }" errorsMap="${errors}" autoFocus="true" />
 
             <div
                 class="form-group ${errors['equipmentModel.equipmentType'] != null ? 'has-error' : ''}">

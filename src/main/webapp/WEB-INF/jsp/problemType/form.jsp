@@ -33,7 +33,7 @@
             <fieldset>
                 <input name="problemType.id" value="${problemType.id }" type="hidden" />
                 
-                <cejug:textFieldVertical name="problemType.name" value="${problemType.name }" errorsMap="${errors}" />
+                <cejug:textFieldVertical name="problemType.name" value="${problemType.name }" errorsMap="${errors}" autoFocus="true" />
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-default btn-sm">

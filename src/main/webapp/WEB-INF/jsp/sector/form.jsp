@@ -30,7 +30,7 @@
             method="post">
 
             <cejug:textFieldVertical type="text" name="sector.name"
-                value="${sector.name }" errorsMap="${errors}" />
+                value="${sector.name }" errorsMap="${errors}" autoFocus="true" />
             <cejug:textFieldVertical type="email" name="sector.email"
                 value="${sector.email}" errorsMap="${errors}" />
             <cejug:singleCheckboxField name="sector.respondsOccurrence"

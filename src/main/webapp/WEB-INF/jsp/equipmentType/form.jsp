@@ -30,7 +30,7 @@
 		<form action="${action}" method="post">
 			<fieldset>
 				<cejug:textFieldVertical name="equipmentType.name"
-					value="${equipmentType.name }" errorsMap="${errors}" />
+					value="${equipmentType.name }" errorsMap="${errors}" autoFocus="true" />
 
 				<input name="equipmentType.id" value="${equipmentType.id }"
 					type="hidden" />

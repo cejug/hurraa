@@ -32,7 +32,7 @@
             method="post">
 
             <cejug:textFieldVertical type="text" name="costCenter.code"
-                value="${costCenter.code}" errorsMap="${errors}" />
+                value="${costCenter.code}" errorsMap="${errors}" autoFocus="true" />
             <cejug:textFieldVertical type="text" name="costCenter.name"
                 value="${costCenter.name }" errorsMap="${errors}" />
             <cejug:textFieldVertical type="text"

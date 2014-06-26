@@ -27,7 +27,7 @@
         <form class="form-vertical" action="${action}" method="post">
 
             <cejug:textFieldVertical name="equipment.serialId"
-                value="${equipment.serialId}" errorsMap="${errors}" />
+                value="${equipment.serialId}" errorsMap="${errors}" autoFocus="true" />
             <cejug:textFieldVertical name="equipment.endOfWarranty"
                 value="${equipment.endOfWarranty}" errorsMap="${errors}" />
             <cejug:textFieldVertical name="equipment.lastMaintenance"

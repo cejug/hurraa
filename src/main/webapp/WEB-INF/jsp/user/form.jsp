@@ -28,7 +28,7 @@
 		<form role="form" action="${action}" method="post">
 			<fieldset>
 				<cejug:textFieldVertical type="text" name="user.name"
-					value="${user.name}" errorsMap="${errors}" />
+					value="${user.name}" errorsMap="${errors}" autoFocus="true" />
 				<cejug:textFieldVertical type="email" name="user.email"
 					value="${user.email}" errorsMap="${errors}" />
 				<cejug:textFieldVertical type="password" name="user.password"

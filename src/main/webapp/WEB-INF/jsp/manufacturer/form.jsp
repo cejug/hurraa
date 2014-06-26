@@ -27,7 +27,7 @@
         <div style="width: 50%;">
         <form class="form-horizontal" role="form" action="${action}" method="post">
 
-          <cejug:textFieldVertical type="text" name="manufacturer.name" value="${manufacturer.name}" errorsMap="${errors}"/>
+          <cejug:textFieldVertical type="text" name="manufacturer.name" value="${manufacturer.name}" errorsMap="${errors}" autoFocus="true" />
         
           <input name="manufacturer.id" value="${manufacturer.id }" type="hidden" />
                       

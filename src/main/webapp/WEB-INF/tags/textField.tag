@@ -17,6 +17,7 @@
 <div class="form-group">
   <label for="${name}" class="col-sm-2 control-label"><fmt:message key="${name}" /></label>
   <div class="col-sm-10">
-     <input type="${type}" class="form-control" name="${name}" id="${name}" value="${value}" placeholder="${placeholder}"/>
+     <input type="${type}" class="form-control" name="${name}" id="${name}" value="${value}" placeholder="${placeholder}" 
+     ${autoFocus == true ? 'autofocus' : ''}/>
   </div>
 </div>

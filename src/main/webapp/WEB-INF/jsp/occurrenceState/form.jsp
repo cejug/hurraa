@@ -33,7 +33,7 @@
             <fieldset>
                 <input name="occurrenceState.id" value="${occurrenceState.id }" type="hidden" />
                 
-                <cejug:textFieldVertical name="occurrenceState.name" value="${occurrenceState.name }" errorsMap="${errors}" />
+                <cejug:textFieldVertical name="occurrenceState.name" value="${occurrenceState.name }" errorsMap="${errors}" autoFocus="true" />
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-default btn-sm">
